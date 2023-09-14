@@ -4,10 +4,10 @@ import { navLinks } from "@/constant";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
-function TopBar() {
+function Header() {
   const pathname = usePathname();
   return (
-    <header className="fixed top-0 left-0 w-[100vw] flex flex-row justify-between items-center h-[3.2rem] border-b border-black px-4">
+    <header className="fixed top-0 left-0 w-[100vw] flex flex-row justify-between items-center h-[3.5rem] border-b border-black px-4 bg-white">
       <div className="logo">
         <img
           className="w-72 w-50"
@@ -27,7 +27,9 @@ function TopBar() {
             <Link
               href={link.route}
               key={link.id}
-              className={`uppercase h-full flex items-center p-3 ${isActive && "bg-black text-white"}`}
+              className={`uppercase h-full flex items-center p-3 ${
+                isActive && "bg-black text-white"
+              }`}
             >
               {link.title}
             </Link>
@@ -38,4 +40,4 @@ function TopBar() {
   );
 }
 
-export default TopBar;
+export default Header;

@@ -1,4 +1,4 @@
-import TopBar from "@/components/TopBar";
+import Header from "@/components/Header";
 import "./globals.css";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
@@ -19,8 +19,8 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${inter.className} relative`}>
-        <TopBar />
-        <main className="pt-[3.2rem]">{children}</main>
+        <Header />
+        <main className="pt-[4rem]">{children}</main>
       </body>
     </html>
   );

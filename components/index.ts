@@ -1,6 +1,6 @@
 import BottomBar from "./BottomBar";
-import TopBar from "./TopBar";
-import Welcome from "./Welcome";
+import Header from "./Header";
+import Home from "./Home";
 import VerticalTabs from "./VerticalTabs";
 
-export { TopBar, BottomBar, Welcome, VerticalTabs };
+export { Header as TopBar, BottomBar, Home as Welcome, VerticalTabs };
