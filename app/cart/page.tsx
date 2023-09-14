@@ -1,7 +1,7 @@
 const Page = async () => {
  await new Promise((resolve) => setTimeout(resolve,1000))
   return <div>
-    Hello
+    Hello from cart 
   </div>;
 };
 
