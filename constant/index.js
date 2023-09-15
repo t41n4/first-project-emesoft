@@ -1,9 +1,6 @@
-import {products} from './products'
-import {navLinks} from './navLinks'
-import {welcomeData} from './welcome'
+import { navLinks } from "./navLinks";
+import { welcomeData } from "./welcome";
+import { fetchCategories } from "./category";
+import { fetchProducts } from "./products";
 
-
-
-
-
-export {products as dumpData, navLinks, welcomeData}
+export { fetchProducts, navLinks, welcomeData, fetchCategories };

@@ -1,6 +1,7 @@
-import BottomBar from "./BottomBar";
 import Header from "./Header";
-import Home from "./Home";
 import VerticalTabs from "./VerticalTabs";
+import Footer from "./Footer";
+import Product from "./Product";
+import ImgMediaCard from "./ImgMediaCard";
 
-export { Header as TopBar, BottomBar, Home as Welcome, VerticalTabs };
+export { Header, Footer, VerticalTabs, Product, ImgMediaCard };

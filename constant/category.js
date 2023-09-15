@@ -1,6 +1,6 @@
-export async function fetchProducts() {
+export async function fetchCategories() {
     try {
-        const response = await fetch('https://fakestoreapi.com/products');
+        const response = await fetch('https://fakestoreapi.com/products/categories');
         if (!response.ok) {
             throw new Error('Lỗi khi tải dữ liệu từ API.');
         }
