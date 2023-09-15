@@ -4,10 +4,10 @@ import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
 import { useEffect, useState } from "react";
 
-import { CartItem } from "@/components";
-import { fetchProducts, fetchProductsByID } from "@/constant/products";
-import { fetchCart } from "./callApiCart";
-import { IProduct } from "@/components/Product";
+import { CartItem } from "@/app/components";
+import { IProduct } from "@/app/components/Product";
+import { useFetchProducts } from "@/hooks";
+import { fetchCart } from "../../../hooks/useCartData";
 
 export interface Products {
   id: number;
@@ -48,7 +48,7 @@ const Cart = () => {
     // const productData = await fetchProductsByID();
     if (cartData) {
       cartData.forEach(async (item: IProductItem) => {
-        const productItem = await fetchProductsByID(item.productId);
+        const productItem = await useFetchProductsByID(item.productId);
         const newData = [...productData, productItem];
         setProductData(newData);
       });

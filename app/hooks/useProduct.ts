@@ -1,4 +1,4 @@
-export async function fetchProducts() {
+export async function useFetchProducts() {
   try {
     const response = await fetch("https://fakestoreapi.com/products");
     if (!response.ok) {
@@ -14,7 +14,7 @@ export async function fetchProducts() {
   }
 }
 
-export async function fetchProductsByID(id: number) {
+export async function useFetchProductsByID(id: number) {
   try {
     const response = await fetch(`https://fakestoreapi.com/products/${id}`);
     if (!response.ok) {

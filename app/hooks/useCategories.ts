@@ -1,4 +1,4 @@
-export async function fetchCategories() {
+export async function useFetchCategories() {
     try {
         const response = await fetch('https://fakestoreapi.com/products/categories');
         if (!response.ok) {

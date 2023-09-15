@@ -1,16 +1,10 @@
-import { Product } from "@/components";
-import { IProduct } from "@/components/Product";
-import Catergory from "@/components/Category";
-import { fetchProducts } from "@/constant/products";
-import {
-  Box,
-  Grid
-} from "@mui/material";
-
+import { Product } from "@/app/components";
+import { IProduct } from "@/app/components/Product";
+import { Box, Grid } from "@mui/material";
+import { useFetchProducts } from "@/";
 
 const Page = async () => {
-  
-  const products = await fetchProducts();
+  const products = await useFetchProducts();
 
   return (
     <Box className="flex flex-row p-2 w-full justify-between">
