@@ -1,8 +1,6 @@
 "use client";
 
-import {
-  Grid
-} from "@mui/material";
+import { Grid } from "@mui/material";
 import { ImgMediaCard } from ".";
 
 export interface IProduct {
@@ -14,7 +12,6 @@ export interface IProduct {
   category: string;
   rating: object;
 }
-
 
 export default function Product({
   id,

@@ -22,6 +22,6 @@
       "@/*": ["./*"]
     }
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "constant/index.js"],
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "constant/index.js", "app/pages/cart/index.tsx", "constant/welcome.js", "constant/products.js", "constant/navLinks.js", "constant/category.js"],
   "exclude": ["node_modules"]
 }

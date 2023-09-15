@@ -2,6 +2,7 @@ import { welcomeData } from "@/constant";
 
 export default function Home() {
   return (
+    
     <div className="w-full flex justify-center items-center flex-col">
       <picture className="border border-black">
         <img src={welcomeData[0].image} alt="" />
