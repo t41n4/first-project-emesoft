@@ -1,4 +1,5 @@
 import { Footer, Header } from "@/components";
+import SmoothScroll from "@/components/SmoothScroll";
 import "@/styles/globals.css";
 import { Backdrop, CircularProgress } from "@mui/material";
 import type { AppProps } from "next/app";
@@ -19,7 +20,6 @@ function Loading() {
     router.events.on("routeChangeStart", handleStart);
     router.events.on("routeChangeComplete", handleComplete);
     router.events.on("routeChangeError", handleComplete);
-   
 
     return () => {
       router.events.off("routeChangeStart", handleStart);
@@ -42,10 +42,12 @@ function Loading() {
 
 export default function App({ Component, pageProps }: AppProps) {
   return (
-    <div className="pt-[3.5rem]">
+    <div className="pt-[3.5rem] ">
       <Loading />
       <Header />
-      <Component {...pageProps} />;
+      <SmoothScroll>
+        <Component {...pageProps} />;
+      </SmoothScroll>
       <Footer />
     </div>
   );

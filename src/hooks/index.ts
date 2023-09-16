@@ -1,6 +1,7 @@
 import { fetchCart, fetchProId } from "./useCartData";
 import { useFetchCategories } from "./useCategories";
 import { useFetchProducts, useFetchProductsByID } from "./useProduct";
+import useWindowSize from "./useWindowSize";
 
 export {
   fetchCart,
@@ -8,4 +9,5 @@ export {
   useFetchProducts,
   useFetchProductsByID,
   useFetchCategories,
+  useWindowSize,
 };

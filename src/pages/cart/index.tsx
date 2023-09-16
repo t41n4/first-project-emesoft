@@ -5,7 +5,7 @@ import Grid from "@mui/material/Grid";
 import { useEffect, useState } from "react";
 
 import { CartItem } from "@/components";
-import { IProduct } from "@/components/Product";
+import { IProduct } from "@/components/ProductItem";
 import { fetchCart, useFetchProductsByID } from "@/hooks";
 
 export interface  Products {

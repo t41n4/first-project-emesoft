@@ -1,8 +1,9 @@
-import { Product } from "@/components";
-import { IProduct } from "@/components/Product";
-import Catergory from "@/components/Category";
+import { Product, ProductLayout } from "@/components";
+import Content from "@/components/Content";
+import { IProduct } from "@/components/ProductItem";
+import SmoothScroll from "@/components/SmoothScroll";
 import { fetchProducts } from "@/constant/products";
-import { Box, Grid } from "@mui/material";
+import { Grid, Skeleton, Stack } from "@mui/material";
 import { useEffect, useState } from "react";
 
 const errorProduct: IProduct = {
@@ -15,8 +16,20 @@ const errorProduct: IProduct = {
   rating: Object(),
 };
 
-const Page =  () => {
+const SkeletonItem = () => {
+  return (
+    <Stack>
+      <Skeleton className="flex min-h-[40vh] w-full" variant="rectangular" />
+      <Skeleton className="min-h-[5vh]" variant="text" />
+      <Skeleton className="min-h-[5vh]" variant="text" />
+    </Stack>
+  );
+};
+
+const Page = () => {
   const [products, setProducts] = useState<Array<IProduct>>([]);
+
+  const [isLoading, setIsLoading] = useState<boolean>(true);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -24,6 +37,7 @@ const Page =  () => {
         const data = await fetchProducts();
         console.log("data: ", data);
         setProducts(data);
+        setIsLoading(!data);
       } catch (error) {
         // Handle any errors here
         console.error("Error fetching data:", error);
@@ -34,15 +48,25 @@ const Page =  () => {
   }, []);
 
   return (
-    <Box className="flex flex-row p-2 w-full justify-between">
-      {/* <Catergory /> */}
-      <Grid container columns={{ xs: 12 }} spacing={1}>
-        {products.map((product: IProduct, index: any) => (
-          <Product key={index} {...product} />
-        ))}
-        <Product {...errorProduct} />
-      </Grid>
-    </Box>
+    <div className="p-5">
+      {isLoading ? (
+        <ProductLayout>
+          {[...Array(20)].map((_, index) => (
+            <Grid item key={index}>
+              <SkeletonItem />
+            </Grid>
+          ))}
+        </ProductLayout>
+      ) : (
+        <ProductLayout>
+          {products.map((product: IProduct, index: any) => (
+            <Grid item className="">
+              <Product key={index} {...product} />
+            </Grid>
+          ))}
+        </ProductLayout>
+      )}
+    </div>
   );
 };
 
