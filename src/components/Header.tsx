@@ -4,6 +4,7 @@ import { navLinks } from "@/constant";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
+
 function Header() {
   const pathname = usePathname();
   return (
@@ -18,11 +19,13 @@ function Header() {
         />
       </div>
 
-      <div className="TopBar Site_Title uppercase">home page</div>
+      <div className="uppercase">home page</div>
 
-      <div className="TopBar Site_Navigation flex flex-row gap-2 h-full">
+      <div className="Navigation_Bar flex flex-row gap-2 h-full">
         {navLinks.map((link) => {
           const isActive = pathname === link.route;
+          console.log("pathname: ", pathname);
+
           return (
             <Link
               href={link.route}

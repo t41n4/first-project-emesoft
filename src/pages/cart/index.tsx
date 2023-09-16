@@ -4,12 +4,11 @@ import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
 import { useEffect, useState } from "react";
 
-import { CartItem } from "@/app/components";
-import { IProduct } from "@/app/components/Product";
-import { useFetchProducts } from "@/hooks";
-import { fetchCart } from "../../../hooks/useCartData";
+import { CartItem } from "@/components";
+import { IProduct } from "@/components/Product";
+import { fetchCart, useFetchProductsByID } from "@/hooks";
 
-export interface Products {
+export interface  Products {
   id: number;
   name: string;
   price: number;
@@ -32,9 +31,9 @@ interface MyComponentProps {
   initialData: string[]; // Define the prop with an initial array of strings
 }
 
-const Cart = () => {
+const Cart =  () => {
   const [cartData, setCartData] = useState([]);
-  const [productData, setProductData] = useState([]);
+  const [productData, setProductData] = useState<Array<IProduct>>([]);
 
   // Call api cart
   const callApiCart = async () => {
