@@ -1,14 +1,31 @@
-import React, { useEffect, useState } from "react";
+import { useProductContext } from "@/context/ProductContext";
 import List from "@mui/material/List";
 import ListItemButton from "@mui/material/ListItemButton";
 import ListItemText from "@mui/material/ListItemText";
 import Typography from "@mui/material/Typography";
+import React, { useEffect, useState } from "react";
 
 // Define your CategoryItem component
 const CategoryItem = ({ category }: { category: string }) => {
   const [active, setActive] = React.useState(false);
+  const { filterProductsByCategory, selectedCategory } = useProductContext();
 
   const handleClick = () => {
+    if (active) {
+      // remove current category from selectedCategory
+      console.log(
+        "newSelectedCategory: ",
+        selectedCategory.filter((item: string) => item !== category)
+      );
+
+      filterProductsByCategory(
+        selectedCategory.filter((item: string) => item !== category)
+      );
+    } else {
+      // add current category to selectedCategory
+      // console.log("newSelectedCategory: ", [...selectedCategory, category]);
+      filterProductsByCategory([...selectedCategory, category]);
+    }
     setActive(!active);
   };
 
@@ -16,7 +33,7 @@ const CategoryItem = ({ category }: { category: string }) => {
     <List disablePadding>
       <ListItemButton
         onClick={handleClick}
-        className={`${active ? "bg-gray-500" : "bg-none"} hover:bg-[#e4e6e7]`}
+        className={`${active ? "bg-gray-500" : "bg-none"}`}
       >
         <ListItemText primary={category} className="uppercase" />
       </ListItemButton>

@@ -7,6 +7,7 @@ import { Backdrop, CircularProgress } from "@mui/material";
 import type { AppProps } from "next/app";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
+import { ProductProvider } from "../context/ProductContext";
 
 function Loading() {
   const router = useRouter();
@@ -45,13 +46,15 @@ function Loading() {
 export default function App({ Component, pageProps }: AppProps) {
   return (
     <main className="pt-[3.5rem] ">
-      <CartProvider>
-        <FloatingCartButton />
-        <Loading />
-        <Header />
-        <Component {...pageProps} />;
-        <Footer />
-      </CartProvider>
+      <ProductProvider>
+        <CartProvider>
+          <FloatingCartButton />
+          <Loading />
+          <Header />
+          <Component {...pageProps} />;
+          <Footer />
+        </CartProvider>
+      </ProductProvider>
     </main>
   );
 }
