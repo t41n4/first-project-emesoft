@@ -6,11 +6,14 @@ import {
 import { styled } from "@mui/system";
 import RemoveIcon from "@mui/icons-material/Remove";
 import AddIcon from "@mui/icons-material/Add";
-
+import { useCart } from "@/context";
+import { IInputQuantity } from "@/common/types";
 const CustomNumberInput = React.forwardRef(function CustomNumberInput(
   props: NumberInputProps,
   ref: React.ForwardedRef<HTMLDivElement>
 ) {
+  const { cart, addToCart, removeFromCart, updateQuantytiCart } = useCart();
+  const { id } = props;
   return (
     <NumberInput
       slots={{
@@ -30,12 +33,24 @@ const CustomNumberInput = React.forwardRef(function CustomNumberInput(
       }}
       {...props}
       ref={ref}
+      onChange={(event, value) => {
+        updateQuantytiCart(value, id);
+      }}
     />
   );
 });
 
-export default function QuantityInput() {
-  return <CustomNumberInput aria-label="Quantity Input" min={1} value={1} />;
+export default function QuantityInput(props: IInputQuantity) {
+  const { value, id } = props;
+
+  return (
+    <CustomNumberInput
+      aria-label="Quantity Input"
+      min={1}
+      value={value}
+      id={id}
+    />
+  );
 }
 
 const blue = {
@@ -81,7 +96,7 @@ const StyledInput = styled("input")(
   font-weight: 400;
   line-height: 1.375;
   color: ${theme.palette.mode === "dark" ? grey[300] : grey[900]};
-  background: ${theme.palette.mode === "dark" ? grey[900] : "#fff"};
+  background: #E4E6E7;
   border: 1px solid #000;
   margin: 0;
   padding: 10px 10px;

@@ -1,15 +1,22 @@
 // Define the type for your cart item
-export interface CartItem {
+export interface ICartItem {
   id: number;
+  image: string;
   name: string;
   price: number;
+  quantity:number;
+}
+export interface IInputQuantity{
+  id:number,
+  value:number
 }
 
 // Define the shape of your context
 export interface CartContextType {
-  cart: CartItem[];
-  addToCart: (item: CartItem) => void;
+  cart: ICartItem[];
+  addToCart: (item: ICartItem) => void;
   removeFromCart: (id: number) => void;
+  updateQuantytiCart: (id: IInputQuantity) => void;
 }
 
 export interface ICategories {

@@ -1,10 +1,12 @@
 import { CartItem, CartLayout } from "@/components";
-import { Grid, Button, Stack } from "@mui/material";
+import { useCart } from "@/context";
 
 const CartPage = () => {
+  const { cart, addToCart, removeFromCart } = useCart();
+  console.log("test cart", cart);
   return (
     <CartLayout>
-      <CartItem />
+      <CartItem dataCart={cart} />
     </CartLayout>
   );
 };

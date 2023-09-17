@@ -11,8 +11,6 @@ import {
   Typography,
 } from "@mui/material";
 
-
-
 export default function Product(props: IProduct) {
   const { cart, addToCart, removeFromCart } = useCart();
   return (
@@ -39,11 +37,15 @@ export default function Product(props: IProduct) {
         <Button
           className="bg-blue-500 hover:bg-blue-700 mb-3"
           variant="contained"
-          onClick={() => addToCart({
-            id: props.id,
-            name: props.title,
-            price: props.price,
-          })}
+          onClick={() =>
+            addToCart({
+              id: props.id,
+              image: props.image,
+              name: props.title,
+              price: props.price,
+              quantity: 1,
+            })
+          }
         >
           Add to Cart
         </Button>

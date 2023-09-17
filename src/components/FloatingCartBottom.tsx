@@ -2,7 +2,6 @@ import { useCart } from "@/context";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import Box from "@mui/material/Box";
 import Fab from "@mui/material/Fab";
-
 export default function FloatingCartButton() {
   const { cart } = useCart();
 
