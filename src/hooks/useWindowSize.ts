@@ -1,9 +1,5 @@
+import { IWindowSize } from "@/common";
 import { useEffect, useState } from "react";
-
-export interface IWindowSize {
-  width: number | 0;
-  height: number | 0;
-}
 
 const useWindowSize = (): IWindowSize => {
   const [windowDimensions, setWindowDimensions] = useState<IWindowSize>({

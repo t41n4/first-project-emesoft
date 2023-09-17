@@ -1,5 +1,9 @@
+"use client";
+
 import { Footer, Header } from "@/components";
+import FloatingCartButton from "@/components/FloatingCartBottom";
 import SmoothScroll from "@/components/SmoothScroll";
+import { CartProvider } from "@/context/CartContext";
 import "@/styles/globals.css";
 import { Backdrop, CircularProgress } from "@mui/material";
 import type { AppProps } from "next/app";
@@ -43,12 +47,13 @@ function Loading() {
 export default function App({ Component, pageProps }: AppProps) {
   return (
     <div className="pt-[3.5rem] ">
-      <Loading />
-      <Header />
-      <SmoothScroll>
+      <CartProvider>
+        <FloatingCartButton />
+        <Loading />
+        <Header />
         <Component {...pageProps} />;
-      </SmoothScroll>
-      <Footer />
+        <Footer />
+      </CartProvider>
     </div>
   );
 }

@@ -2,10 +2,7 @@
 
 import { Box, Grid } from "@mui/material";
 import React from "react";
-
-interface ProductLayout {
-  children: React.ReactNode;
-}
+import { ProductLayout } from "@/common";
 
 const ProductLayout: React.FC<ProductLayout> = ({ children }) => (
   <Box className="flex flex-row p-2 w-full justify-between">

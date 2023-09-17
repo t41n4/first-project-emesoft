@@ -4,9 +4,7 @@ export async function useFetchProducts() {
     if (!response.ok) {
       throw new Error("Lỗi khi tải dữ liệu từ API.");
     }
-
     const data = await response.json();
-    console.log(data);
     return data;
   } catch (error) {
     console.error("Lỗi:", error);
@@ -20,9 +18,7 @@ export async function useFetchProductsByID(id: number) {
     if (!response.ok) {
       throw new Error("Lỗi khi tải dữ liệu từ API.");
     }
-
     const data = await response.json();
-    console.log(data);
     return data;
   } catch (error) {
     console.error("Lỗi:", error);
