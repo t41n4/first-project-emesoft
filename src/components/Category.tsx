@@ -17,9 +17,7 @@ import {
   useState,
 } from "react";
 
-export interface ICategories {
-  [index: number]: string;
-}
+
 
 const Catergory = async () => {
   const [data, setData] = useState([]);

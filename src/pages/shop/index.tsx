@@ -1,8 +1,9 @@
+import { IProduct } from "@/common";
 import { Product, ProductLayout } from "@/components";
-import Content from "@/components/Content";
-import { IProduct } from "@/components/ProductItem";
+import FloatingCartButton from "@/components/FloatingCartBottom";
 import SmoothScroll from "@/components/SmoothScroll";
 import { fetchProducts } from "@/constant/products";
+import { CartProvider } from "@/context/CartContext";
 import { Grid, Skeleton, Stack } from "@mui/material";
 import { useEffect, useState } from "react";
 
@@ -48,25 +49,27 @@ const Page = () => {
   }, []);
 
   return (
-    <div className="p-5">
-      {isLoading ? (
-        <ProductLayout>
-          {[...Array(20)].map((_, index) => (
-            <Grid item key={index}>
-              <SkeletonItem />
-            </Grid>
-          ))}
-        </ProductLayout>
-      ) : (
-        <ProductLayout>
-          {products.map((product: IProduct, index: any) => (
-            <Grid item className="">
-              <Product key={index} {...product} />
-            </Grid>
-          ))}
-        </ProductLayout>
-      )}
-    </div>
+    <SmoothScroll>
+      <div className="p-5">
+        {isLoading ? (
+          <ProductLayout>
+            {[...Array(20)].map((_, index) => (
+              <Grid item key={index}>
+                <SkeletonItem />
+              </Grid>
+            ))}
+          </ProductLayout>
+        ) : (
+          <ProductLayout>
+            {products.map((product: IProduct, index: any) => (
+              <Grid item className="">
+                <Product key={index} {...product} />
+              </Grid>
+            ))}
+          </ProductLayout>
+        )}
+      </div>
+    </SmoothScroll>
   );
 };
 

@@ -5,58 +5,30 @@ import Grid from "@mui/material/Grid";
 import { useEffect, useState } from "react";
 
 import { CartItem } from "@/components";
-import { IProduct } from "@/components/ProductItem";
+
 import { fetchCart, useFetchProductsByID } from "@/hooks";
+import { IProduct, IProductItem } from "@/common";
 
-export interface  Products {
-  id: number;
-  name: string;
-  price: number;
-  image: string;
-}
-
-interface ICart {
-  id: number;
-  userId: number;
-  date: string; // Assuming date is a string in ISO 8601 format (e.g., "2020-10-10")
-  products: IProductItem[];
-}
-
-interface IProductItem {
-  productId: number;
-  quantity: number;
-}
-
-interface MyComponentProps {
-  initialData: string[]; // Define the prop with an initial array of strings
-}
-
-const Cart =  () => {
-  const [cartData, setCartData] = useState([]);
+const Cart = () => {
   const [productData, setProductData] = useState<Array<IProduct>>([]);
 
   // Call api cart
   const callApiCart = async () => {
     const cartData = await fetchCart();
-    if (cartData) {
-      setCartData(cartData);
-    }
-  };
+    console.log("cartData: ", cartData);
 
-  const callProduct = async () => {
-    // const productData = await fetchProductsByID();
     if (cartData) {
+      const newData: any[] | ((prevState: IProduct[]) => IProduct[]) = [];
       cartData.forEach(async (item: IProductItem) => {
         const productItem = await useFetchProductsByID(item.productId);
-        const newData = [...productData, productItem];
-        setProductData(newData);
+        newData.push(productItem);
       });
+      setProductData(newData);
     }
   };
 
   useEffect(() => {
     callApiCart();
-    callProduct();
   }, []);
 
   return (
@@ -65,9 +37,13 @@ const Cart =  () => {
         <Grid xs={9} container>
           <Box sx={{ flexGrow: 1, borderBottom: "1px solid #000" }}>
             <Grid container>
-              {productData.map((product: IProduct, index: number) => (
-                <CartItem key={index} {...product}></CartItem>
-              ))}
+              {productData ? (
+                productData.map((product: IProduct, index: number) => (
+                  <CartItem key={index} {...product} />
+                ))
+              ) : (
+                <>Nothing</>
+              )}
             </Grid>
           </Box>
         </Grid>

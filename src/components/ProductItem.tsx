@@ -1,40 +1,26 @@
 "use client";
 
+import { IProduct } from "@/common";
+import { useCart } from "@/context";
 import {
   Button,
   Card,
   CardActions,
   CardContent,
   CardMedia,
-  Grid,
   Typography,
 } from "@mui/material";
 
-export interface IProduct {
-  id: number;
-  title: string;
-  price: number;
-  image: string;
-  description: string;
-  category: string;
-  rating: object;
-}
 
-export default function Product({
-  id,
-  title,
-  price,
-  image,
-  description,
-  category,
-  rating,
-}: IProduct) {
+
+export default function Product(props: IProduct) {
+  const { cart, addToCart, removeFromCart } = useCart();
   return (
     <Card className="flex flex-col justify-between items-center h-full  border border-black">
       <CardMedia
         component="img"
-        className="h-[30vh] object-contain p-5"
-        image={image}
+        className="min-h-[30vh] object-contain p-5"
+        image={props.image}
       />
 
       <CardContent>
@@ -42,10 +28,10 @@ export default function Product({
           gutterBottom
           className="text-sm text-start overflow-hidden line-clamp-3"
         >
-          {title}
+          {props.title}
         </Typography>
         <Typography variant="body1" color="text.secondary">
-          {price}$
+          {props.price}$
         </Typography>
       </CardContent>
 
@@ -53,6 +39,11 @@ export default function Product({
         <Button
           className="bg-blue-500 hover:bg-blue-700 mb-3"
           variant="contained"
+          onClick={() => addToCart({
+            id: props.id,
+            name: props.title,
+            price: props.price,
+          })}
         >
           Add to Cart
         </Button>
