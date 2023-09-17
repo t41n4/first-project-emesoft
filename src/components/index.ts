@@ -6,4 +6,19 @@ import CartItem from "./cart/CartItem";
 import ProductLayout from "./shop/ProductLayout";
 import FloatingCartButton from "./shared/FloatingCartBottom";
 
-export { Header, Footer, Product, CartItem, ProductLayout, FloatingCartButton };
+import CartLayout from "./CartLayout";
+import QuantityInput from "./QuantityInput";
+import CartInfo from "./CartInfo";
+import CartEmpty from "./CartEmpty";
+export {
+  Header,
+  Footer,
+  Product,
+  CartItem,
+  ProductLayout,
+  CartLayout,
+  QuantityInput,
+  CartInfo,
+  CartEmpty,
+  FloatingCartButton,
+};

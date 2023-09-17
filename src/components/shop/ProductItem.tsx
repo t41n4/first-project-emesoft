@@ -40,8 +40,10 @@ export default function Product(props: IProduct) {
           onClick={() =>
             addToCart({
               id: props.id,
+              image: props.image,
               name: props.title,
               price: props.price,
+              quantity: 1,
             })
           }
         >
