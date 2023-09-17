@@ -23,7 +23,7 @@ function Header() {
       <div className="Navigation_Bar flex flex-row h-full border-x-black border">
         {navLinks.map((link) => {
           const isActive = pathname === link.route;
-          console.log("pathname: ", pathname);
+          // console.log("pathname: ", pathname);
 
           return (
             <Link
