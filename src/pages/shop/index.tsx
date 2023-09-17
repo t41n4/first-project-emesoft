@@ -1,9 +1,7 @@
 import { IProduct } from "@/common";
 import { Product, ProductLayout } from "@/components";
-import FloatingCartButton from "@/components/FloatingCartBottom";
-import SmoothScroll from "@/components/SmoothScroll";
+import CategoryFilter from "@/components/shop/CategoryFilter";
 import { fetchProducts } from "@/constant/products";
-import { CartProvider } from "@/context/CartContext";
 import { Grid, Skeleton, Stack } from "@mui/material";
 import { useEffect, useState } from "react";
 
@@ -49,8 +47,13 @@ const Page = () => {
   }, []);
 
   return (
-    <SmoothScroll>
-      <div className="p-5">
+    <div className="p-5 flex flew-row">
+      <div className="Category">
+        <div className="p-2 sticky h-screen top-[4.75rem] left-[3.5rem]">
+          <CategoryFilter></CategoryFilter>
+        </div>
+      </div>
+      <div className="Content flex w-full">
         {isLoading ? (
           <ProductLayout>
             {[...Array(20)].map((_, index) => (
@@ -62,14 +65,14 @@ const Page = () => {
         ) : (
           <ProductLayout>
             {products.map((product: IProduct, index: any) => (
-              <Grid item className="">
-                <Product key={index} {...product} />
+              <Grid item key={index}>
+                <Product {...product} />
               </Grid>
             ))}
           </ProductLayout>
         )}
       </div>
-    </SmoothScroll>
+    </div>
   );
 };
 

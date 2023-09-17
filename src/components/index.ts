@@ -1,8 +1,9 @@
-import Header from "./Header";
-import VerticalTabs from "./VerticalTabs";
-import Footer from "./Footer";
-import Product from "./ProductItem";
-import CartItem from "./CartItem";
-import ProductLayout from "./ProductLayout";
+import Header from "./shared/Header";
 
-export { Header, Footer, VerticalTabs, Product, CartItem, ProductLayout };
+import Footer from "./shared/Footer";
+import Product from "./shop/ProductItem";
+import CartItem from "./cart/CartItem";
+import ProductLayout from "./shop/ProductLayout";
+import FloatingCartButton from "./shared/FloatingCartBottom";
+
+export { Header, Footer, Product, CartItem, ProductLayout, FloatingCartButton };

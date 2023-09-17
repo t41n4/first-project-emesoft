@@ -11,10 +11,8 @@ import {
   Typography,
 } from "@mui/material";
 
-
-
 export default function Product(props: IProduct) {
-  const { cart, addToCart, removeFromCart } = useCart();
+  const { addToCart } = useCart();
   return (
     <Card className="flex flex-col justify-between items-center h-full  border border-black">
       <CardMedia
@@ -39,11 +37,13 @@ export default function Product(props: IProduct) {
         <Button
           className="bg-blue-500 hover:bg-blue-700 mb-3"
           variant="contained"
-          onClick={() => addToCart({
-            id: props.id,
-            name: props.title,
-            price: props.price,
-          })}
+          onClick={() =>
+            addToCart({
+              id: props.id,
+              name: props.title,
+              price: props.price,
+            })
+          }
         >
           Add to Cart
         </Button>
@@ -51,8 +51,3 @@ export default function Product(props: IProduct) {
     </Card>
   );
 }
-// overflow: "hidden",
-//             textOverflow: "ellipsis",
-//             display: "-webkit-box",
-//             WebkitLineClamp: "2",
-//             WebkitBoxOrient: "vertical",

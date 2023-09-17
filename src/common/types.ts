@@ -13,10 +13,10 @@ export interface CartContextType {
 }
 
 export interface ICategories {
-  [index: number]: string;
+  [x: string]: any;
 }
 
-export interface ProductLayout {
+export interface IProductLayout {
   children: React.ReactNode;
 }
 
@@ -25,7 +25,7 @@ export interface IWindowSize {
   height: number | 0;
 }
 
-export interface Products {
+export interface IProducts {
   id: number;
   name: string;
   price: number;
