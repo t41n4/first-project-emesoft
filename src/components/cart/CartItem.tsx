@@ -25,13 +25,23 @@ const CartItem = (props: ICartItem) => {
               <Grid item xs={2} sx={{ padding: "16px" }}>
                 <CardMedia
                   component="img"
-                  sx={{ width: "168px", height: "225px", objectFit: "contain" }}
+                  sx={{ objectFit: "contain" }}
                   // className="w-20% h-30% object-contain"
                   image={data.image}
                   title="green iguana"
+                  className="p-5 bg-white"
                 />
               </Grid>
-              <Grid item xs={7} sx={{ padding: "16px" }}>
+              <Grid
+                item
+                xs={7}
+                sx={{
+                  padding: "16px",
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
+                }}
+              >
                 <Typography variant="h5">{data.name}</Typography>
               </Grid>
               <Grid
@@ -55,10 +65,17 @@ const CartItem = (props: ICartItem) => {
                 </Grid>
                 <Grid item>
                   <Typography variant="h5">
-                    $ {data.price * data.quantity}
+                    {data.price * data.quantity === 0
+                      ? "00.00 $"
+                      : new Intl.NumberFormat("en-US", {
+                          style: "currency",
+                          currency: "USD",
+                          minimumFractionDigits: 2,
+                        }).format(data.price * data.quantity)}
                   </Typography>
                 </Grid>
               </Grid>
+
               <Grid item xs={1} sx={{ display: "flex", justifyContent: "end" }}>
                 <QuantityInput value={data.quantity} id={data.id} />
               </Grid>

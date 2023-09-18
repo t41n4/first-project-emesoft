@@ -76,6 +76,10 @@ const grey = {
   900: "#24292f",
 };
 
+const black = {
+  100: "#000000",
+};
+
 const StyledInputRoot = styled("div")(
   ({ theme }) => `
   height: 100%;
@@ -130,7 +134,7 @@ const StyledButton = styled("button")(
   box-sizing: border-box;
   line-height: 1.5;
   border: 1px solid black;
-  color: ${theme.palette.mode === "dark" ? blue[300] : blue[600]};
+  color: ${theme.palette.mode === "dark" ? blue[300] : black[100]};
   background: transparent;
   width: 4rem;
   height: 4rem;

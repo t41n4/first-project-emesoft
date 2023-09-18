@@ -1,16 +1,17 @@
 import Header from "./shared/Header";
-
 import Footer from "./shared/Footer";
+
 import Product from "./shop/ProductItem";
-import CartItem from "./cart/CartItem";
 import ProductLayout from "./shop/ProductLayout";
 import FloatingCartButton from "./shared/FloatingCartBottom";
 
-import CartLayout from "./CartLayout";
-import QuantityInput from "./QuantityInput";
-import CartInfo from "./CartInfo";
-import CartEmpty from "./CartEmpty";
-import SkeletonCart from "./SkeletonCart";
+import CartLayout from "./cart/CartLayout";
+import QuantityInput from "./cart/QuantityInput";
+import CartInfo from "./cart/CartInfo";
+import CartEmpty from "./cart/CartEmpty";
+import SkeletonCart from "./cart/SkeletonCart";
+import CartItem from "./cart/CartItem";
+
 export {
   Header,
   Footer,
@@ -20,6 +21,7 @@ export {
   CartLayout,
   QuantityInput,
   CartInfo,
-  CartEmpty,SkeletonCart,
+  CartEmpty,
+  SkeletonCart,
   FloatingCartButton,
 };

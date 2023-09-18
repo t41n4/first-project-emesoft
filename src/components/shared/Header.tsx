@@ -19,7 +19,7 @@ function Header() {
       </div>
 
       <div className="uppercase">
-        {pathname.slice(1) === "" ? pathname.slice(1) : "Home"}
+        {pathname.slice(1) === "" ? "Home" : pathname.slice(1)}
       </div>
 
       <div className="Navigation_Bar flex flex-row h-full border-x-black border">
