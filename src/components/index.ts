@@ -11,7 +11,6 @@ import QuantityInput from "./QuantityInput";
 import CartInfo from "./CartInfo";
 import CartEmpty from "./CartEmpty";
 import SkeletonCart from "./SkeletonCart";
-import SkeletonCartInfo from "./SkeletonCartInfo";
 export {
   Header,
   Footer,
@@ -21,6 +20,6 @@ export {
   CartLayout,
   QuantityInput,
   CartInfo,
-  CartEmpty,SkeletonCart,SkeletonCartInfo,
+  CartEmpty,SkeletonCart,
   FloatingCartButton,
 };
