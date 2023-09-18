@@ -51,7 +51,7 @@ export default function App({ Component, pageProps }: AppProps) {
           <FloatingCartButton />
           <Loading />
           <Header />
-          <Component {...pageProps} />;
+          <Component {...pageProps} />
           <Footer />
         </CartProvider>
       </ProductProvider>

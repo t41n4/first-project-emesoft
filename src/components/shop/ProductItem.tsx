@@ -11,10 +11,15 @@ import {
   Typography,
 } from "@mui/material";
 
+export const scaleAnimation =
+  "transform transition hover:scale-105  duration-500 ease-in-out";
+
 export default function Product(props: IProduct) {
   const { addToCart } = useCart();
   return (
-    <Card className="flex flex-col justify-between items-center h-full border border-black">
+    <Card
+      className={`flex flex-col justify-between items-center h-full border border-black hover:opacity-80 ${scaleAnimation}`}
+    >
       <CardMedia
         component="img"
         className="h-[50%] object-contain p-5 object-center"

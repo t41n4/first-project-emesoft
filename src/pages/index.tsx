@@ -2,6 +2,7 @@ import Image from "next/image";
 import { Inter } from "next/font/google";
 import { welcomeData } from "@/constant";
 import { Typography } from "@mui/material";
+import { scaleAnimation } from "@/components/shop/ProductItem";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -16,7 +17,7 @@ export default function Home() {
           Lorem ipsum dolor sit amet consectetur adipisicing elit.
         </Typography>
 
-        <picture className="border border-black">
+        <picture className={`border border-black ${scaleAnimation}`}>
           <img className="w-full h-full" src={welcomeData[0].image} alt="" />
         </picture>
 
@@ -30,7 +31,7 @@ export default function Home() {
 
       <div className="grid grid-cols-3 grid-rows-1 gap-3 pt-5 ">
         {welcomeData.slice(1).map((item) => (
-          <div className="relative h-[70vh] w-[30vw]">
+          <div className={`relative h-[70vh] w-[30vw] ${scaleAnimation}`}>
             <span className="absolute h-full w-full flex flex-col justify-center items-center z-[100]">
               <Typography variant="h4"> {item.title}</Typography>
             </span>

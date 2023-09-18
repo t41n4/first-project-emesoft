@@ -12,7 +12,7 @@ const CartLayout: React.FC<ICartLayout> = ({ children }) => {
     setIsLoading(true);
   }, 1000);
   return (
-    <Box>
+    <Box className="min-h-screen">
       <Grid container sx={{ borderBottom: "1px solid #000" }}>
         {/* Title */}
         <Grid item xs={12} mt={2} sx={{ borderBottom: "1px solid #000" }}>
@@ -24,13 +24,12 @@ const CartLayout: React.FC<ICartLayout> = ({ children }) => {
             Your Cart
           </Typography>
         </Grid>
-        {/* Cart item */}
         {loading ? (
           <>
             <Grid item xs={12} md={9}>
               {children}
             </Grid>
-            {/* Cart info */}
+
             <CartInfo />
           </>
         ) : (
