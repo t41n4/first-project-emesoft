@@ -21,7 +21,7 @@ const CartItem = (props: ICartItem) => {
       ) : (
         dataCart.map((data: ICartItem, index: number) => {
           return (
-            <Grid container sx={{ borderBottom: "1px solid #000" }}>
+            <Grid container sx={{ borderBottom: "1px solid #000" }} key={index}>
               <Grid item xs={2} sx={{ padding: "16px" }}>
                 <CardMedia
                   sx={{ height: "225px", width: "168px", objectFit: "contain" }}
