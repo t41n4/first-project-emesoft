@@ -1,7 +1,7 @@
 "use client";
-import { Box, Grid, Typography, Button, Checkbox } from "@mui/material";
-import React from "react";
 import { CartInfo, SkeletonCart } from "@/components";
+import { Box, Grid, Typography } from "@mui/material";
+import React from "react";
 interface ICartLayout {
   children: React.ReactNode;
 }
@@ -16,8 +16,11 @@ const CartLayout: React.FC<ICartLayout> = ({ children }) => {
       <Grid container sx={{ borderBottom: "1px solid #000" }}>
         {/* Title */}
         <Grid item xs={12} mt={2} sx={{ borderBottom: "1px solid #000" }}>
-          <Typography variant="h5" sx={{ marginLeft: "16px" }}>
-            {" "}
+          <Typography
+            className="text-left flex "
+            variant="h5"
+            sx={{ marginLeft: "16px" }}
+          >
             Your Cart
           </Typography>
         </Grid>

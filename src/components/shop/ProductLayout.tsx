@@ -1,9 +1,8 @@
 "use client";
 
+import { IProductLayout } from "@/common";
 import { Box, Grid } from "@mui/material";
 import React from "react";
-import { IProductLayout } from "@/common";
-import CategoryFilter from "./CategoryFilter";
 import SmoothScroll from "../framer/SmoothScroll";
 
 const ProductLayout: React.FC<IProductLayout> = ({ children }) => (

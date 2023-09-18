@@ -39,7 +39,7 @@ const SmoothScroll: React.FC<{ children: React.ReactNode }> = ({
       <motion.div
         ref={scrollRef}
         style={{ y: spring }} // translateY of scroll container using negative scroll value
-        className="scroll-container flex w-full h-full"
+        className="scroll-container flex w-full h-1/2"
       >
         {children}
       </motion.div>

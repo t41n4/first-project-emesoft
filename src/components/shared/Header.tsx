@@ -31,8 +31,8 @@ function Header() {
             <Link
               href={link.route}
               key={link.id}
-              className={`uppercase h-full flex items-center p-3 ${
-                isActive && "bg-black text-white"
+              className={`uppercase h-full flex items-center p-3 hover:bg-gray-800 hover:text-white ${
+                isActive && "bg-black text-white "
               }`}
             >
               {link.title}
