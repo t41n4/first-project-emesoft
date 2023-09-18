@@ -1,14 +1,13 @@
 "use client";
 
-import { Footer, Header } from "@/components";
-import FloatingCartButton from "@/components/FloatingCartBottom";
-import SmoothScroll from "@/components/SmoothScroll";
+import { FloatingCartButton, Footer, Header } from "@/components";
 import { CartProvider } from "@/context/CartContext";
 import "@/styles/globals.css";
 import { Backdrop, CircularProgress } from "@mui/material";
 import type { AppProps } from "next/app";
 import { useRouter } from "next/router";
-import { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
+import { ProductProvider } from "../context/ProductContext";
 
 function Loading() {
   const router = useRouter();
@@ -46,14 +45,16 @@ function Loading() {
 
 export default function App({ Component, pageProps }: AppProps) {
   return (
-    <div className="pt-[3.5rem] ">
-      <CartProvider>
-        <FloatingCartButton />
-        <Loading />
-        <Header />
-        <Component {...pageProps} />;
-        <Footer />
-      </CartProvider>
-    </div>
+    <main className="pt-[3.5rem] ">
+      <ProductProvider>
+        <CartProvider>
+          <FloatingCartButton />
+          <Loading />
+          <Header />
+          <Component {...pageProps} />;
+          <Footer />
+        </CartProvider>
+      </ProductProvider>
+    </main>
   );
 }
