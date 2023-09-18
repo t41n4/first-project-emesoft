@@ -1,5 +1,6 @@
 import { IProduct } from "@/common";
-import { fetchProducts } from "@/constant";
+import { useFetchProducts } from "@/hooks";
+import { data } from "autoprefixer";
 import {
   ReactNode,
   createContext,
@@ -13,7 +14,7 @@ interface ProductContextType {
   products: IProduct[];
   filteredProducts: IProduct[];
   selectedCategory: any;
-  filterProductsByCategory: (category: string) => void;
+  filterProductsByCategory: (category: any) => void;
 }
 
 // Create the context
@@ -27,19 +28,10 @@ export function ProductProvider({ children }: { children: ReactNode }) {
   const [filteredProducts, setFilteredProducts] = useState<Array<IProduct>>([]);
 
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const data = await fetchProducts();
-        console.log("data: ", data);
-        setProducts(data);
-        setFilteredProducts(data);
-      } catch (error) {
-        // Handle any errors here
-        console.error("Error fetching data:", error);
-      }
-    };
-
-    fetchData();
+    useFetchProducts().then((res) => {
+      setProducts(res);
+      setFilteredProducts(res);
+    });
   }, []);
   // Your product data (replace with your actual product data)
 

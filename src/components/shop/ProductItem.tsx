@@ -14,10 +14,10 @@ import {
 export default function Product(props: IProduct) {
   const { addToCart } = useCart();
   return (
-    <Card className="flex flex-col justify-between items-center h-full  border border-black">
+    <Card className="flex flex-col justify-between items-center  h-[60vh] border border-black">
       <CardMedia
         component="img"
-        className="min-h-[30vh] object-contain p-5"
+        className="min-h-[30vh] object-contain p-5 object-center"
         image={props.image}
       />
 
@@ -35,17 +35,17 @@ export default function Product(props: IProduct) {
 
       <CardActions>
         <Button
-          className="bg-blue-500 hover:bg-blue-700 mb-3"
+          className="bg-blue-500 hover:bg-blue-700 mb-3 font-sans-semibold"
           variant="contained"
-          onClick={() =>
+          onClick={() => {
             addToCart({
               id: props.id,
               image: props.image,
               name: props.title,
               price: props.price,
               quantity: 1,
-            })
-          }
+            });
+          }}
         >
           Add to Cart
         </Button>

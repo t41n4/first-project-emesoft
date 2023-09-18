@@ -6,18 +6,13 @@ import Typography from "@mui/material/Typography";
 import React, { useEffect, useState } from "react";
 
 // Define your CategoryItem component
-const CategoryItem = ({ category }: { category: string }) => {
+const CategoryItem = ({ category }: { category: any }) => {
   const [active, setActive] = React.useState(false);
   const { filterProductsByCategory, selectedCategory } = useProductContext();
 
   const handleClick = () => {
     if (active) {
       // remove current category from selectedCategory
-      console.log(
-        "newSelectedCategory: ",
-        selectedCategory.filter((item: string) => item !== category)
-      );
-
       filterProductsByCategory(
         selectedCategory.filter((item: string) => item !== category)
       );
@@ -27,6 +22,8 @@ const CategoryItem = ({ category }: { category: string }) => {
       filterProductsByCategory([...selectedCategory, category]);
     }
     setActive(!active);
+    // scroll to top
+    window.scrollTo(0, 0);
   };
 
   return (
@@ -61,7 +58,7 @@ function CategoryFilter() {
   return (
     <div className="border border-black rounded-[2%] p-6 min-w-[10vw]">
       <Typography variant="h5">Category</Typography>
-      {categories.map((category: string, index: number) => (
+      {categories.map((category: any, index: number) => (
         <CategoryItem key={index} category={category} />
       ))}
     </div>
