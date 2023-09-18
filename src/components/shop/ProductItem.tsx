@@ -14,10 +14,10 @@ import {
 export default function Product(props: IProduct) {
   const { addToCart } = useCart();
   return (
-    <Card className="flex flex-col justify-between items-center  h-[60vh] border border-black">
+    <Card className="flex flex-col justify-between items-center h-full border border-black">
       <CardMedia
         component="img"
-        className="min-h-[30vh] object-contain p-5 object-center"
+        className="h-[50%] object-contain p-5 object-center"
         image={props.image}
       />
 

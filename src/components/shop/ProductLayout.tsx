@@ -7,7 +7,7 @@ import CategoryFilter from "./CategoryFilter";
 import SmoothScroll from "../framer/SmoothScroll";
 
 const ProductLayout: React.FC<IProductLayout> = ({ children }) => (
-  <Box className="flex flex-row p-2 w-full justify-between">
+  <Box className="flex flex-row p-2 w-full justify-between ">
     <SmoothScroll>
       <Grid
         container

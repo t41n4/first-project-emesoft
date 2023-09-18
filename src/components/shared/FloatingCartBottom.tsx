@@ -8,6 +8,9 @@ export default function FloatingCartButton() {
   const { cart } = useCart();
   const router = useRouter();
 
+  // canculate total quantity in cart
+  const totalQuantity = cart.reduce((total, item) => total + item.quantity, 0);
+
   return (
     <>
       {cart.length > 0 && ( // Only show the button if the cart is not empty
@@ -19,7 +22,7 @@ export default function FloatingCartButton() {
               router.push("/cart");
             }}
           >
-            <span className="leading-[15px]">{cart.length}</span>
+            <span className="leading-[15px]">{totalQuantity}</span>
             <ShoppingCartIcon />
           </Fab>
         </Box>

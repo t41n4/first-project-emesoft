@@ -1,5 +1,5 @@
 import { CartContextType } from "@/common";
-import { ICartItem, IInputQuantity } from "@/common/types";
+import { ICartItem } from "@/common/types";
 import React, { createContext, useContext, useState } from "react";
 
 // Create the CartContext
@@ -10,23 +10,25 @@ export const CartContext = createContext<CartContextType | undefined>(
 // Create a provider component
 export const CartProvider: React.FC<any> = ({ children }) => {
   const [carts, setCart] = useState<ICartItem[]>([]);
-  console.log("cart: ", carts);
 
   const isItemExist = (item: ICartItem) =>
     carts.some((cart) => cart.id === item.id && cart.name === item.name);
 
   const addToCart = (item: ICartItem) => {
     if (isItemExist(item)) {
-      const update = carts.map((cart) => {
-        if (cart.id === item.id) {
-          cart.quantity += 1;
+      // update quantity
+      const cartClone = carts.map((cartItem) => {
+        if (cartItem.id === item.id) {
+          cartItem.quantity += 1;
         }
-        return cart;
+        return cartItem;
       });
+      setCart(cartClone);
     } else {
       setCart([...carts, item]);
     }
   };
+
   const updateQuantytiCart = (value: number, id: number) => {
     if (carts.length === 0) {
       console.log("mang rong");
@@ -48,7 +50,12 @@ export const CartProvider: React.FC<any> = ({ children }) => {
 
   return (
     <CartContext.Provider
-      value={{ cart: carts, addToCart, removeFromCart, updateQuantytiCart }}
+      value={{
+        cart: carts,
+        addToCart,
+        removeFromCart,
+        updateQuantytiCart,
+      }}
     >
       {children}
     </CartContext.Provider>

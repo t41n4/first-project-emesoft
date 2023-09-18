@@ -17,6 +17,7 @@ export interface CartContextType {
   addToCart: (item: ICartItem) => void;
   removeFromCart: (id: number) => void;
   updateQuantytiCart: (id: IInputQuantity) => void;
+  totalQuantity: number;
 }
 
 export interface ICategories {
