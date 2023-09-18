@@ -24,7 +24,9 @@ const CartItem = (props: ICartItem) => {
             <Grid container sx={{ borderBottom: "1px solid #000" }} key={index}>
               <Grid item xs={2} sx={{ padding: "16px" }}>
                 <CardMedia
-                  sx={{ height: "225px", width: "168px", objectFit: "contain" }}
+                  component="img"
+                  sx={{ width: "168px", height: "225px", objectFit: "contain" }}
+                  // className="w-20% h-30% object-contain"
                   image={data.image}
                   title="green iguana"
                 />
