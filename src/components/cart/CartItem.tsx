@@ -53,7 +53,7 @@ const CartItem = (props: ICartItem) => {
                 </Grid>
                 <Grid item>
                   <Typography variant="h5">
-                    {data.price * data.quantity} $
+                    $ {data.price * data.quantity}
                   </Typography>
                 </Grid>
               </Grid>

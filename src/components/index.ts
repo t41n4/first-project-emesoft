@@ -10,6 +10,7 @@ import CartLayout from "./CartLayout";
 import QuantityInput from "./QuantityInput";
 import CartInfo from "./CartInfo";
 import CartEmpty from "./CartEmpty";
+import SkeletonCart from "./SkeletonCart";
 export {
   Header,
   Footer,
@@ -19,6 +20,6 @@ export {
   CartLayout,
   QuantityInput,
   CartInfo,
-  CartEmpty,
+  CartEmpty,SkeletonCart,
   FloatingCartButton,
 };
