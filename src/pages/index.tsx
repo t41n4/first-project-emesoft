@@ -1,11 +1,10 @@
-import Image from "next/image";
 import { Inter } from "next/font/google";
 import { welcomeData } from "@/constant";
 import { Typography } from "@mui/material";
 import { scaleAnimation } from "@/components/shop/ProductItem";
 import Link from "next/link";
 
-const inter = Inter({ subsets: ["latin"] });
+// const inter = Inter({ subsets: ["latin"] });
 
 export default function Home() {
   return (
@@ -32,7 +31,10 @@ export default function Home() {
 
       <div className="grid grid-cols-3 grid-rows-1 gap-3 pt-5 ">
         {welcomeData.slice(1).map((item) => (
-          <Link className={`relative h-[70vh] w-[30vw] ${scaleAnimation}`} href={"/shop"} >
+          <Link
+            className={`relative h-[70vh] w-[30vw] ${scaleAnimation}`}
+            href={"/shop"}
+          >
             <span className="absolute h-full w-full flex flex-col justify-center items-center z-[100]">
               <Typography variant="h4"> {item.title}</Typography>
             </span>

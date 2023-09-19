@@ -17,7 +17,9 @@ const SkeletonItem = () => {
 const Page = () => {
   // const [isLoading, setIsLoading] = useState<boolean>(true);
 
-  const {  filteredProducts } = useProductContext();
+  const { filteredProducts, numberOfPages, paginateData } = useProductContext();
+  console.log("numberOfPages: ", numberOfPages);
+  console.log("filteredProducts: ", filteredProducts);
 
   return (
     <div className="p-5 flex flew-row">
@@ -37,8 +39,8 @@ const Page = () => {
           </ProductLayout>
         ) : (
           <ProductLayout>
-            {filteredProducts.map((product: IProduct, index: any) => (
-              <Grid item key={index}>
+            {paginateData.currentData().map((product: IProduct) => (
+              <Grid item key={product.id}>
                 <Product {...product} />
               </Grid>
             ))}

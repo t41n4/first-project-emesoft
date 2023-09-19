@@ -1,10 +1,14 @@
+"use client";
+
 import { motion, useScroll, useSpring, useTransform } from "framer-motion";
 import React, { useCallback, useLayoutEffect, useRef, useState } from "react";
 import ResizeObserver from "resize-observer-polyfill";
+import classNames from "classnames";
 
-const SmoothScroll: React.FC<{ children: React.ReactNode }> = ({
-  children,
-}) => {
+const SmoothScroll: React.FC<{
+  children: React.ReactNode;
+  className?: string | undefined;
+}> = ({ children, className }) => {
   // scroll container
   const scrollRef = useRef<HTMLDivElement | null>(null);
 
@@ -33,17 +37,16 @@ const SmoothScroll: React.FC<{ children: React.ReactNode }> = ({
   const transform = useTransform(scrollY, [0, pageHeight], [0, -100]);
   const physics = { damping: 15, mass: 0.27, stiffness: 55 }; // easing of smooth scroll
   const spring = useSpring(transform, physics); // apply easing to the negative scroll value
-
+  const combinedClassName: any = classNames("scroll-container", className);
+  // console.log("combinedClassName: ", combinedClassName);
   return (
-    <>
-      <motion.div
-        ref={scrollRef}
-        style={{ y: spring }} // translateY of scroll container using negative scroll value
-        className="scroll-container flex w-full h-1/2"
-      >
-        {children}
-      </motion.div>
-    </>
+    <motion.div
+      ref={scrollRef}
+      style={{ y: spring }} // translateY of scroll container using negative scroll value
+      className={combinedClassName}
+    >
+      {children}
+    </motion.div>
   );
 };
 

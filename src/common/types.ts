@@ -1,14 +1,16 @@
+import { Dispatch, SetStateAction } from "react";
+
 // Define the type for your cart item
 export interface ICartItem {
   id: number;
   image: string;
   name: string;
   price: number;
-  quantity:number;
+  quantity: number;
 }
-export interface IInputQuantity{
-  id:number,
-  value:number
+export interface IInputQuantity {
+  id: number;
+  value: number;
 }
 
 // Define the shape of your context
@@ -18,6 +20,27 @@ export interface CartContextType {
   removeFromCart: (id: number) => void;
   updateQuantytiCart: (id: IInputQuantity) => void;
   totalQuantity: number;
+}
+
+// Define the context interface
+export interface ProductContextType {
+  products: IProduct[];
+  filteredProducts: IProduct[];
+  numberOfPages: number;
+  selectedCategory: any;
+  filterProductsByCategory: (category: any) => void;
+  paginateData: IPaginateData;
+  Page: number;
+  setPage: Dispatch<SetStateAction<number>>;
+}
+
+export interface IPaginateData {
+  next: () => void;
+  prev: () => void;
+  jump: (page: number) => void;
+  currentData: () => any[] ;
+  currentPage: number;
+  maxPage: number;
 }
 
 export interface ICategories {

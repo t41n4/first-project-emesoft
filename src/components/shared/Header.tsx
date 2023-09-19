@@ -18,7 +18,7 @@ function Header() {
         />
       </div>
 
-      <div className="uppercase">
+      <div className="uppercase font-sans-semibold">
         {pathname.slice(1) === "" ? "Home" : pathname.slice(1)}
       </div>
 

@@ -12,15 +12,15 @@ const CustomNumberInput = React.forwardRef(function CustomNumberInput(
   props: NumberInputProps,
   ref: React.ForwardedRef<HTMLDivElement>
 ) {
-  const { cart, addToCart, removeFromCart, updateQuantytiCart } = useCart();
+  const { updateQuantytiCart } = useCart();
   const { id } = props;
   return (
     <NumberInput
       slots={{
         root: StyledInputRoot,
         input: StyledInput,
-        incrementButton: StyledButton,
-        decrementButton: StyledButton,
+        incrementButton: StyledButtonInCre,
+        decrementButton: StyledButtonDecre,
       }}
       slotProps={{
         incrementButton: {
@@ -76,10 +76,6 @@ const grey = {
   900: "#24292f",
 };
 
-const black = {
-  100: "#000000",
-};
-
 const StyledInputRoot = styled("div")(
   ({ theme }) => `
   height: 100%;
@@ -127,14 +123,51 @@ const StyledInput = styled("input")(
 `
 );
 
-const StyledButton = styled("button")(
+const StyledButtonInCre = styled("button")(
   ({ theme }) => `
   font-family: IBM Plex Sans, sans-serif;
   font-size: 0.875rem;
   box-sizing: border-box;
   line-height: 1.5;
   border: 1px solid black;
-  color: ${theme.palette.mode === "dark" ? blue[300] : black[100]};
+  border-bottom: 0;
+  color: ${theme.palette.mode === "dark" ? blue[300] : blue[600]};
+  background: transparent;
+  width: 4rem;
+  height: 4rem;
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: center;
+  align-items: center;
+  transition-property: all;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: 120ms;
+
+  &:hover {
+    background: ${theme.palette.mode === "dark" ? blue[800] : blue[100]};
+    cursor: pointer;
+  }
+
+  &:focus-visible {
+    outline: 0;
+  }
+
+  &.increment {
+    order: 1;
+  }
+`
+);
+
+const StyledButtonDecre = styled("button")(
+  ({ theme }) => `
+  font-family: IBM Plex Sans, sans-serif;
+  font-size: 0.875rem;
+  box-sizing: border-box;
+  line-height: 1.5;
+  border: 1px solid black;
+  border-top: 0;
+
+  color: ${theme.palette.mode === "dark" ? blue[300] : blue[600]};
   background: transparent;
   width: 4rem;
   height: 4rem;

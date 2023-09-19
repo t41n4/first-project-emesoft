@@ -49,7 +49,7 @@ function CategoryFilter() {
         .then((response) => response.json())
         .then((data) => {
           setCategories(data);
-          console.log("data: ", data);
+          // console.log("data: ", data);
         })
         .catch((error) => console.error("Error fetching categories: ", error));
     }

@@ -4,7 +4,7 @@ const SkeletonCart = () => {
     <Grid container sx={{ borderBottom: "1px solid #000" }}>
       <Grid item xs={2} sx={{ padding: "16px" }}>
         <Skeleton variant="rectangular" width="100%">
-          <div style={{ paddingTop: "57%" }} />
+          <div className="pt-[57%]" />
         </Skeleton>
       </Grid>
       <Grid item xs={7} sx={{ padding: "16px" }}>

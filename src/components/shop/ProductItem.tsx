@@ -12,7 +12,7 @@ import {
 } from "@mui/material";
 
 export const scaleAnimation =
-  "transform transition hover:scale-105  duration-500 ease-in-out";
+  "transform transition hover:scale-[101%]  duration-500 ease-in-out";
 
 export default function Product(props: IProduct) {
   const { addToCart } = useCart();
@@ -29,11 +29,14 @@ export default function Product(props: IProduct) {
       <CardContent>
         <Typography
           gutterBottom
-          className="text-sm text-start overflow-hidden line-clamp-3"
+          className="text-lg font-sans-bold text-start overflow-hidden line-clamp-3"
         >
           {props.title}
         </Typography>
-        <Typography variant="body1" color="text.secondary">
+        <Typography variant="h5" color="text.secondary" className="uppercase">
+          {props.category}
+        </Typography>
+        <Typography variant="h6" color="text.secondary">
           {props.price}$
         </Typography>
       </CardContent>
