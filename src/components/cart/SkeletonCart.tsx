@@ -1,43 +1,80 @@
-import { Grid, CardMedia, Typography, Button, Skeleton } from "@mui/material";
+import HighlightOffIcon from "@mui/icons-material/HighlightOff";
+import {
+  Grid,
+  CardMedia,
+  Typography,
+  Skeleton,
+  IconButton,
+  Box,
+  Button,
+} from "@mui/material";
 const SkeletonCart = () => {
   return (
-    <Grid container sx={{ borderBottom: "1px solid #000" }}>
-      <Grid item xs={2} sx={{ padding: "16px" }}>
-        <Skeleton variant="rectangular" width="100%">
-          <div className="pt-[57%]" />
-        </Skeleton>
-      </Grid>
-      <Grid item xs={7} sx={{ padding: "16px" }}>
-        <Skeleton width="100%">
-          <Typography>.</Typography>
-        </Skeleton>
-      </Grid>
+    <>
+      <Box className="max-w-lg">
+        <Box
+          component="div"
+          className="sticky top-[4.5rem] left-[3.5rem] pl-4 border border-black ml-4"
+        >
+          <Skeleton>
+            <Typography className="text-3xl font-normal mt-2">
+              200000
+            </Typography>
+          </Skeleton>
+          <Skeleton>
+            <Typography className="text-2xl my-4">
+              Shipping fees are calculated at checkout
+            </Typography>
+          </Skeleton>
+          <Box className="text-2xl"></Box>
+
+          <Box className="flex justify-center">
+            <Skeleton>
+              <Button
+                variant="contained"
+                className="my-3 px-16  bg-black hover:bg-[#E4E6E7] hover:text-black "
+              >
+                Pay
+              </Button>
+            </Skeleton>
+          </Box>
+        </Box>
+      </Box>
       <Grid
-        item
-        xs={2}
-        sx={{
-          display: "flex",
-          flexDirection: "column",
-          justifyContent: "space-between",
-          alignItems: "end",
-          padding: "16px",
-        }}
+        container
+        className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5"
       >
-        <Grid item>
-          <Skeleton>
-            <Button sx={{ background: "#000" }}>Delete</Button>
-          </Skeleton>
-        </Grid>
-        <Grid item>
-          <Skeleton>
-            <Typography variant="h5">Price</Typography>
-          </Skeleton>
-        </Grid>
+        {[...Array(4)].map((item) => {
+          return (
+            <Grid item className="border border-black">
+              <Box className="  flex flex-col text-center">
+                <Box className="flex flex-row-reverse">
+                  <Skeleton className="mr-1">
+                    <IconButton aria-label="delete" size="small">
+                      <HighlightOffIcon />
+                    </IconButton>
+                  </Skeleton>
+                </Box>
+                <Skeleton className=" mx-auto">
+                  <CardMedia
+                    component="img"
+                    className="h-60 w-40 object-contain px-3 rounded"
+                    image=""
+                  />
+                </Skeleton>
+                <Skeleton className="mx-auto">
+                  <Typography className="my-2">Name</Typography>
+                </Skeleton>
+
+                <Skeleton className="mx-auto ">
+                  <Typography className="my-2">20000</Typography>
+                </Skeleton>
+              </Box>
+            </Grid>
+          );
+        })}
       </Grid>
-      <Grid item xs={1} sx={{ display: "flex", justifyContent: "end" }}>
-        <Skeleton></Skeleton>
-      </Grid>
-    </Grid>
+    </>
   );
 };
 export default SkeletonCart;
