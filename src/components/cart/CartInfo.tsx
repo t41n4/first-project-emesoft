@@ -3,7 +3,7 @@ import { useCart } from "@/context";
 import { useState } from "react";
 import { formatNumber } from "./CartItem";
 const CartInfo = () => {
-  const { carts } = useCart();
+  const { carts, addToCart, removeFromCart } = useCart();
   const [disableBtn, setDisableBtn] = useState(false);
 
   const sumPrice = () => {

@@ -10,6 +10,7 @@ export const CartContext = createContext<CartContextType | undefined>(
 // Create a provider component
 export const CartProvider: React.FC<any> = ({ children }) => {
   const [carts, setCart] = useState<ICartItem[]>([]);
+  const [quantity, setQuantity] = useState(1);
 
   const isItemExist = (item: ICartItem) =>
     carts.some((cart) => cart.id === item.id && cart.name === item.name);
@@ -29,9 +30,12 @@ export const CartProvider: React.FC<any> = ({ children }) => {
     }
   };
 
-  const updateQuantytiCart = (value: number, id: number) => {
+  const updateQuantytiCart = (
+    value: number | undefined,
+    id: number | undefined
+  ) => {
     if (carts.length === 0) {
-      console.log("mang rong");
+      // console.log("mang rong");
     } else {
       const cartClone = carts.map((cartItem) => {
         if (cartItem.id === id) {
@@ -62,6 +66,8 @@ export const CartProvider: React.FC<any> = ({ children }) => {
         addToCart,
         removeFromCart,
         updateQuantytiCart,
+        quantity,
+        setQuantity,
       }}
     >
       {children}

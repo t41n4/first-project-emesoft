@@ -9,10 +9,10 @@ import AddIcon from "@mui/icons-material/Add";
 import { IInputQuantity } from "@/common/types";
 import { useCart } from "@/context";
 const CustomNumberInput = React.forwardRef(function CustomNumberInput(
-  props: NumberInputProps,
+  props: NumberInputProps & IInputQuantity,
   ref: React.ForwardedRef<HTMLDivElement>
 ) {
-  const { updateQuantytiCart } = useCart();
+  const { updateQuantytiCart, setQuantity } = useCart();
   return (
     <NumberInput
       slots={{
@@ -34,6 +34,7 @@ const CustomNumberInput = React.forwardRef(function CustomNumberInput(
       ref={ref}
       onChange={(events, value) => {
         updateQuantytiCart(value, props.id);
+        setQuantity(value);
       }}
     />
   );

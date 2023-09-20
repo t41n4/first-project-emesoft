@@ -6,6 +6,7 @@ import { usePathname } from "next/navigation";
 
 function Header() {
   const pathname = usePathname();
+
   return (
     <header className="fixed top-0 left-0 w-[100vw] flex flex-row justify-between items-center h-[3.5rem] border-b border-black px-4 bg-[#e4e6e7] z-50">
       <div className="logo">
@@ -17,11 +18,9 @@ function Header() {
           loading="lazy"
         />
       </div>
-
       <div className="uppercase font-sans-semibold">
-        {pathname.slice(1) === "" ? "Home" : pathname.slice(1)}
+        {pathname?.slice(1) === "" ? "Home" : pathname?.slice(1)}
       </div>
-
       <div className="Navigation_Bar flex flex-row h-full border-x-black border">
         {navLinks.map((link) => {
           const isActive = pathname === link.route;

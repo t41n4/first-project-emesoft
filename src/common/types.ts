@@ -2,18 +2,18 @@ import { Dispatch, SetStateAction } from "react";
 
 // Define the type for your cart item
 export interface ICartItem {
-  id: number;
-  image: string;
-  name: string;
-  price: number;
-  quantity: number;
+  id: number | undefined;
+  image: string | undefined;
+  name: string | undefined;
+  price: number | undefined;
+  quantity: number | undefined;
 }
 export interface ICartItems {
-  dataCarts: ICartItem[]
+  dataCarts: ICartItem[];
 }
-export interface IInputQuantity{
-  id:number,
-  value:number
+export interface IInputQuantity {
+  id: any;
+  value: number | undefined;
 }
 
 // Define the shape of your context
@@ -21,7 +21,12 @@ export interface CartContextType {
   carts: ICartItem[];
   addToCart: (item: ICartItem) => void;
   removeFromCart: (id: number) => void;
-  updateQuantytiCart: (value:number ,id: number) => void;
+  updateQuantytiCart: (
+    value: number | undefined,
+    id: number | undefined
+  ) => void;
+  quantity: number;
+  setQuantity: any;
 }
 
 // Define the context interface
@@ -40,7 +45,7 @@ export interface IPaginateData {
   next: () => void;
   prev: () => void;
   jump: (page: number) => void;
-  currentData: () => any[] ;
+  currentData: () => any[];
   currentPage: number;
   maxPage: number;
 }
@@ -88,5 +93,10 @@ export interface IProduct {
   image: string;
   description: string;
   category: string;
-  rating: object;
+  rating: IRating;
+}
+
+interface IRating {
+  cout: number;
+  rate: number;
 }

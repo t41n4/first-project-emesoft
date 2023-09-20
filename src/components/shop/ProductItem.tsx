@@ -10,15 +10,34 @@ import {
   CardMedia,
   Typography,
 } from "@mui/material";
+import { useRouter } from "next/router";
 
 export const scaleAnimation =
   "transform transition hover:scale-[101%]  duration-500 ease-in-out";
 
 export default function Product(props: IProduct) {
+  const router = useRouter();
+
+  //filter title to make it url friendly
+  // only allow a-z, 0-9, - and _
+  // remove all other characters
+  // replace spaces with -
+  // replace multiple - with single -
+  const title = props.title
+    .trim()
+    .toLowerCase()
+    .replace(/[^a-z0-9-_\s]/g, "")
+    .replace(/\s+/g, "-")
+    .replace(/-+/g, "-");
+
+  const slug = props.id;
   const { addToCart } = useCart();
   return (
     <Card
-      className={`flex flex-col justify-between items-center h-full border border-black hover:opacity-80 ${scaleAnimation}`}
+      onClick={() => {
+        router.push(`/shop/${slug}`);
+      }}
+      className={`flex flex-col justify-between items-center h-full border border-black hover:opacity-80 ${scaleAnimation} hover:cursor-pointer`}
     >
       <CardMedia
         component="img"

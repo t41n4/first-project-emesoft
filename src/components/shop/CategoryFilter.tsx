@@ -1,4 +1,5 @@
 import { useProductContext } from "@/context/ProductContext";
+import { Skeleton } from "@mui/material";
 import List from "@mui/material/List";
 import ListItemButton from "@mui/material/ListItemButton";
 import ListItemText from "@mui/material/ListItemText";
@@ -58,9 +59,20 @@ function CategoryFilter() {
   return (
     <div className="border border-black rounded-[2%] p-6 min-w-[10vw]">
       <Typography variant="h5">Category</Typography>
-      {categories.map((category: any, index: number) => (
-        <CategoryItem key={index} category={category} />
-      ))}
+      {!categories.length ? (
+        // Render skeleton loading items while loading is true
+        <>
+          <Skeleton height={20} width={120} />
+          <Skeleton height={20} width={120} />
+          <Skeleton height={20} width={120} />
+          {/* Add more Skeleton elements as needed */}
+        </>
+      ) : (
+        // Render the actual category list when loading is false
+        categories.map((category: any, index: number) => (
+          <CategoryItem key={index} category={category} />
+        ))
+      )}
     </div>
   );
 }

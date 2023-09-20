@@ -14,7 +14,7 @@ import { CartEmpty } from "@/components";
 import { useRouter } from "next/router";
 
 // Format Currency
-export const formatNumber = (price: number, quantyti: number = 1) => {
+export const formatNumber = (price: number , quantyti: number = 1) => {
   let dollarUS = Intl.NumberFormat("en-US", {
     style: "currency",
     currency: "USD",
