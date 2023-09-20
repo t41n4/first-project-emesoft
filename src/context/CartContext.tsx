@@ -1,46 +1,48 @@
 import { CartContextType } from "@/common";
 import { ICartItem } from "@/common/types";
 import React, { createContext, useContext, useState } from "react";
-
+import { usePagination } from "@/hooks";
 // Create the CartContext
 export const CartContext = createContext<CartContextType | undefined>(
   undefined
 );
-
+const PER_PAGE = 8;
 // Create a provider component
 export const CartProvider: React.FC<any> = ({ children }) => {
   const [carts, setCart] = useState<ICartItem[]>([]);
 
+  // Pagination variables
+  const [numberOfPages, setNumberOfPages] = useState<number>(0);
+  const paginateData = usePagination(carts, PER_PAGE);
+  const [Page, setPage] = useState<number>(1);
+  // check pro exist in cart
   const isItemExist = (item: ICartItem) =>
-    carts.some((cart) => cart.id === item.id && cart.name === item.name);
+    carts.some((cart) => cart.id === item.id);
 
   const addToCart = (item: ICartItem) => {
     if (isItemExist(item)) {
-      // update quantity
-      const cartClone = carts.map((cartItem) => {
-        if (cartItem.id === item.id) {
-          cartItem.quantity += 1;
+      const cartClones = carts.filter((cart) => {
+        if (cart.id === item.id) {
+          cart.quantity += 1;
         }
-        return cartItem;
+        return cart;
       });
-      setCart(cartClone);
+      setCart(cartClones);
     } else {
       setCart([...carts, item]);
     }
+    //Update number of page / set Total page
+    setNumberOfPages(Math.ceil(carts.length / PER_PAGE));
   };
 
   const updateQuantytiCart = (value: number, id: number) => {
-    if (carts.length === 0) {
-      console.log("mang rong");
-    } else {
-      const cartClone = carts.map((cartItem) => {
-        if (cartItem.id === id) {
-          cartItem.quantity = value;
-        }
-        return cartItem;
-      });
-      setCart(cartClone);
-    }
+    const cartClones = carts.filter((cart) => {
+      if (cart.id === id) {
+        cart.quantity = value;
+      }
+      return cart;
+    });
+    setCart(cartClones);
   };
 
   const removeFromCart = (id: number) => {

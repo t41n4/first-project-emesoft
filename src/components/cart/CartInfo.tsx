@@ -22,7 +22,7 @@ const CartInfo = () => {
         className="sticky top-[4.5rem] left-[3.5rem] pl-4 border border-black ml-4"
       >
         <Typography className="text-3xl font-normal mt-2">
-          {formatNumber(totalPriceCart)}
+          Total : {formatNumber(totalPriceCart)}
         </Typography>
         <Typography className="text-2xl my-4">
           Shipping fees are calculated at checkout
