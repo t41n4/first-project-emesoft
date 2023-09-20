@@ -4,7 +4,7 @@ import { useState } from "react";
 import { formatNumber } from "./CartItem";
 const CartInfo = () => {
   const { carts } = useCart();
-  const [disableBtn, setDisableBtn] = useState(false);
+  const [disableBtn, setDisableBtn] = useState(true);
 
   const sumPrice = () => {
     let total = 0;
@@ -28,13 +28,20 @@ const CartInfo = () => {
           Shipping fees are calculated at checkout
         </Typography>
         <Box className="text-2xl">
-          <Checkbox className="w-0 h-0 " /> Agree with the above information
+          <Checkbox
+            className="w-0 h-0 "
+            onChange={(event) => {
+              setDisableBtn(!event.target.checked);
+            }}
+          />{" "}
+          Agree with the above information
         </Box>
 
         <Box className="flex justify-center">
           <Button
             variant="contained"
             className="my-3 px-16  bg-black hover:bg-[#E4E6E7] hover:text-black "
+            disabled={disableBtn}
           >
             Pay
           </Button>
