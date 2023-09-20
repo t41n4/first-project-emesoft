@@ -8,18 +8,20 @@ export interface ICartItem {
   price: number;
   quantity: number;
 }
-export interface IInputQuantity {
-  id: number;
-  value: number;
+export interface ICartItems {
+  dataCarts: ICartItem[]
+}
+export interface IInputQuantity{
+  id:number,
+  value:number
 }
 
 // Define the shape of your context
 export interface CartContextType {
-  cart: ICartItem[];
+  carts: ICartItem[];
   addToCart: (item: ICartItem) => void;
   removeFromCart: (id: number) => void;
-  updateQuantytiCart: (id: IInputQuantity) => void;
-  totalQuantity: number;
+  updateQuantytiCart: (value:number ,id: number) => void;
 }
 
 // Define the context interface

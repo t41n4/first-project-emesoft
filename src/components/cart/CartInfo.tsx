@@ -1,13 +1,14 @@
 import { Box, Grid, Typography, Button, Checkbox } from "@mui/material";
 import { useCart } from "@/context";
 import { useState } from "react";
-
+import { formatNumber } from "./CartItem";
 const CartInfo = () => {
-  const { cart, addToCart, removeFromCart } = useCart();
+  const { carts } = useCart();
   const [disableBtn, setDisableBtn] = useState(false);
+
   const sumPrice = () => {
     let total = 0;
-    cart.map((cartItem) => {
+    carts.map((cartItem) => {
       total += cartItem.quantity * cartItem.price;
     });
     return total;
@@ -15,61 +16,31 @@ const CartInfo = () => {
 
   const totalPriceCart = sumPrice();
   return (
-    <Grid
-      item
-      sx={{
-        padding: "16px",
-        width: "100%",
-      }}
-      xs={12}
-      md={3}
-    >
-      <Grid item xs={12} sx={{ display: "flex", alignItems: "center" }}>
-        <Typography sx={{ fontSize: "18px", fontWeight: "bold" }}>
-          Total:
-        </Typography>
-        <Typography variant="h5" sx={{ marginLeft: "10px" }}>
-          {totalPriceCart === 0
-            ? "00.00 $"
-            : new Intl.NumberFormat("en-US", {
-                style: "currency",
-                currency: "USD",
-                minimumFractionDigits: 2,
-              }).format(totalPriceCart)}
-        </Typography>
-      </Grid>
-      <Grid item xs={12} sx={{ display: "flex", alignItems: "center" }}>
-        <Typography sx={{ fontSize: "18px" }}>
-          Shipping fees will be calculated at checkout.
-        </Typography>
-      </Grid>
-      <Grid item xs={12}>
-        <Typography sx={{ fontSize: "18px" }}>
-          <Checkbox
-            onChange={(e) => {
-              setDisableBtn(e.target.checked);
-            }}
-          />
-          I agree with the above information
-        </Typography>
-      </Grid>
-      <Grid
-        item
-        xs={12}
-        sx={{
-          display: "flex",
-          justifyContent: "center",
-        }}
+    <Box className="max-w-lg">
+      <Box
+        component="div"
+        className="sticky top-[4.5rem] left-[3.5rem] pl-4 border border-black ml-4"
       >
-        <Button
-          className="bg-blue-500 mt-6 hover:bg-blue-700 mb-3 px-[10vh]  "
-          variant="contained"
-          disabled={disableBtn ? false : true}
-        >
-          Pay
-        </Button>
-      </Grid>
-    </Grid>
+        <Typography className="text-3xl font-normal mt-2">
+          {formatNumber(totalPriceCart)}
+        </Typography>
+        <Typography className="text-2xl my-4">
+          Shipping fees are calculated at checkout
+        </Typography>
+        <Box className="text-2xl">
+          <Checkbox className="w-0 h-0 " /> Agree with the above information
+        </Box>
+
+        <Box className="flex justify-center">
+          <Button
+            variant="contained"
+            className="my-3 px-16  bg-black hover:bg-[#E4E6E7] hover:text-black "
+          >
+            Pay
+          </Button>
+        </Box>
+      </Box>
+    </Box>
   );
 };
 export default CartInfo;

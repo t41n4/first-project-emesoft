@@ -44,14 +44,21 @@ export const CartProvider: React.FC<any> = ({ children }) => {
   };
 
   const removeFromCart = (id: number) => {
-    const updatedCart = carts.filter((item) => item.id !== id);
-    setCart(updatedCart);
+    // const updatedCart = carts.filter((item) => item.id === id);
+    // console.log(updatedCart);
+    // setCart(updatedCart);
+    const updateCart = carts.filter((cart) => {
+      if (cart.id !== id) {
+        return cart;
+      }
+    });
+    setCart(updateCart);
   };
 
   return (
     <CartContext.Provider
       value={{
-        cart: carts,
+        carts,
         addToCart,
         removeFromCart,
         updateQuantytiCart,

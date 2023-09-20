@@ -1,89 +1,64 @@
-import { Box, Grid, CardMedia, Typography, Button } from "@mui/material";
+import {
+  Box,
+  Grid,
+  CardMedia,
+  Typography,
+  Button,
+  IconButton,
+} from "@mui/material";
+import HighlightOffIcon from "@mui/icons-material/HighlightOff";
 import { QuantityInput } from "@/components";
 import { useCart } from "@/context";
-import { ICartItem } from "@/common/types";
+import { ICartItems } from "@/common/types";
 import { CartEmpty } from "@/components";
+import { useRouter } from "next/router";
 
-const CartItem = (props: ICartItem) => {
-  const { dataCart } = props;
-  const { cart, addToCart, removeFromCart } = useCart();
-  // if (dataCart.length === 0) {
-  //   console.log("Cart Roong");
-  // } else {
-  //   console.log(dataCart);
-  // }
-  // console.log("check data cart", dataCart);
+// Format Currency
+export const formatNumber = (price: number, quantyti: number = 1) => {
+  let dollarUS = Intl.NumberFormat("en-US", {
+    style: "currency",
+    currency: "USD",
+  });
 
-  return (
-    <Box>
-      {dataCart.length === 0 ? (
-        <CartEmpty />
-      ) : (
-        dataCart.map((data: ICartItem, index: number) => {
-          return (
-            <Grid container sx={{ borderBottom: "1px solid #000" }} key={index}>
-              <Grid item xs={2} sx={{ padding: "16px" }}>
-                <CardMedia
-                  component="img"
-                  sx={{ objectFit: "contain" }}
-                  // className="w-20% h-30% object-contain"
-                  image={data.image}
-                  title="green iguana"
-                  className="p-5 bg-white"
-                />
-              </Grid>
-              <Grid
-                item
-                xs={7}
-                sx={{
-                  padding: "16px",
-                  display: "flex",
-                  justifyContent: "center",
-                  alignItems: "center",
-                }}
+  return dollarUS.format(price * quantyti);
+};
+const CartItem = (props: ICartItems) => {
+  const { dataCarts } = props;
+  const { carts, addToCart, removeFromCart } = useCart();
+  const router = useRouter();
+  console.log("check dataCart", dataCarts);
+
+  return dataCarts.length === 0 ? (
+    <CartEmpty />
+  ) : (
+    dataCarts.map((cart) => {
+      return (
+        <Grid item className="border border-black">
+          <Box className="  flex flex-col text-center">
+            <Box className="flex flex-row-reverse">
+              <IconButton
+                aria-label="delete"
+                size="small"
+                onClick={() => removeFromCart(cart.id)}
               >
-                <Typography variant="h5">{data.name}</Typography>
-              </Grid>
-              <Grid
-                item
-                xs={2}
-                sx={{
-                  display: "flex",
-                  flexDirection: "column",
-                  justifyContent: "space-between",
-                  alignItems: "end",
-                  padding: "16px",
-                }}
-              >
-                <Grid item>
-                  <Button
-                    sx={{ background: "#000" }}
-                    onClick={() => removeFromCart(data.id)}
-                  >
-                    Delete
-                  </Button>
-                </Grid>
-                <Grid item>
-                  <Typography variant="h5">
-                    {data.price * data.quantity === 0
-                      ? "00.00 $"
-                      : new Intl.NumberFormat("en-US", {
-                          style: "currency",
-                          currency: "USD",
-                          minimumFractionDigits: 2,
-                        }).format(data.price * data.quantity)}
-                  </Typography>
-                </Grid>
-              </Grid>
-
-              <Grid item xs={1} sx={{ display: "flex", justifyContent: "end" }}>
-                <QuantityInput value={data.quantity} id={data.id} />
-              </Grid>
-            </Grid>
-          );
-        })
-      )}
-    </Box>
+                <HighlightOffIcon />
+              </IconButton>
+            </Box>
+            <CardMedia
+              component="img"
+              alt="green iguana"
+              className="h-60 object-contain px-3 rounded"
+              image={cart.image}
+            />
+            <Typography className="my-2">{cart.name}</Typography>
+            <QuantityInput value={cart.quantity} id={cart.id} />
+            <Typography className="my-2">
+              {formatNumber(cart.price, cart.quantity)}
+            </Typography>
+          </Box>
+        </Grid>
+      );
+    })
   );
 };
 

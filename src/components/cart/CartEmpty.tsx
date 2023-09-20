@@ -6,21 +6,20 @@ const CartEmpty = () => {
 
   return (
     <Grid
-      container
-      sx={{
-        height: "250px",
-        display: "flex",
-        flexDirection: "column",
-        alignItems: "center",
-        justifyContent: "center",
-      }}
+      item
+      className="border border-black col-span-4 flex justify-center items-center flex-col"
     >
       <CardMedia
         image="https://cdn3.iconfinder.com/data/icons/shopping-and-ecommerce-28/90/empty_cart-512.png"
-        sx={{ width: "150px", height: "150px" }}
+        className="w-40 h-40"
       />
       <Typography variant="h5">Your Cart is empty</Typography>
-      <Button onClick={() => router.push("/shop")}>Goto Shop</Button>
+      <Button
+        onClick={() => router.push("/shop")}
+        className="my-3 px-16 text-white bg-black hover:bg-[#E4E6E7] hover:text-black "
+      >
+        Goto Shop
+      </Button>
     </Grid>
   );
 };
