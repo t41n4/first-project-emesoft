@@ -12,7 +12,7 @@ const CustomNumberInput = React.forwardRef(function CustomNumberInput(
   props: NumberInputProps & IInputQuantity,
   ref: React.ForwardedRef<HTMLDivElement>
 ) {
-  const { updateQuantytiCart, setQuantity } = useCart();
+  const { updateQuantityCart, setQuantity } = useCart();
   return (
     <NumberInput
       slots={{
@@ -33,7 +33,7 @@ const CustomNumberInput = React.forwardRef(function CustomNumberInput(
       {...props}
       ref={ref}
       onChange={(events, value) => {
-        updateQuantytiCart(value, props.id);
+        updateQuantityCart(value, props.id);
         setQuantity(value);
       }}
     />

@@ -15,36 +15,39 @@ export const CartProvider: React.FC<any> = ({ children }) => {
   const isItemExist = (item: ICartItem) =>
     carts.some((cart) => cart.id === item.id && cart.name === item.name);
 
+  const findCartItemIndex = (carts: ICartItem[], item: ICartItem) => {
+    return carts.findIndex(
+      (cart) => cart.id === item.id && cart.name === item.name
+    );
+  };
+
   const addToCart = (item: ICartItem) => {
-    console.log('item: ', item);
+    console.log("item: ", item);
     if (isItemExist(item)) {
-      // update quantity
-      const cartClone = carts.map((cartItem) => {
-        if (cartItem.id === item.id) {
-          cartItem.quantity += item.quantity;
-        }
-        return cartItem;
-      });
-      setCart(cartClone);
+      const index = findCartItemIndex(carts, item);
+      if (index !== -1) {
+        const cartsClone = [...carts];
+        cartsClone[index].quantity += item.quantity;
+        setCart(cartsClone);
+      }
     } else {
       setCart([...carts, item]);
     }
   };
 
-  const updateQuantytiCart = (
+  const updateQuantityCart = (
     value: number | undefined,
     id: number | undefined
   ) => {
     if (carts.length === 0) {
-      // console.log("mang rong");
+      // Handle the case when the cart is empty
     } else {
-      const cartClone = carts.map((cartItem) => {
-        if (cartItem.id === id) {
-          cartItem.quantity = value;
-        }
-        return cartItem;
-      });
-      setCart(cartClone);
+      const index = carts.findIndex((cart) => cart.id === id);
+      if (index !== -1) {
+        const cartsClone = [...carts];
+        cartsClone[index].quantity = value;
+        setCart(cartsClone);
+      }
     }
   };
 
@@ -66,7 +69,7 @@ export const CartProvider: React.FC<any> = ({ children }) => {
         carts,
         addToCart,
         removeFromCart,
-        updateQuantytiCart,
+        updateQuantityCart,
         quantity,
         setQuantity,
       }}
