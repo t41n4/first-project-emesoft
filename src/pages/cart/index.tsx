@@ -14,14 +14,11 @@ const CartPage = () => {
   const { carts, addToCart, removeFromCart } = useCart();
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
-  const { currentData, currentPage, maxPage, setCurrentPage } = usePagination(
-    carts,
-    8
-  );
+  const { currentData, currentPage, maxPage, jump } = usePagination(carts, 8);
 
   // Handle change pagination
   const handleChange = (event: React.ChangeEvent<unknown>, value: number) => {
-    setCurrentPage(value);
+    jump(value);
     window.scrollTo(0, 0);
   };
   console.log("Current data", currentData);
@@ -53,6 +50,7 @@ const CartPage = () => {
                     count={maxPage}
                     page={currentPage}
                     onChange={(event, value) => handleChange(event, value)}
+                    size="large"
                   />
                 </Grid>
               </>

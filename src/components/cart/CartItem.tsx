@@ -32,7 +32,7 @@ const CartItem = (props: ICartItems) => {
     <>
       {dataCarts.map((cart) => {
         return (
-          <Grid item className="border border-black">
+          <Grid item className="border border-black bg-[#FFF]">
             <Box className="  flex flex-col text-center">
               <Box className="flex flex-row-reverse">
                 <IconButton
@@ -49,9 +49,11 @@ const CartItem = (props: ICartItems) => {
                 className="h-60 object-contain px-3 rounded"
                 image={cart.image}
               />
-              <Typography className="my-2">{cart.name}</Typography>
+              <Typography className="my-2 px-4 whitespace-nowrap overflow-hidden text-ellipsis">
+                {cart.name}
+              </Typography>
               <QuantityInput value={cart.quantity} id={cart.id} />
-              <Typography className="my-2">
+              <Typography className="my-2 font-normal" variant="h6">
                 {formatNumber(cart.price, cart.quantity)}
               </Typography>
             </Box>

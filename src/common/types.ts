@@ -43,7 +43,6 @@ export interface IPaginateData {
   currentData: () => any[] ;
   currentPage: number;
   maxPage: number;
-  setCurrentPage: () => void;
 }
 
 export interface ICategories {

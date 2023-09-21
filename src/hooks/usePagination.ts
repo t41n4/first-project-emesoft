@@ -27,7 +27,7 @@ function usePagination(
     setCurrentPage((currentPage) => Math.min(pageNumber, maxPage));
   }
 
-  return { next, prev, jump, currentData, currentPage, maxPage,setCurrentPage };
+  return { next, prev, jump, currentData, currentPage, maxPage };
 }
 
 export default usePagination;
