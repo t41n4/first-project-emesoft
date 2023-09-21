@@ -9,10 +9,22 @@ import {
 import { useCart } from "@/context";
 import { useState } from "react";
 import { Grid, Box, Pagination } from "@mui/material";
-
+import { usePagination } from "@/hooks";
 const CartPage = () => {
   const { carts, addToCart, removeFromCart } = useCart();
   const [isLoading, setIsLoading] = useState<boolean>(false);
+
+  const { currentData, currentPage, maxPage, setCurrentPage } = usePagination(
+    carts,
+    8
+  );
+
+  // Handle change pagination
+  const handleChange = (event: React.ChangeEvent<unknown>, value: number) => {
+    setCurrentPage(value);
+    window.scrollTo(0, 0);
+  };
+  console.log("Current data", currentData);
 
   setTimeout(() => {
     setIsLoading(true);
@@ -32,12 +44,16 @@ const CartPage = () => {
               <CartEmpty />
             ) : (
               <>
-                <CartItem dataCarts={carts} />
+                <CartItem dataCarts={currentData()} />
                 <Grid
                   item
                   className="col-span-1 md:col-span-2 lg:col-span-4 flex justify-center"
                 >
-                  <Pagination count={3} page={2} />
+                  <Pagination
+                    count={maxPage}
+                    page={currentPage}
+                    onChange={(event, value) => handleChange(event, value)}
+                  />
                 </Grid>
               </>
             )}

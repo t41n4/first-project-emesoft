@@ -15,6 +15,9 @@ export const CartProvider: React.FC<any> = ({ children }) => {
   const [numberOfPages, setNumberOfPages] = useState<number>(0);
   const paginateData = usePagination(carts, PER_PAGE);
   const [Page, setPage] = useState<number>(1);
+
+  //Update number of page / set Total page
+
   // check pro exist in cart
   const isItemExist = (item: ICartItem) =>
     carts.some((cart) => cart.id === item.id);
@@ -31,8 +34,6 @@ export const CartProvider: React.FC<any> = ({ children }) => {
     } else {
       setCart([...carts, item]);
     }
-    //Update number of page / set Total page
-    setNumberOfPages(Math.ceil(carts.length / PER_PAGE));
   };
 
   const updateQuantytiCart = (value: number, id: number) => {
