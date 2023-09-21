@@ -9,7 +9,10 @@ export default function FloatingCartButton() {
   const router = useRouter();
 
   // canculate total quantity in cart
-  const totalQuantity = carts.reduce((total, item) => total + item.quantity, 0);
+  const totalQuantity = carts.reduce(
+    (total, item) => total + (item.quantity ?? 0),
+    0
+  );
 
   return (
     <>

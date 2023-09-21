@@ -1,37 +1,39 @@
+import { Visibility, VisibilityOff } from "@mui/icons-material";
 import {
   Box,
-  Typography,
-  TextField,
-  FormControl,
-  InputLabel,
-  OutlinedInput,
-  InputAdornment,
-  IconButton,
-  Divider,
-  Stack,
   Button,
+  Divider,
+  FormControl,
+  IconButton,
+  InputAdornment,
+  InputLabel,
   Link,
+  OutlinedInput,
+  Stack,
+  TextField,
+  Typography,
 } from "@mui/material";
-import { Login, Visibility, VisibilityOff } from "@mui/icons-material";
 
 import FacebookIcon from "@mui/icons-material/Facebook";
 import GoogleIcon from "@mui/icons-material/Google";
 import React from "react";
-import { useRouter } from "next/router";
 const LoginForm = () => {
   const [showPassword, setShowPassword] = React.useState(false);
   const handleClickShowPassword = () => setShowPassword((show) => !show);
   const [valueName, setValueName] = React.useState("");
   const [password, setPassword] = React.useState("");
 
-  const handleOnchange = (event: React.ChangeEvent, type: string) => {
+  const handleOnchange = (
+    event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
+    type: string
+  ) => {
     if (type === "userName") {
       setValueName(event.target.value);
     } else {
       setPassword(event.target.value);
     }
   };
-  const handleSubmit = (e) => {
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     alert("true");

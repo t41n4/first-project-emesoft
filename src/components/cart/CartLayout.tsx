@@ -1,6 +1,5 @@
 "use client";
-import { CartInfo, SkeletonCart } from "@/components";
-import { Box, Grid, Typography } from "@mui/material";
+import { Box } from "@mui/material";
 import React from "react";
 interface ICartLayout {
   children: React.ReactNode;
