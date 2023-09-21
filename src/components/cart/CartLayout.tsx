@@ -6,7 +6,7 @@ interface ICartLayout {
 }
 
 const CartLayout: React.FC<ICartLayout> = ({ children }) => {
-  return <Box>{children}</Box>;
+  return <div>{children}</div>;
 };
 
 export default CartLayout;

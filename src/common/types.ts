@@ -18,7 +18,7 @@ export interface IInputQuantity {
 export interface CartContextType {
   carts: ICartItem[];
   addToCart: (item: ICartItem) => void;
-  removeFromCart: (id: number) => void;
+  removeFromCart: (id: any) => void;
   updateQuantityCart: (
     value: number | undefined,
     id: number | undefined

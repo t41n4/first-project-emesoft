@@ -10,7 +10,7 @@ import QuantityInput from "./cart/QuantityInput";
 import CartInfo from "./cart/CartInfo";
 import CartEmpty from "./cart/CartEmpty";
 import SkeletonCart from "./cart/SkeletonCart";
-import CartItem from "./cart/CartItem.1";
+import CartItems from "./cart/CartItems";
 
 
 import LoginForm from "./login/LoginForm";
@@ -18,7 +18,7 @@ export {
   Header,
   Footer,
   Product,
-  CartItem,
+  CartItems,
   ProductLayout,
   QuantityInput,
   CartInfo,
