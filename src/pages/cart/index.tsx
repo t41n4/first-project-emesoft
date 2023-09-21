@@ -3,7 +3,6 @@ import {
   CartInfo,
   QuantityInput,
   SkeletonCart,
-  CartLayout,
   CartEmpty,
 } from "@/components";
 import { useCart } from "@/context";

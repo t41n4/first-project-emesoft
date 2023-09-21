@@ -95,7 +95,7 @@ const StyledInput = styled("input")(
   line-height: 1.375;
   color: ${theme.palette.mode === "dark" ? grey[300] : grey[900]};
   background: ${theme.palette.mode === "dark" ? grey[900] : "#fff"};
-  border: 1px solid ${theme.palette.mode === "dark" ? grey[700] : grey[200]};
+  border: 1px solid ${blue[400]};
   border-radius: 4px;
   margin: 0 4px;
   padding: 10px 12px;

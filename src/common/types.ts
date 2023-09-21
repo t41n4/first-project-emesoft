@@ -8,9 +8,7 @@ export interface ICartItem {
   price: number | undefined;
   quantity: number | undefined;
 }
-export interface ICartItems {
-  dataCarts: ICartItem[];
-}
+
 export interface IInputQuantity {
   id: any;
   value: number | undefined;
