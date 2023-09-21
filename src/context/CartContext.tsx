@@ -1,19 +1,27 @@
 import { CartContextType } from "@/common";
 import { ICartItem } from "@/common/types";
 import React, { createContext, useContext, useState } from "react";
-
+import { usePagination } from "@/hooks";
 // Create the CartContext
 export const CartContext = createContext<CartContextType | undefined>(
   undefined
 );
-
+const PER_PAGE = 8;
 // Create a provider component
 export const CartProvider: React.FC<any> = ({ children }) => {
   const [carts, setCart] = useState<ICartItem[]>([]);
   const [quantity, setQuantity] = useState(1);
 
+  // Pagination variables
+  const [numberOfPages, setNumberOfPages] = useState<number>(0);
+  const paginateData = usePagination(carts, PER_PAGE);
+  const [Page, setPage] = useState<number>(1);
+
+  //Update number of page / set Total page
+
+  // check pro exist in cart
   const isItemExist = (item: ICartItem) =>
-    carts.some((cart) => cart.id === item.id && cart.name === item.name);
+    carts.some((cart) => cart.id === item.id);
 
   const findCartItemIndex = (carts: ICartItem[], item: ICartItem) => {
     return carts.findIndex(
