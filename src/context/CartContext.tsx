@@ -16,11 +16,12 @@ export const CartProvider: React.FC<any> = ({ children }) => {
     carts.some((cart) => cart.id === item.id && cart.name === item.name);
 
   const addToCart = (item: ICartItem) => {
+    console.log('item: ', item);
     if (isItemExist(item)) {
       // update quantity
       const cartClone = carts.map((cartItem) => {
         if (cartItem.id === item.id) {
-          cartItem.quantity += 1;
+          cartItem.quantity += item.quantity;
         }
         return cartItem;
       });

@@ -21,7 +21,7 @@ export function ProductProvider({ children }: { children: ReactNode }) {
   const [selectedCategory, setSelectedCategory] = useState<any>([]);
   const [products, setProducts] = useState<Array<IProduct>>([]);
   const [filteredProducts, setFilteredProducts] = useState<Array<IProduct>>([]);
-  
+
   // pagination variables
   const [numberOfPages, setNumberOfPages] = useState<number>(0);
   const paginateData = usePagination(filteredProducts, PER_PAGE);
@@ -52,10 +52,11 @@ export function ProductProvider({ children }: { children: ReactNode }) {
     //update filtered products
     setFilteredProducts(filteredProducts);
 
-    //update number of pages    
+    //update number of pages
     setNumberOfPages(Math.ceil(filteredProducts.length / PER_PAGE));
     //reset page to 1
     setPage(1);
+    paginateData.jump(1);
   };
 
   const value: ProductContextType = {

@@ -32,16 +32,19 @@ export default function Product(props: IProduct) {
 
   const slug = props.id;
   const { addToCart } = useCart();
+
+  const handleClick = () => {
+    router.push(`/shop/${slug}`);
+  };
+
   return (
     <Card
-      onClick={() => {
-        router.push(`/shop/${slug}`);
-      }}
-      className={`flex flex-col justify-between items-center h-full border border-black hover:opacity-80 ${scaleAnimation} hover:cursor-pointer`}
+      className={`flex flex-col justify-between items-center h-full border border-black hover:opacity-80 ${scaleAnimation}`}
     >
       <CardMedia
+        onClick={handleClick}
         component="img"
-        className="h-[50%] object-contain p-5 object-center"
+        className="h-[50%] object-contain p-5 object-center  hover:cursor-pointer"
         image={props.image}
       />
 
