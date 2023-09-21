@@ -59,7 +59,7 @@ export const CartProvider: React.FC<any> = ({ children }) => {
     }
   };
 
-  const removeFromCart = (id: number) => {
+  const removeFromCart = (id: number | undefined) => {
     // const updatedCart = carts.filter((item) => item.id === id);
     // console.log(updatedCart);
     // setCart(updatedCart);

@@ -1,20 +1,13 @@
-import { Box, Grid, Typography, Button, Checkbox } from "@mui/material";
 import { useCart } from "@/context";
+import { sumPrice, formatNumber } from "@/utils";
+import { Box, Button, Checkbox, Typography } from "@mui/material";
 import { useState } from "react";
-import { formatNumber } from "./CartItem";
+
 const CartInfo = () => {
   const { carts } = useCart();
   const [disableBtn, setDisableBtn] = useState(true);
 
-  const sumPrice = () => {
-    let total = 0;
-    carts.map((cartItem) => {
-      total += cartItem.quantity * cartItem.price;
-    });
-    return total;
-  };
-
-  const totalPriceCart = sumPrice();
+  const totalPriceCart = sumPrice(carts);
   return (
     <Box className="max-w-lg">
       <Box

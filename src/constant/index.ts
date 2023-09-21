@@ -1,5 +1,5 @@
 import { navLinks } from "./navLinks";
+import { StyledButton, StyledInput, blue, grey } from "./styleQuantityInput";
 import { welcomeData } from "./welcome";
-import { fetchCategories } from "./category";
 
-export { navLinks, welcomeData, fetchCategories };
+export { StyledButton, StyledInput, blue, grey, navLinks, welcomeData }

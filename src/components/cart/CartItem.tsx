@@ -1,31 +1,13 @@
-import {
-  Box,
-  Grid,
-  CardMedia,
-  Typography,
-  Button,
-  IconButton,
-} from "@mui/material";
-import HighlightOffIcon from "@mui/icons-material/HighlightOff";
+import { ICartItem } from "@/common/types";
 import { QuantityInput } from "@/components";
 import { useCart } from "@/context";
-import { ICartItem } from "@/common/types";
-import { CartEmpty } from "@/components";
-import { useRouter } from "next/router";
+import { formatNumber } from "@/utils";
+import HighlightOffIcon from "@mui/icons-material/HighlightOff";
+import { Box, CardMedia, Grid, IconButton, Typography } from "@mui/material";
 
-// Format Currency
-export const formatNumber = (price: number, quantyti: number = 1) => {
-  let dollarUS = Intl.NumberFormat("en-US", {
-    style: "currency",
-    currency: "USD",
-  });
-
-  return dollarUS.format(price * quantyti);
-};
 const CartItem = (props: { dataCarts: ICartItem[] }) => {
   const { dataCarts } = props;
-  const { carts, addToCart, removeFromCart } = useCart();
-  const router = useRouter();
+  const { removeFromCart } = useCart();
   console.log("check dataCart", dataCarts);
 
   return (
