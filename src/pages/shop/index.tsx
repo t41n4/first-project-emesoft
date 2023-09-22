@@ -3,6 +3,7 @@ import { Product, ProductLayout } from "@/components";
 import CategoryFilter from "@/components/shop/CategoryFilter";
 import { useProductContext } from "@/context/ProductContext";
 import { Grid, Skeleton, Stack } from "@mui/material";
+import { use, useEffect } from "react";
 
 const SkeletonItem = () => {
   return (
@@ -14,12 +15,26 @@ const SkeletonItem = () => {
   );
 };
 
+const ProductEmpty = () => {
+  return (
+    <div className="flex flex-col justify-center items-center">
+      <img
+        src="https://www.emesoft.net/wp-content/uploads/2023/06/EMESOFT-Logo-Full-Horizontal-.png"
+        alt="EMESOFT-Logo-Full-Horizontal"
+      />
+      <h1 className="text-3xl font-bold">No Product Found</h1>
+    </div>
+  );
+};
+
 const Page = () => {
   // const [isLoading, setIsLoading] = useState<boolean>(true);
 
-  const { filteredProducts, numberOfPages, paginateData } = useProductContext();
-  console.log("numberOfPages: ", numberOfPages);
-  console.log("filteredProducts: ", filteredProducts);
+  const { filteredProducts, products, paginateData } = useProductContext();
+
+  useEffect(() => {
+    paginateData.jump(1);
+  }, [paginateData]);
 
   return (
     <div className="p-5 flex flew-row">
@@ -29,7 +44,7 @@ const Page = () => {
         </div>
       </div>
       <div className="Content flex w-full">
-        {!filteredProducts.length ? (
+        {!products.length ? (
           <ProductLayout>
             {[...Array(20)].map((_, index) => (
               <Grid item key={index}>
@@ -37,7 +52,7 @@ const Page = () => {
               </Grid>
             ))}
           </ProductLayout>
-        ) : (
+        ) : filteredProducts.length ? (
           <ProductLayout>
             {paginateData.currentData().map((product: IProduct) => (
               <Grid item key={product.id}>
@@ -45,6 +60,8 @@ const Page = () => {
               </Grid>
             ))}
           </ProductLayout>
+        ) : (
+          <ProductEmpty />
         )}
       </div>
     </div>

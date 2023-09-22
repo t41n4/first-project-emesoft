@@ -44,7 +44,6 @@ function CategoryFilter() {
 
   useEffect(() => {
     // Make an API request to fetch category data
-
     if (!categories.length) {
       fetch("https://fakestoreapi.com/products/categories")
         .then((response) => response.json())
@@ -54,7 +53,7 @@ function CategoryFilter() {
         })
         .catch((error) => console.error("Error fetching categories: ", error));
     }
-  }, [categories]); // Include categories in the dependency array
+  }, [categories]);
 
   return (
     <div className="border border-black rounded-[2%] p-6 min-w-[10vw]">

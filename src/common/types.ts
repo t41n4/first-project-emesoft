@@ -39,6 +39,8 @@ export interface ProductContextType {
   paginateData: IPaginateData;
   Page: number;
   setPage: Dispatch<SetStateAction<number>>;
+  searchTerm: string;
+  setSearchTerm: Dispatch<SetStateAction<string>>;
 }
 
 export interface IPaginateData {

@@ -1,11 +1,15 @@
 "use client";
 
 import { navLinks } from "@/constant";
+import { useProductContext } from "@/context/ProductContext";
+import SearchIcon from "@mui/icons-material/Search";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
 function Header() {
   const pathname = usePathname();
+  // console.log("pathname: ", pathname);
+  const { setSearchTerm } = useProductContext();
 
   return (
     <header className="fixed top-0 left-0 w-[100vw] flex flex-row justify-between items-center h-[3.5rem] border-b border-black px-4 bg-[#e4e6e7] z-50">
@@ -18,10 +22,29 @@ function Header() {
           loading="lazy"
         />
       </div>
-      <div className="uppercase font-sans-semibold">
+      <div className="page_title uppercase font-sans-semibold">
         {pathname?.slice(1) === "" ? "Home" : pathname?.slice(1)}
       </div>
-      <div className="Navigation_Bar flex flex-row h-full border-x-black border">
+
+      {(pathname?.slice(1) === "shop" || pathname?.slice(1) === "cart") && (
+        <div className="search_bar">
+          <div className="relative rounded bg-opacity-15 hover:bg-opacity-25 mr-2 ml-0 w-full sm:ml-3  ">
+            <div className="p-2 h-full absolute flex items-center justify-center">
+              <SearchIcon />
+            </div>
+            <input
+              className="text-current py-1 px-10 md:w-[20vw] w-full transition-all "
+              placeholder="Search…"
+              aria-label="search"
+              onChange={(e) => {
+                setSearchTerm(e.target.value);
+              }}
+            />
+          </div>
+        </div>
+      )}
+
+      <div className="navigate_bar flex flex-row h-full border-x-black border">
         {navLinks.map((link) => {
           const isActive = pathname === link.route;
           // console.log("pathname: ", pathname);
