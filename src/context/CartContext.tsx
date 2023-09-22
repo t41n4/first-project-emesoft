@@ -70,7 +70,12 @@ export const CartProvider: React.FC<any> = ({ children }) => {
     });
     setCart(updateCart);
   };
-
+  const filterSearch = (textSearch: string) => {
+    carts.filter((cart) => {
+      return cart.name?.includes(textSearch);
+    });
+  };
+  console.log("text", carts);
   return (
     <CartContext.Provider
       value={{
@@ -80,6 +85,7 @@ export const CartProvider: React.FC<any> = ({ children }) => {
         updateQuantityCart,
         quantity,
         setQuantity,
+        filterSearch,
       }}
     >
       {children}

@@ -25,6 +25,7 @@ export interface CartContextType {
   ) => void;
   quantity: number;
   setQuantity: any;
+  filterSearch: (textSearch: string)=>void;
 }
 
 // Define the context interface

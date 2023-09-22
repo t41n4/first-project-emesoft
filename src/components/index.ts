@@ -11,7 +11,7 @@ import CartInfo from "./cart/CartInfo";
 import CartEmpty from "./cart/CartEmpty";
 import SkeletonCart from "./cart/SkeletonCart";
 import CartItems from "./cart/CartItems";
-
+import HeaderCart from "./cart/HeaderCart";
 
 import LoginForm from "./login/LoginForm";
 export {
@@ -26,4 +26,5 @@ export {
   SkeletonCart,
   FloatingCartButton,
   LoginForm
+  ,HeaderCart
 };

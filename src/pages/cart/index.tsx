@@ -1,4 +1,4 @@
-import { CartItems, CartInfo, SkeletonCart, CartEmpty } from "@/components";
+import { CartItems, CartInfo, CartEmpty, HeaderCart } from "@/components";
 import { useCart } from "@/context";
 import { useState } from "react";
 import { Grid, Box, Pagination, Skeleton } from "@mui/material";
@@ -28,7 +28,9 @@ const CartPage = () => {
         </div>
       </div>
       <div className="cartItems  w-full">
-        <div className="header bg-green-400 "></div>
+        <div className="header ">
+          <HeaderCart />
+        </div>
         {currentData().length === 0 ? (
           <CartEmpty />
         ) : (
