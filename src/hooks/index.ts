@@ -1,5 +1,5 @@
 import { fetchCart, fetchProId } from "./useCartData";
-import { useFetchCategories } from "./useCategories";
+import { useCategories } from "./useCategories";
 import { useFetchProducts, useFetchProductsByID } from "./useProduct";
 import useWindowSize from "./useWindowSize";
 import usePagination from "./usePagination";
@@ -9,7 +9,7 @@ export {
   fetchProId,
   useFetchProducts,
   useFetchProductsByID,
-  useFetchCategories,
+  useCategories,
   useWindowSize,
   usePagination,
   useFormControls

@@ -9,18 +9,18 @@ import React, { useEffect, useState } from "react";
 // Define your CategoryItem component
 const CategoryItem = ({ category }: { category: any }) => {
   const [active, setActive] = React.useState(false);
-  const { filterProductsByCategory, selectedCategory } = useProductContext();
+  const { handleCategoryChange, categoryTerm } = useProductContext();
 
   const handleClick = () => {
     if (active) {
       // remove current category from selectedCategory
-      filterProductsByCategory(
-        selectedCategory.filter((item: string) => item !== category)
+      handleCategoryChange(
+        categoryTerm.filter((item: string) => item !== category)
       );
     } else {
       // add current category to selectedCategory
       // console.log("newSelectedCategory: ", [...selectedCategory, category]);
-      filterProductsByCategory([...selectedCategory, category]);
+      handleCategoryChange([...categoryTerm, category]);
     }
     setActive(!active);
     // scroll to top
@@ -44,7 +44,6 @@ function CategoryFilter() {
 
   useEffect(() => {
     // Make an API request to fetch category data
-
     if (!categories.length) {
       fetch("https://fakestoreapi.com/products/categories")
         .then((response) => response.json())
@@ -54,7 +53,7 @@ function CategoryFilter() {
         })
         .catch((error) => console.error("Error fetching categories: ", error));
     }
-  }, [categories]); // Include categories in the dependency array
+  }, [categories]);
 
   return (
     <div className="border border-black rounded-[2%] p-6 min-w-[10vw]">

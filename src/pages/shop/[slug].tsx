@@ -2,6 +2,7 @@ import { IProduct } from "@/common";
 import { QuantityInput } from "@/components";
 import { useCart } from "@/context";
 import { useFetchProductsByID } from "@/hooks";
+import { validateSlug } from "@/utils";
 import { Button, Rating, Skeleton, Typography } from "@mui/material";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
@@ -12,13 +13,24 @@ export default function Page() {
   const [product, setProduct] = useState<IProduct>();
 
   const { addToCart, quantity } = useCart();
+  // validate slug ??
 
   useEffect(() => {
     if (!slug) return;
-    useFetchProductsByID(Number(slug)).then((res) => {
-      // console.log(res);
-      setProduct(res);
-    });
+    if (!validateSlug(slug)) {
+      router.push("/404");
+      return;
+    }
+
+    try {
+      useFetchProductsByID(Number(slug)).then((res) => {
+        // console.log(res);
+        setProduct(res);
+      });
+    } catch (error) {
+      console.log(error);
+      router.push("/404");
+    }
   }, [slug]);
 
   useEffect(() => {

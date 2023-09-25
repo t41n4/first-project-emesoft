@@ -33,11 +33,17 @@ export interface ProductContextType {
   products: IProduct[];
   filteredProducts: IProduct[];
   numberOfPages: number;
-  selectedCategory: any;
-  filterProductsByCategory: (category: any) => void;
+  categoryTerm: any;
   paginateData: IPaginateData;
   Page: number;
   setPage: Dispatch<SetStateAction<number>>;
+  // searchTerm: string;
+  // setSearchTerm: Dispatch<SetStateAction<string>>;
+  minMaxPrice: number[];
+
+  handleSearchTermChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  handleCurrentFilterPriceChange: (newValue: number | number[]) => void;
+  handleCategoryChange: (category: any) => void;
 }
 
 export interface IPaginateData {
