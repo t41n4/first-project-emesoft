@@ -4,6 +4,7 @@ import { useCart } from "@/context";
 import { useFetchProductsByID } from "@/hooks";
 import { validateSlug } from "@/utils";
 import { Button, Rating, Skeleton, Typography } from "@mui/material";
+import Image from "next/image";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 
@@ -47,10 +48,14 @@ export default function Page() {
         <div className="product product-image flex justify-center items-center border border-black bg-white rounded-lg">
           {product ? (
             <div className="Image p-5">
-              <img
+              <Image
                 className="object-cover h-full w-full rounded-lg"
                 src={product.image}
                 alt="EMESOFT-Logo-Full-Horizontal"
+                priority={true}
+                sizes="100% 100%"
+                width={500}
+                height={500}
               />
             </div>
           ) : (

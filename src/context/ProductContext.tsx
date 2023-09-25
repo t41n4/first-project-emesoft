@@ -34,8 +34,9 @@ export function ProductProvider({ children }: { children: ReactNode }) {
   const rawData = useFetchProducts();
 
   useEffect(() => {
-    if (displayData.length !== 0) return;
+    if (products.length !== 0) return;
     rawData.then((res) => {
+      // console.log("res: ", displayData);
       setProducts(res);
       setDisplayData(res);
       setNumberOfPages(Math.ceil(res.length / PRODUCT_PER_PAGE));
@@ -50,31 +51,61 @@ export function ProductProvider({ children }: { children: ReactNode }) {
   const handleQueryChange = (props: IQuery) => {
     const { searchTerm, categoryTerm, priceTerm } = props;
 
-    const SearchResult = products.filter((product: IProduct) =>
-      product.title.toLowerCase().includes(searchTerm.toLowerCase())
+    // const SearchResult = products.filter((product: IProduct) =>
+    //   product.title.toLowerCase().includes(searchTerm.toLowerCase())
+    // );
+
+    // const PriceResult = products.filter((product: IProduct) => {
+    //   if (priceTerm === 0) {
+    //     // setDisplayData(products);
+    //     return true;
+    //   }
+    //   return (
+    //     product.price >= (priceTerm as number) &&
+    //     product.price <= minMaxPrice[1]
+    //   );
+    // });
+
+    // const CategoryResult = products.filter((product: IProduct) => {
+    //   if (categoryTerm.length === 0) {
+    //     return true;
+    //   }
+    //   return categoryTerm.includes(product.category);
+    // });
+
+    const [SearchResult, PriceResult, CategoryResult] = products.reduce(
+      ([SearchResult, PriceResult, CategoryResult], product: IProduct) => {
+        const { title, price, category } = product;
+        const titleMatch = title
+          .toLowerCase()
+          .includes(searchTerm.toLowerCase());
+        titleMatch && SearchResult.push(product);
+
+        const priceMatch =
+          price >= (priceTerm as number) && price <= minMaxPrice[1];
+
+        priceMatch && PriceResult.push(product);
+
+        const categoryMatch =
+          categoryTerm.length === 0 ? true : categoryTerm.includes(category);
+
+        categoryMatch && CategoryResult.push(product);
+
+        return [SearchResult, PriceResult, CategoryResult];
+      },
+      [[], [], []] as [IProduct[], IProduct[], IProduct[]]
     );
+    // console.log("SearchResult: ", SearchResult);
+    // console.log("PriceResult: ", PriceResult);
+    // console.log("CategoryResult: ", CategoryResult);
 
-    const PriceResult = products.filter((product: IProduct) => {
-      if (priceTerm === 0) {
-        // setDisplayData(products);
-        return true;
-      }
-      return (
-        product.price >= (priceTerm as number) &&
-        product.price <= minMaxPrice[1]
-      );
-    });
+    console.log([SearchResult, PriceResult, CategoryResult]);
 
-    const CategoryResult = products.filter((product: IProduct) => {
-      if (categoryTerm.length === 0) {
-        return true;
-      }
-      return categoryTerm.includes(product.category);
-    });
-
-    const joinedResult = SearchResult.filter((product: IProduct) =>
-      PriceResult.includes(product)
-    ).filter((product: IProduct) => CategoryResult.includes(product));
+    // join 3 array
+    const joinedResult = [SearchResult, PriceResult, CategoryResult]
+      .filter((arr) => arr.length !== 0)
+      .reduce((a, b) => a.filter((c) => b.includes(c)));
+    console.log("joinedResult: ", joinedResult);
 
     // console.log("props: ", props);
     // console.log(SearchResult, PriceResult, CategoryResult);
@@ -122,7 +153,7 @@ export function ProductProvider({ children }: { children: ReactNode }) {
 
   const value: ProductContextType = {
     products,
-    filteredProducts: displayData,
+    displayData,
     categoryTerm,
     numberOfPages,
     paginateData,

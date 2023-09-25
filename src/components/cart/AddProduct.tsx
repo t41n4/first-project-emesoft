@@ -27,7 +27,7 @@ import { styled } from "@mui/material/styles";
 import { Controller, useForm } from "react-hook-form";
 import CloudUploadIcon from "@mui/icons-material/CloudUpload";
 import { useState, useEffect } from "react";
-import { useFetchCategories } from "@/hooks";
+import { useCategories } from "@/hooks";
 const VisuallyHiddenInput = styled("input")({
   clip: "rect(0 0 0 0)",
   clipPath: "inset(50%)",
@@ -49,13 +49,18 @@ const AddProduct = () => {
     category: string;
     picture: string;
   }
+
+  const rawData = useCategories();
+  console.log("rawData: ", rawData);
   // UseEffects
   useEffect(() => {
-    useFetchCategories().then((response) => {
-      if (response) {
-        setCategories(response);
-      }
-    });
+    setCategories(rawData);
+
+    // useCategories().then((response) => {
+    //   if (response) {
+    // setCategories(rawData);
+    //   }
+    // });
   }, []);
 
   // Handle open modal

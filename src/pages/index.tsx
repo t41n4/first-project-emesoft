@@ -41,7 +41,6 @@ export default function Home() {
               <Typography variant="h4"> {item.title}</Typography>
             </span>
             <Image
-              key={item.id}
               className="object-contain h-full w-full border border-black bg-white opacity-60"
               src={item.image}
               alt=""
