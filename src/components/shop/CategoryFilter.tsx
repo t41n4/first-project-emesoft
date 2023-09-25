@@ -9,18 +9,18 @@ import React, { useEffect, useState } from "react";
 // Define your CategoryItem component
 const CategoryItem = ({ category }: { category: any }) => {
   const [active, setActive] = React.useState(false);
-  const { filterProductsByCategory, selectedCategory } = useProductContext();
+  const { handleCategoryChange, categoryTerm } = useProductContext();
 
   const handleClick = () => {
     if (active) {
       // remove current category from selectedCategory
-      filterProductsByCategory(
-        selectedCategory.filter((item: string) => item !== category)
+      handleCategoryChange(
+        categoryTerm.filter((item: string) => item !== category)
       );
     } else {
       // add current category to selectedCategory
       // console.log("newSelectedCategory: ", [...selectedCategory, category]);
-      filterProductsByCategory([...selectedCategory, category]);
+      handleCategoryChange([...categoryTerm, category]);
     }
     setActive(!active);
     // scroll to top

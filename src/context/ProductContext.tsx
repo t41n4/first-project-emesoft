@@ -2,11 +2,9 @@ import { IProduct } from "@/common";
 import { ProductContextType } from "@/common/types";
 import { useFetchProducts } from "@/hooks";
 import usePagination from "@/hooks/usePagination";
-import { data } from "autoprefixer";
 import {
   ReactNode,
   createContext,
-  use,
   useContext,
   useEffect,
   useState,
@@ -14,97 +12,134 @@ import {
 
 const PRODUCT_PER_PAGE = 8;
 
+export interface Query {
+  searchTerm: string;
+  categoryTerm: string[];
+  priceTerm: number | number[];
+}
+
 // Create the context
 const ProductContext = createContext<ProductContextType | undefined>(undefined);
 // Define the ProductProvider component
 export function ProductProvider({ children }: { children: ReactNode }) {
-  const [selectedCategory, setSelectedCategory] = useState<any>([]);
   const [products, setProducts] = useState<Array<IProduct>>([]);
-  const [filteredProducts, setFilteredProducts] = useState<Array<IProduct>>([]);
+  const [minMaxPrice, setMinMaxPrice] = useState<number[]>([0, 0]);
+
+  const [displayData, setDisplayData] = useState<Array<IProduct>>([]);
+
   const [searchTerm, setSearchTerm] = useState<string>("");
+  const [categoryTerm, setCategoryTerm] = useState<string[]>([]);
+  const [priceTerm, setPriceTerm] = useState<number | number[]>(0);
 
   // pagination variables
   const [numberOfPages, setNumberOfPages] = useState<number>(0);
-  const paginateData = usePagination(filteredProducts, PRODUCT_PER_PAGE);
-  // console.log("paginateData: ", paginateData);
+  const paginateData = usePagination(displayData, PRODUCT_PER_PAGE);
   const [Page, setPage] = useState<number>(1);
 
+  const rawData = useFetchProducts();
+
+  const findMax = (value: Array<IProduct>) => {
+    return Math.max(...value.map((product: IProduct) => product.price));
+  };
+  const findMin = (value: Array<IProduct>) => {
+    return Math.min(...value.map((product: IProduct) => product.price));
+  };
+
   useEffect(() => {
-    useFetchProducts().then((res) => {
+    if (displayData.length !== 0) return;
+    rawData.then((res) => {
       setProducts(res);
-      setFilteredProducts(res);
+      setDisplayData(res);
       setNumberOfPages(Math.ceil(res.length / PRODUCT_PER_PAGE));
+
+      const highestPrice = findMax(res);
+      const lowestPrice = findMin(res);
+
+      setMinMaxPrice([lowestPrice, highestPrice]);
     });
-  }, []);
-  // Your product data (replace with your actual product data)
+  }, [rawData]);
 
-  useEffect(() => {
-    if (searchTerm === "") {
-      console.log("searchTerm is empty");
-      filterProductsByCategory(selectedCategory);
-      paginateData.jump(1);
+  const handleQueryChange = (props: Query) => {
+    const { searchTerm, categoryTerm, priceTerm } = props;
 
-      return;
-    }
-
-    const SearchResult = filteredProducts.filter((product: IProduct) =>
+    const SearchResult = products.filter((product: IProduct) =>
       product.title.toLowerCase().includes(searchTerm.toLowerCase())
     );
 
-    const isFound = SearchResult.length > 0;
-
-    if (isFound) {
-      console.log("isFound: ", isFound);
-      setFilteredProducts(SearchResult);
-      setNumberOfPages(Math.ceil(SearchResult.length / PRODUCT_PER_PAGE));
-
-      setPage(1);
-      paginateData.jump(1);
-    } else {
-      console.log("isFound: ", isFound);
-
-      setFilteredProducts([]);
-      setNumberOfPages(0);
-      setPage(1);
-      paginateData.jump(1);
-    }
-    console.log("paginateData: ", paginateData);
-  }, [searchTerm]);
-
-  // Function to filter products by category
-  const filterProductsByCategory = (category: any) => {
-    //update selected category
-    setSelectedCategory(category);
-
-    //update products still retrun if category is empty
-    const filteredProducts = products.filter((product: IProduct) => {
-      if (category.length === 0) {
+    const PriceResult = products.filter((product: IProduct) => {
+      if (priceTerm === 0) {
+        // setDisplayData(products);
         return true;
       }
-      return category.includes(product.category);
+      return product.price >= priceTerm && product.price <= minMaxPrice[1];
     });
 
-    //update filtered products
-    setFilteredProducts(filteredProducts);
+    const CategoryResult = products.filter((product: IProduct) => {
+      if (categoryTerm.length === 0) {
+        return true;
+      }
+      return categoryTerm.includes(product.category);
+    });
 
-    //update number of pages
-    setNumberOfPages(Math.ceil(filteredProducts.length / PRODUCT_PER_PAGE));
-    //reset page to 1
-    setPage(1);
+    const joinedResult = SearchResult.filter((product: IProduct) =>
+      PriceResult.includes(product)
+    ).filter((product: IProduct) => CategoryResult.includes(product));
+
+    // console.log("props: ", props);
+    // console.log(SearchResult, PriceResult, CategoryResult);
+    // console.log("joinedResult: ", joinedResult);
+
     paginateData.jump(1);
+    setDisplayData(joinedResult);
+  };
+
+  const handleSearchTermChange = (
+    event: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    const searchTerm = event.target.value;
+    setSearchTerm(searchTerm);
+    handleQueryChange({
+      searchTerm,
+      categoryTerm,
+      priceTerm,
+    });
+  };
+
+  const handleCurrentFilterPriceChange = (value: number | number[]) => {
+    const priceTerm = value;
+    // console.log("priceTerm: ", priceTerm);
+    setPriceTerm(priceTerm);
+    handleQueryChange({
+      searchTerm,
+      categoryTerm,
+      priceTerm,
+    });
+  };
+  // Function to filter products by category
+  const handleCategoryChange = (category: any) => {
+    const categoryTerm = category;
+    console.log("categoryTerm: ", categoryTerm);
+    setCategoryTerm(categoryTerm);
+
+    handleQueryChange({
+      searchTerm,
+      categoryTerm,
+      priceTerm,
+    });
   };
 
   const value: ProductContextType = {
     products,
-    filteredProducts,
-    selectedCategory,
-    filterProductsByCategory,
+    filteredProducts: displayData,
+    categoryTerm,
     numberOfPages,
     paginateData,
     setPage,
     Page,
-    setSearchTerm,
-    searchTerm,
+    minMaxPrice,
+    handleSearchTermChange,
+    handleCurrentFilterPriceChange,
+    handleCategoryChange,
   };
 
   return (

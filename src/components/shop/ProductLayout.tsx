@@ -3,16 +3,17 @@
 import { IProductLayout } from "@/common";
 import { useProductContext } from "@/context/ProductContext";
 import { Box, Grid, Pagination } from "@mui/material";
-import React, { useState } from "react";
+import React from "react";
 import SmoothScroll from "../framer/SmoothScroll";
 
 const ProductLayout: React.FC<IProductLayout> = ({ children }) => {
-  const { numberOfPages, paginateData, setPage, Page } = useProductContext();
+  const { paginateData, setPage, Page } = useProductContext();
 
   const handleChange = (event: React.ChangeEvent<unknown>, value: number) => {
+    console.log("handleChange: ");
     setPage(value);
     paginateData.jump(value);
-    // set scroll to top
+
     window.scrollTo(0, 0);
   };
   return (
@@ -26,7 +27,7 @@ const ProductLayout: React.FC<IProductLayout> = ({ children }) => {
         </Grid>
       </SmoothScroll>
       <Pagination
-        count={numberOfPages}
+        count={paginateData.maxPage}
         className="mt-5 flex w-full justify-center p-3 "
         size="large"
         page={Page}

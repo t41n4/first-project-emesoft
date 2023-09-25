@@ -3,6 +3,7 @@ import { welcomeData } from "@/constant";
 import { Typography } from "@mui/material";
 import { scaleAnimation } from "@/components/shop/ProductItem";
 import Link from "next/link";
+import Image from "next/image";
 
 // const inter = Inter({ subsets: ["latin"] });
 
@@ -32,17 +33,20 @@ export default function Home() {
       <div className="grid grid-cols-3 grid-rows-1 gap-3 pt-5 ">
         {welcomeData.slice(1).map((item) => (
           <Link
+            key={item.id}
             className={`relative h-[70vh] w-[30vw] ${scaleAnimation}`}
             href={"/shop"}
           >
             <span className="absolute h-full w-full flex flex-col justify-center items-center z-[100]">
               <Typography variant="h4"> {item.title}</Typography>
             </span>
-            <img
+            <Image
               key={item.id}
               className="object-contain h-full w-full border border-black bg-white opacity-60"
               src={item.image}
               alt=""
+              width={500}
+              height={500}
             />
           </Link>
         ))}
