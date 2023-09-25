@@ -21,7 +21,6 @@ import {
 const CartItems = (props: { dataCarts: ICartItem[] }) => {
   const { dataCarts } = props;
   const { removeFromCart } = useCart();
-  console.log("check dataCart", dataCarts);
 
   return dataCarts.map((cart) => {
     return (

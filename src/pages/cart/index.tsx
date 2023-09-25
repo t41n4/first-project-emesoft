@@ -15,7 +15,6 @@ const CartPage = () => {
     jump(value);
     window.scrollTo(0, 0);
   };
-  console.log("Current data", currentData);
 
   setTimeout(() => {
     setIsLoading(true);

@@ -1,8 +1,9 @@
-import { Box, Typography } from "@mui/material";
+import { Box, Typography, Button } from "@mui/material";
 import { styled, alpha } from "@mui/material/styles";
 import InputBase from "@mui/material/InputBase";
 import SearchIcon from "@mui/icons-material/Search";
 import { useCart } from "@/context";
+import { AddProduct } from "@/components";
 const Search = styled("div")(({ theme }) => ({
   position: "relative",
   borderRadius: theme.shape.borderRadius,
@@ -47,19 +48,25 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 }));
 const HeaderCart = () => {
   const { filterSearch } = useCart();
+
   return (
     <Box className=" flex justify-between mb-1">
       <Typography variant="h4">Your cart</Typography>
-      <Search>
-        <SearchIconWrapper>
-          <SearchIcon />
-        </SearchIconWrapper>
-        <StyledInputBase
-          placeholder="Search…"
-          inputProps={{ "aria-label": "search" }}
-          onChange={(event) => filterSearch(event.target.value)}
-        />
-      </Search>
+      <div className="flex">
+        <Search>
+          <SearchIconWrapper>
+            <SearchIcon />
+          </SearchIconWrapper>
+          <StyledInputBase
+            placeholder="Search…"
+            inputProps={{ "aria-label": "search" }}
+            onChange={(event) => {
+              filterSearch(event.target.value);
+            }}
+          />
+        </Search>
+        <AddProduct />
+      </div>
     </Box>
   );
 };

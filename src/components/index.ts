@@ -12,7 +12,7 @@ import CartEmpty from "./cart/CartEmpty";
 import SkeletonCart from "./cart/SkeletonCart";
 import CartItems from "./cart/CartItems";
 import HeaderCart from "./cart/HeaderCart";
-
+import AddProduct from "./cart/AddProduct";
 import LoginForm from "./login/LoginForm";
 export {
   Header,
@@ -25,6 +25,7 @@ export {
   CartEmpty,
   SkeletonCart,
   FloatingCartButton,
-  LoginForm
-  ,HeaderCart
+  LoginForm,
+  HeaderCart,
+  AddProduct
 };

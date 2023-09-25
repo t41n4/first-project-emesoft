@@ -10,6 +10,8 @@ const PER_PAGE = 8;
 // Create a provider component
 export const CartProvider: React.FC<any> = ({ children }) => {
   const [carts, setCart] = useState<ICartItem[]>([]);
+  const [newCarts, setNewCarts] = useState<ICartItem[]>([]);
+
   const [quantity, setQuantity] = useState(1);
 
   // Pagination variables
@@ -30,16 +32,17 @@ export const CartProvider: React.FC<any> = ({ children }) => {
   };
 
   const addToCart = (item: ICartItem) => {
-    console.log("item: ", item);
     if (isItemExist(item)) {
       const index = findCartItemIndex(carts, item);
       if (index !== -1) {
         const cartsClone = [...carts];
         cartsClone[index].quantity += item.quantity;
         setCart(cartsClone);
+        setNewCarts(cartsClone);
       }
     } else {
       setCart([...carts, item]);
+      setNewCarts([...newCarts, item]);
     }
   };
 
@@ -55,6 +58,7 @@ export const CartProvider: React.FC<any> = ({ children }) => {
         const cartsClone = [...carts];
         cartsClone[index].quantity = value;
         setCart(cartsClone);
+        setNewCarts(cartsClone);
       }
     }
   };
@@ -69,13 +73,20 @@ export const CartProvider: React.FC<any> = ({ children }) => {
       }
     });
     setCart(updateCart);
+    setNewCarts(updateCart);
   };
+
   const filterSearch = (textSearch: string) => {
-    carts.filter((cart) => {
-      return cart.name?.includes(textSearch);
-    });
+    if (textSearch) {
+      const updateCart = carts.filter((cart) => {
+        return cart.name?.includes(textSearch);
+      });
+      setCart(updateCart);
+    } else {
+      setCart(newCarts);
+    }
   };
-  console.log("text", carts);
+
   return (
     <CartContext.Provider
       value={{
