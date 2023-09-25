@@ -2,13 +2,11 @@ import { useProductContext } from "@/context/ProductContext";
 import { Typography, Slider } from "@mui/material";
 import * as React from "react";
 
-export interface IAppProps {}
-
 function calculateValue(value: number) {
   return value;
 }
 
-export default function PriceFilter(props: IAppProps) {
+export default function PriceFilter() {
   const [value, setValue] = React.useState<number>(0);
   const { minMaxPrice, handleCurrentFilterPriceChange } = useProductContext();
 
@@ -36,7 +34,8 @@ export default function PriceFilter(props: IAppProps) {
           placeholder="Price"
           value={value}
           onChange={(e) => {
-            handleChange(e, Number(e.target.value));
+            const event = e as unknown as Event;
+            handleChange(event, Number(e.target.value));
           }}
         />
         - {minMaxPrice[1]}$

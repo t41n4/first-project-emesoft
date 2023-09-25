@@ -29,6 +29,12 @@ export interface CartContextType {
   setQuantity: any;
 }
 
+export interface IQuery {
+  searchTerm: string;
+  categoryTerm: string[];
+  priceTerm: number | number[];
+}
+
 // Define the context interface
 export interface ProductContextType {
   products: IProduct[];

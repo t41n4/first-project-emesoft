@@ -1,7 +1,8 @@
 import { IProduct } from "@/common";
-import { ProductContextType } from "@/common/types";
+import { IQuery, ProductContextType } from "@/common/types";
 import { useFetchProducts } from "@/hooks";
 import usePagination from "@/hooks/usePagination";
+import { findMax, findMin } from "@/utils";
 import {
   ReactNode,
   createContext,
@@ -11,12 +12,6 @@ import {
 } from "react";
 
 const PRODUCT_PER_PAGE = 8;
-
-export interface Query {
-  searchTerm: string;
-  categoryTerm: string[];
-  priceTerm: number | number[];
-}
 
 // Create the context
 const ProductContext = createContext<ProductContextType | undefined>(undefined);
@@ -38,13 +33,6 @@ export function ProductProvider({ children }: { children: ReactNode }) {
 
   const rawData = useFetchProducts();
 
-  const findMax = (value: Array<IProduct>) => {
-    return Math.max(...value.map((product: IProduct) => product.price));
-  };
-  const findMin = (value: Array<IProduct>) => {
-    return Math.min(...value.map((product: IProduct) => product.price));
-  };
-
   useEffect(() => {
     if (displayData.length !== 0) return;
     rawData.then((res) => {
@@ -59,7 +47,7 @@ export function ProductProvider({ children }: { children: ReactNode }) {
     });
   }, [rawData]);
 
-  const handleQueryChange = (props: Query) => {
+  const handleQueryChange = (props: IQuery) => {
     const { searchTerm, categoryTerm, priceTerm } = props;
 
     const SearchResult = products.filter((product: IProduct) =>
@@ -71,7 +59,10 @@ export function ProductProvider({ children }: { children: ReactNode }) {
         // setDisplayData(products);
         return true;
       }
-      return product.price >= priceTerm && product.price <= minMaxPrice[1];
+      return (
+        product.price >= (priceTerm as number) &&
+        product.price <= minMaxPrice[1]
+      );
     });
 
     const CategoryResult = products.filter((product: IProduct) => {
@@ -89,6 +80,7 @@ export function ProductProvider({ children }: { children: ReactNode }) {
     // console.log(SearchResult, PriceResult, CategoryResult);
     // console.log("joinedResult: ", joinedResult);
 
+    setPage(1);
     paginateData.jump(1);
     setDisplayData(joinedResult);
   };
