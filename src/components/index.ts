@@ -5,26 +5,27 @@ import Product from "./shop/ProductItem";
 import ProductLayout from "./shop/ProductLayout";
 import FloatingCartButton from "./shared/FloatingCartBottom";
 
-import CartLayout from "./cart/CartLayout";
+
 import QuantityInput from "./cart/QuantityInput";
 import CartInfo from "./cart/CartInfo";
 import CartEmpty from "./cart/CartEmpty";
 import SkeletonCart from "./cart/SkeletonCart";
-import CartItem from "./cart/CartItem";
-
-
+import CartItems from "./cart/CartItems";
+import HeaderCart from "./cart/HeaderCart";
+import AddProduct from "./cart/AddProduct";
 import LoginForm from "./login/LoginForm";
 export {
   Header,
   Footer,
   Product,
-  CartItem,
+  CartItems,
   ProductLayout,
-  CartLayout,
   QuantityInput,
   CartInfo,
   CartEmpty,
   SkeletonCart,
   FloatingCartButton,
-  LoginForm
+  LoginForm,
+  HeaderCart,
+  AddProduct
 };

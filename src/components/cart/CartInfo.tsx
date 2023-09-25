@@ -1,6 +1,14 @@
 import { useCart } from "@/context";
 import { sumPrice, formatNumber } from "@/utils";
-import { Box, Button, Checkbox, Typography } from "@mui/material";
+import Box from "@mui/material/Box";
+import Card from "@mui/material/Card";
+import CardActions from "@mui/material/CardActions";
+import CardContent from "@mui/material/CardContent";
+import Button from "@mui/material/Button";
+import Typography from "@mui/material/Typography";
+import FormGroup from "@mui/material/FormGroup";
+import FormControlLabel from "@mui/material/FormControlLabel";
+import Checkbox from "@mui/material/Checkbox";
 import { useState } from "react";
 
 const CartInfo = () => {
@@ -9,37 +17,34 @@ const CartInfo = () => {
 
   const totalPriceCart = sumPrice(carts);
   return (
-    <Box className="max-w-lg">
-      <Box
-        component="div"
-        className="sticky top-[4.5rem] left-[3.5rem] pl-4 border border-black ml-4"
-      >
-        <Typography className="text-3xl font-normal mt-2">
-          Total : {formatNumber(totalPriceCart)}
-        </Typography>
-        <Typography className="text-2xl my-4">
-          Shipping fees are calculated at checkout
-        </Typography>
-        <Box className="text-2xl">
-          <Checkbox
-            className="w-0 h-0 "
-            onChange={(event) => {
-              setDisableBtn(!event.target.checked);
-            }}
-          />{" "}
-          Agree with the above information
-        </Box>
+    <Box className="w-80 ml-4">
+      <Card sx={{ minWidth: 275 }}>
+        <CardContent className="pb-2">
+          <Typography variant="h5">
+            Total: {formatNumber(totalPriceCart)}
+          </Typography>
 
-        <Box className="flex justify-center">
+          <Typography variant="h6">Free shipping</Typography>
+        </CardContent>
+        <CardActions className="flex flex-col">
+          <FormGroup className="items-start">
+            <FormControlLabel
+              control={
+                <Checkbox onChange={(event) => setDisableBtn(!disableBtn)} />
+              }
+              label="Agree with the above information"
+            />
+          </FormGroup>
           <Button
+            size="small"
+            className="bg-blue-500"
+            disabled={disableBtn ? true : false}
             variant="contained"
-            className="my-3 px-16  bg-black hover:bg-[#E4E6E7] hover:text-black "
-            disabled={disableBtn}
           >
             Pay
           </Button>
-        </Box>
-      </Box>
+        </CardActions>
+      </Card>
     </Box>
   );
 };

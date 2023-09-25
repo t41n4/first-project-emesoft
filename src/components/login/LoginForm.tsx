@@ -35,9 +35,7 @@ const LoginForm = () => {
   };
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-
     alert("true");
-
     console.log("check use name", valueName);
     console.log("check password", password);
   };
@@ -59,7 +57,7 @@ const LoginForm = () => {
         name="userName"
         type="text"
         className="my-3"
-        onChange={(e) => handleOnchange(e, "userName")}
+        onChange={(event) => setValueName(event.target.value)}
       />
       <FormControl variant="outlined" className="my-2" required>
         <InputLabel htmlFor="outlined-adornment-password">Password</InputLabel>
@@ -67,7 +65,7 @@ const LoginForm = () => {
           name="password"
           id="outlined-adornment-password"
           type={showPassword ? "text" : "password"}
-          onChange={(e) => handleOnchange(e, "password")}
+          onChange={(event) => setPassword(event.target.value)}
           endAdornment={
             <InputAdornment position="end">
               <IconButton

@@ -1,3 +1,7 @@
+import { ICartItem } from "@/common/types";
+import { QuantityInput } from "@/components";
+import { useCart } from "@/context";
+import { formatNumber } from "@/utils";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import HighlightOffIcon from "@mui/icons-material/HighlightOff";
@@ -11,26 +15,32 @@ import {
   CardActions,
   CardHeader,
   IconButton,
-  Skeleton,
+  Avatar,
 } from "@mui/material";
-const SkeletonCart = () => {
-  return (
-    <Grid item>
-      <Card>
-        <Skeleton>
+
+const CartItems = (props: { dataCarts: ICartItem[] }) => {
+  const { dataCarts } = props;
+  const { removeFromCart } = useCart();
+
+  return dataCarts.map((cart) => {
+    return (
+      <Grid item key={cart.id}>
+        <Card>
           <CardHeader
             action={
-              <IconButton className="mx-1">
+              <IconButton
+                className="mx-1"
+                onClick={() => removeFromCart(cart.id)}
+              >
                 <HighlightOffIcon />
               </IconButton>
             }
             className="p-0"
           />
-        </Skeleton>
-        <Skeleton>
           <CardActionArea>
             <CardMedia
               component="img"
+              image={cart.image}
               alt="green iguana"
               className="h-72 object-contain"
             />
@@ -40,17 +50,18 @@ const SkeletonCart = () => {
                 variant="h5"
                 className="whitespace-nowrap overflow-hidden text-ellipsis"
               >
-                113213
+                {cart.name}
               </Typography>
-              <Typography>250000</Typography>
+              <Typography>{formatNumber(cart.price, cart.quantity)}</Typography>
             </CardContent>
           </CardActionArea>
-        </Skeleton>
-        <Skeleton>
-          <CardActions className="flex justify-center mb-1"></CardActions>
-        </Skeleton>
-      </Card>
-    </Grid>
-  );
+          <CardActions className="flex justify-center mb-1">
+            <QuantityInput id={cart.id} value={cart.quantity} />
+          </CardActions>
+        </Card>
+      </Grid>
+    );
+  });
 };
-export default SkeletonCart;
+
+export default CartItems;

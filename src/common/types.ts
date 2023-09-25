@@ -8,9 +8,7 @@ export interface ICartItem {
   price: number | undefined;
   quantity: number | undefined;
 }
-export interface ICartItems {
-  dataCarts: ICartItem[];
-}
+
 export interface IInputQuantity {
   id: any;
   value: number | undefined;
@@ -20,13 +18,14 @@ export interface IInputQuantity {
 export interface CartContextType {
   carts: ICartItem[];
   addToCart: (item: ICartItem) => void;
-  removeFromCart: (id: number) => void;
+  removeFromCart: (id: any) => void;
   updateQuantityCart: (
     value: number | undefined,
     id: number | undefined
   ) => void;
   quantity: number;
   setQuantity: any;
+  filterSearch: (textSearch: string)=>void;
 }
 
 export interface IQuery {
