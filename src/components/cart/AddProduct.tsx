@@ -1,6 +1,14 @@
 import * as React from "react";
 import {
   Button,
+  Drawer,
+  Typography,
+  ListItemIcon,
+  ListItemButton,
+  ListItemText,
+  Box,
+  List,
+  ListItem,
   TextField,
   Dialog,
   DialogTitle,
@@ -20,43 +28,34 @@ import {
   CardContent,
   CardHeader,
   IconButton,
+  ImageList,
+  ImageListItem,
+  ImageListItemBar,
 } from "@mui/material";
 import HighlightOffOutlinedIcon from "@mui/icons-material/HighlightOffOutlined";
-
 import { styled } from "@mui/material/styles";
 import { Controller, useForm } from "react-hook-form";
 import CloudUploadIcon from "@mui/icons-material/CloudUpload";
+import { useCategories } from "@/hooks";
 import { useState, useEffect } from "react";
-import { useFetchCategories } from "@/hooks";
-const VisuallyHiddenInput = styled("input")({
-  clip: "rect(0 0 0 0)",
-  clipPath: "inset(50%)",
-  height: 1,
-  overflow: "hidden",
-  position: "absolute",
-  bottom: 0,
-  left: 0,
-  whiteSpace: "nowrap",
-  width: 1,
-});
+import {
+  FormInputProductName,
+  FormInputPrice,
+  FormInputCategory,
+  FormUploadPicture,
+  FormUploadDetailsPicture,
+} from "@/constant/formAddProduct";
+
 const AddProduct = () => {
   const [open, setOpen] = React.useState(false);
-  const [categories, setCategories] = useState([]);
+  const categories = useCategories();
   const [picture, setPicture] = useState("");
-  interface FormValues {
-    nameProduct: string;
-    price: string;
-    category: string;
-    picture: string;
-  }
-  // UseEffects
-  useEffect(() => {
-    useFetchCategories().then((response) => {
-      if (response) {
-        setCategories(response);
-      }
-    });
-  }, []);
+  const [listPicture, setListPicture] = useState([]);
+  // interface FormValues {
+  //   nameProduct: string;
+  //   price: string;
+  //   category: string;
+  //   picture: string;  // }
 
   // Handle open modal
   const handleClickOpen = () => {
@@ -73,203 +72,199 @@ const AddProduct = () => {
     control,
     setValue,
     reset,
-  } = useForm<FormValues>();
+  } = useForm();
 
   //   hanlde submit form
   const onSubmitForm = (data: any) => {
     console.log("data", data);
     reset();
     setPicture("");
+    setListPicture([]);
   };
 
+  // function srcset(
+  //   image: string,
+  //   width: number,
+  //   height: number,
+  //   rows = 1,
+  //   cols = 1
+  // ) {
+  //   return {
+  //     src: `${image}?w=${width * cols}&h=${height * rows}`,
+  //     srcSet: `${image}?w=${width * cols}&h=${height * rows}2x`,
+  //   };
+  // }
+  // Handle Onclick delete list picture
+  const handleDeleteListPicture = (index: number) => {
+    if (listPicture.length > 0) {
+      const updateListPicture = listPicture.filter(
+        (item, indexItem) => indexItem !== index
+      );
+      setListPicture(updateListPicture);
+    }
+  };
   return (
     <div>
       <Button variant="outlined" onClick={handleClickOpen}>
         Add Product
       </Button>
-      <Dialog open={open} onClose={handleClose} disableEscapeKeyDown={true}>
-        <DialogTitle>Add new product</DialogTitle>
-        <IconButton
-          aria-label="close"
-          onClick={() => setOpen(false)}
-          sx={{
-            position: "absolute",
-            right: 8,
-            top: 8,
-            color: (theme) => theme.palette.grey[500],
-          }}
-        >
-          <HighlightOffOutlinedIcon />
-        </IconButton>
-        <DialogContent>
-          <form
-            onSubmit={handleSubmit(onSubmitForm)}
-            id="my-form"
-            className="grid grid-flow-row gap-5 mt-5 w-96"
-          >
-            <Controller
-              name="nameProduct"
-              control={control}
-              defaultValue=""
-              rules={{
-                required: "product name not be empty!",
-                minLength: { value: 8, message: "Minimum of 8 characters!" },
-              }}
-              render={({
-                field: { onChange, onBlur, value },
-                fieldState: { error },
-                formState,
-              }) => (
-                <TextField
-                  helperText={error ? error.message : null}
-                  size="small"
-                  error={!!error}
-                  onChange={onChange}
-                  onBlur={onBlur}
-                  value={value}
-                  fullWidth
-                  label="Product name"
-                  variant="outlined"
-                />
-              )}
-            />
-
-            <Controller
-              name="price"
-              control={control}
-              defaultValue=""
-              rules={{
-                required: "price not be empty!",
-                pattern: {
-                  value: /^[0-9]+$/,
-                  message: "Please enter a number",
-                },
-              }}
-              render={({
-                field: { onChange, onBlur, value },
-                fieldState: { error },
-                formState,
-              }) => (
-                <TextField
-                  helperText={error ? error.message : null}
-                  size="small"
-                  error={!!error}
-                  onChange={onChange}
-                  onBlur={onBlur}
-                  value={value}
-                  fullWidth
-                  label="Price"
-                  variant="outlined"
-                />
-              )}
-            />
-            <FormControl fullWidth>
-              <InputLabel id="demo-simple-select-label">Category</InputLabel>
-              <Controller
-                name="category"
+      <Drawer anchor="right" open={true} onClose={() => setOpen(false)}>
+        <Card className="w-[50vw] overflow-y-scroll">
+          <CardHeader
+            action={
+              <IconButton aria-label="settings">
+                <HighlightOffOutlinedIcon className="text-4xl" />
+              </IconButton>
+            }
+            className="p-0 flex-row-reverse"
+          />
+          <CardContent>
+            <Typography className="font-semibold text-xl">
+              Add a new product
+            </Typography>
+            <form
+              onSubmit={handleSubmit(onSubmitForm)}
+              id="my-form"
+              className="grid grid-flow-row gap-5 mt-5 w-full"
+            >
+              <FormInputProductName
+                name="productName"
                 control={control}
-                rules={{ required: "Category be not empty!" }}
-                defaultValue=""
-                render={({
-                  field: { onChange, onBlur, value },
-                  fieldState: { error },
-                  formState,
-                }) => {
-                  return (
-                    <Select
-                      labelId="demo-simple-select-label"
-                      id="demo-simple-select"
-                      value={value}
-                      label="Category"
-                      onChange={onChange}
-                      error={!!error}
-                    >
-                      {categories.map((category, index) => {
-                        return <MenuItem value={category}>{category}</MenuItem>;
-                      })}
-                    </Select>
-                  );
-                }}
+                label="Product Name"
               />
-              {errors?.category ? (
-                <span className="text-[0.75rem] mx-[14px] mt-1 text-[#d32f2f]">{`${errors.category.message}`}</span>
-              ) : (
-                <></>
-              )}
-            </FormControl>
+              <FormInputPrice name="price" control={control} label="Price" />
+              <FormInputCategory
+                name="categories"
+                label="Category"
+                control={control}
+              />
+              <Divider textAlign="left">Product Image</Divider>
 
-            <Divider textAlign="left">Product Image</Divider>
-            <Card className=" w-full">
-              {picture ? (
-                <CardHeader
-                  action={
-                    <IconButton
-                      aria-label="settings"
-                      className="p-0"
-                      onClick={() => {
-                        setPicture("");
-                        setValue("picture", "");
-                      }}
-                    >
-                      <HighlightOffOutlinedIcon />
-                    </IconButton>
-                  }
-                />
-              ) : (
-                <></>
-              )}
-              <CardMedia
-                component="img"
-                image={picture}
-                className="mx-auto h-28 object-contain"
-              />
-              <CardContent>
-                {errors?.picture ? (
-                  <span className="text-[0.75rem] mx-[14px] mt-1 text-[#d32f2f]">{`${errors.picture.message}`}</span>
+              <Card className=" w-full">
+                {picture ? (
+                  <CardHeader
+                    action={
+                      <IconButton
+                        aria-label="settings"
+                        className="p-0"
+                        onClick={() => {
+                          setPicture("");
+                          setValue("picture", "");
+                        }}
+                      >
+                        <HighlightOffOutlinedIcon />
+                      </IconButton>
+                    }
+                  />
                 ) : (
                   <></>
                 )}
-              </CardContent>
+                <CardMedia
+                  component="img"
+                  image={picture}
+                  className="mx-auto h-28 object-contain"
+                />
+                <CardContent className="p-0">
+                  {errors?.picture ? (
+                    <span className="text-[0.75rem] mx-[14px] mt-1 text-[#d32f2f]">{`${errors.picture.message}`}</span>
+                  ) : (
+                    <></>
+                  )}
+                </CardContent>
 
-              <CardActions>
-                <Button
-                  component="label"
-                  variant="contained"
-                  startIcon={<CloudUploadIcon />}
-                  className="mx-auto"
+                <CardActions>
+                  <Button
+                    component="label"
+                    variant="contained"
+                    startIcon={<CloudUploadIcon />}
+                    className="mx-auto"
+                  >
+                    Upload file
+                    <FormUploadPicture
+                      name="picture"
+                      control={control}
+                      label="piceture"
+                      setPicture={setPicture}
+                    />
+                  </Button>
+                </CardActions>
+              </Card>
+
+              <Divider textAlign="left">Details Product Image </Divider>
+              <Card className=" w-full">
+                <ImageList
+                  sx={{
+                    width: "100%",
+                    // Promote the list into its own layer in Chrome. This costs memory, but helps keeping high FPS.
+                    transform: "translateZ(0)",
+                  }}
+                  cols={3}
+                  gap={1}
                 >
-                  Upload file
-                  <Controller
-                    name="picture"
-                    control={control}
-                    rules={{ required: "Product image be not empty" }}
-                    defaultValue=""
-                    render={({ field, fieldState, formState }) => {
-                      return (
-                        <VisuallyHiddenInput
-                          type="file"
-                          accept="image/*"
-                          // value={value}
-                          onChange={(e) => {
-                            setPicture(URL.createObjectURL(e.target.files[0]));
-                            return field.onChange(e.target.value);
+                  {listPicture.map((item, index) => {
+                    return (
+                      <ImageListItem key={index}>
+                        <img src={item} loading="lazy" />
+                        <ImageListItemBar
+                          sx={{
+                            background:
+                              "linear-gradient(to bottom, rgba(0,0,0,0.7) 0%, " +
+                              "rgba(0,0,0,0.3) 70%, rgba(0,0,0,0) 100%)",
                           }}
+                          position="top"
+                          actionIcon={
+                            <IconButton
+                              sx={{ color: "white" }}
+                              onClick={() => handleDeleteListPicture(index)}
+                            >
+                              <HighlightOffOutlinedIcon />
+                            </IconButton>
+                          }
+                          actionPosition="left"
                         />
-                      );
-                    }}
-                  />
-                </Button>
-              </CardActions>
-            </Card>
-          </form>
-        </DialogContent>
-        <DialogActions>
-          <Button onClick={() => setOpen(false)}>Cancel</Button>
-          <Button type="submit" form="my-form">
-            ADD
-          </Button>
-        </DialogActions>
-      </Dialog>
+                      </ImageListItem>
+                    );
+                  })}
+                </ImageList>
+                <CardContent className="p-0">
+                  {errors?.detailsPicture ? (
+                    <span className="text-[0.75rem] mx-[14px] mt-1 text-[#d32f2f]">{`${errors.detailsPicture.message}`}</span>
+                  ) : (
+                    <></>
+                  )}
+                </CardContent>
+
+                <CardActions>
+                  <Button
+                    component="label"
+                    variant="contained"
+                    startIcon={<CloudUploadIcon />}
+                    className="mx-auto"
+                  >
+                    Upload file
+                    <FormUploadDetailsPicture
+                      control={control}
+                      label="Details Picture"
+                      name="detailsPicture"
+                      setListPicture={setListPicture}
+                    />
+                  </Button>
+                </CardActions>
+              </Card>
+            </form>
+          </CardContent>
+          <CardActions>
+            <Button
+              type="submit"
+              variant="contained"
+              form="my-form"
+              className="bg-blue-500 mx-auto px-7"
+            >
+              ADD
+            </Button>
+          </CardActions>
+        </Card>
+      </Drawer>
     </div>
   );
 };
