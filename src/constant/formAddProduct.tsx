@@ -18,7 +18,7 @@ import {
 } from "@mui/material";
 import HighlightOffOutlinedIcon from "@mui/icons-material/HighlightOffOutlined";
 import CloudUploadIcon from "@mui/icons-material/CloudUpload";
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { useCategories } from "@/hooks";
 import styled from "styled-components";
 interface FormInputProps {
@@ -119,7 +119,7 @@ export const FormInputCategory = (props: FormInputProps) => {
       control={props.control}
       rules={{ required: "Category not be empty!" }}
       render={({
-        field: { value, onChange },
+        field: { value = [], onChange },
         fieldState: { error },
         formState,
       }) => {
@@ -128,17 +128,25 @@ export const FormInputCategory = (props: FormInputProps) => {
             multiple
             id="tags-outlined"
             options={categories}
-            getOptionLabel={(option) => option}
+            value={
+              typeof value === "string"
+                ? categories.find((cat) => cat === value)
+                : value || null
+            }
+            // defaultValue={[]}
+            // getOptionLabel={(option) => option}
             filterSelectedOptions
             onChange={(event, value) => onChange(value)}
-            renderInput={(params) => (
-              <TextField
-                {...params}
-                label={props.label}
-                helperText={error ? error.message : null}
-                error={!!error}
-              />
-            )}
+            renderInput={(params) => {
+              return (
+                <TextField
+                  {...params}
+                  label={props.label}
+                  helperText={error ? error.message : null}
+                  error={!!error}
+                />
+              );
+            }}
           />
         );
       }}
@@ -213,7 +221,6 @@ export const FormUploadPicture = (props: FormInputProps) => {
 };
 
 export const FormUploadDetailsPicture = (props: FormInputProps) => {
-  // const [listPicture, setListPicture] = useState([]);
   return (
     <Controller
       name={props.name}
@@ -231,14 +238,12 @@ export const FormUploadDetailsPicture = (props: FormInputProps) => {
               console.log("check listFiles", listFiles);
               const listPicture = [];
               for (let i = 0; i < listFiles.length; i++) {
-                listPicture.push(listFiles[i].name);
-
+                listPicture.push(listFiles[i]);
                 props.setListPicture((prevState: any) => [
                   ...prevState,
-                  URL.createObjectURL(listFiles[i]),
+                  listFiles[i],
                 ]);
               }
-
               return field.onChange(listPicture);
             }}
           />

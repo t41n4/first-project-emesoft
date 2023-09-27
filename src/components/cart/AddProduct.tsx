@@ -119,18 +119,19 @@ const AddProduct = () => {
               id="my-form"
               className="grid grid-flow-row gap-5 mt-5 w-full"
             >
-              <FormInputProductName
+              {/* <FormInputProductName
                 name="productName"
                 control={control}
                 label="Product Name"
               />
               <FormInputPrice name="price" control={control} label="Price" />
+
               <FormInputCategory
                 name="categories"
                 label="Category"
                 control={control}
-              />
-              <Divider textAlign="left">Product Image</Divider>
+              /> */}
+              {/* <Divider textAlign="left">Product Image</Divider>
 
               <Card className=" w-full">
                 {picture ? (
@@ -180,7 +181,7 @@ const AddProduct = () => {
                     />
                   </Button>
                 </CardActions>
-              </Card>
+              </Card> */}
 
               <Divider textAlign="left">Details Product Image </Divider>
               <Card className=" w-full">
@@ -196,7 +197,7 @@ const AddProduct = () => {
                   {listPicture.map((item, index) => {
                     return (
                       <ImageListItem key={index}>
-                        <img src={item} loading="lazy" />
+                        <img src={URL.createObjectURL(item)} loading="lazy" />
                         <ImageListItemBar
                           sx={{
                             background:
