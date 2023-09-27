@@ -114,37 +114,34 @@ export const FormInputPrice = (props: FormInputProps) => {
 export const FormInputCategory = (props: FormInputProps) => {
   const categories = useCategories();
   return (
-    <Autocomplete
-      multiple
-      id="tags-standard"
-      options={categories}
-      getOptionLabel={(option) => option}
-      // defaultValue={[top100Films[13]]}
-      renderInput={(params) => (
-        <Controller
-          name={props.name}
-          control={props.control}
-          rules={{ required: "Category be not empty!" }}
-          defaultValue=""
-          render={({
-            field: { onChange, onBlur, value },
-            fieldState: { error },
-            formState,
-          }) => {
-            return (
+    <Controller
+      name={props.name}
+      control={props.control}
+      rules={{ required: "Category not be empty!" }}
+      render={({
+        field: { value, onChange },
+        fieldState: { error },
+        formState,
+      }) => {
+        return (
+          <Autocomplete
+            multiple
+            id="tags-outlined"
+            options={categories}
+            getOptionLabel={(option) => option}
+            filterSelectedOptions
+            onChange={(event, value) => onChange(value)}
+            renderInput={(params) => (
               <TextField
                 {...params}
                 label={props.label}
-                onChange={onChange}
-                value={value}
-                onBlur={onBlur}
                 helperText={error ? error.message : null}
                 error={!!error}
               />
-            );
-          }}
-        />
-      )}
+            )}
+          />
+        );
+      }}
     />
 
     // <FormControl fullWidth>

@@ -31,6 +31,9 @@ import {
   ImageList,
   ImageListItem,
   ImageListItemBar,
+  Snackbar,
+  Alert,
+  AlertTitle,
 } from "@mui/material";
 import HighlightOffOutlinedIcon from "@mui/icons-material/HighlightOffOutlined";
 import { styled } from "@mui/material/styles";
@@ -48,14 +51,10 @@ import {
 
 const AddProduct = () => {
   const [open, setOpen] = React.useState(false);
+  const [openToast, setOpenToast] = React.useState(false);
   const categories = useCategories();
   const [picture, setPicture] = useState("");
   const [listPicture, setListPicture] = useState([]);
-  // interface FormValues {
-  //   nameProduct: string;
-  //   price: string;
-  //   category: string;
-  //   picture: string;  // }
 
   // Handle open modal
   const handleClickOpen = () => {
@@ -76,24 +75,16 @@ const AddProduct = () => {
 
   //   hanlde submit form
   const onSubmitForm = (data: any) => {
-    console.log("data", data);
-    reset();
-    setPicture("");
-    setListPicture([]);
+    if (data) {
+      console.log("data", data);
+
+      reset();
+      setPicture("");
+      setListPicture([]);
+      setOpenToast(true);
+    }
   };
 
-  // function srcset(
-  //   image: string,
-  //   width: number,
-  //   height: number,
-  //   rows = 1,
-  //   cols = 1
-  // ) {
-  //   return {
-  //     src: `${image}?w=${width * cols}&h=${height * rows}`,
-  //     srcSet: `${image}?w=${width * cols}&h=${height * rows}2x`,
-  //   };
-  // }
   // Handle Onclick delete list picture
   const handleDeleteListPicture = (index: number) => {
     if (listPicture.length > 0) {
@@ -103,6 +94,7 @@ const AddProduct = () => {
       setListPicture(updateListPicture);
     }
   };
+
   return (
     <div>
       <Button variant="outlined" onClick={handleClickOpen}>
@@ -265,6 +257,23 @@ const AddProduct = () => {
           </CardActions>
         </Card>
       </Drawer>
+
+      {/* Toast message */}
+      <Snackbar
+        open={openToast}
+        autoHideDuration={6000}
+        onClose={() => setOpenToast(false)}
+        anchorOrigin={{ vertical: "top", horizontal: "left" }}
+      >
+        <Alert
+          onClose={() => setOpenToast(false)}
+          severity="success"
+          sx={{ width: "100%" }}
+        >
+          <AlertTitle>Success</AlertTitle>
+          Add a new product success
+        </Alert>
+      </Snackbar>
     </div>
   );
 };
