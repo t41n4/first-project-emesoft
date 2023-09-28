@@ -13,7 +13,7 @@ import {
   IconButton,
   Skeleton,
 } from "@mui/material";
-const SkeletonCart = () => {
+const CartSkeleton = () => {
   return (
     <Grid item>
       <Card>
@@ -53,4 +53,4 @@ const SkeletonCart = () => {
     </Grid>
   );
 };
-export default SkeletonCart;
+export default CartSkeleton;

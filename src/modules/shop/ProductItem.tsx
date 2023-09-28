@@ -15,7 +15,7 @@ import { useRouter } from "next/router";
 export const scaleAnimation =
   "transform transition hover:scale-[101%]  duration-500 ease-in-out";
 
-export default function Product(props: IProduct) {
+export default function ProductItem(props: IProduct) {
   const router = useRouter();
 
   //filter title to make it url friendly

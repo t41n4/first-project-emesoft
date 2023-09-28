@@ -1,5 +1,5 @@
 import { IProduct } from "@/common";
-import { QuantityInput } from "@/components";
+import { QuantityInput } from "@/modules";
 import { useCart } from "@/context";
 import { useFetchProductsByID } from "@/hooks";
 import { validateSlug } from "@/utils";

@@ -1,11 +1,8 @@
-import { Inter } from "next/font/google";
+import { scaleAnimation } from "@/modules/shop/ProductItem";
 import { welcomeData } from "@/constant";
 import { Typography } from "@mui/material";
-import { scaleAnimation } from "@/components/shop/ProductItem";
-import Link from "next/link";
 import Image from "next/image";
-
-// const inter = Inter({ subsets: ["latin"] });
+import Link from "next/link";
 
 export default function Home() {
   return (

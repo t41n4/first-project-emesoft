@@ -50,29 +50,6 @@ export function ProductProvider({ children }: { children: ReactNode }) {
 
   const handleQueryChange = (props: IQuery) => {
     const { searchTerm, categoryTerm, priceTerm } = props;
-
-    // const SearchResult = products.filter((product: IProduct) =>
-    //   product.title.toLowerCase().includes(searchTerm.toLowerCase())
-    // );
-
-    // const PriceResult = products.filter((product: IProduct) => {
-    //   if (priceTerm === 0) {
-    //     // setDisplayData(products);
-    //     return true;
-    //   }
-    //   return (
-    //     product.price >= (priceTerm as number) &&
-    //     product.price <= minMaxPrice[1]
-    //   );
-    // });
-
-    // const CategoryResult = products.filter((product: IProduct) => {
-    //   if (categoryTerm.length === 0) {
-    //     return true;
-    //   }
-    //   return categoryTerm.includes(product.category);
-    // });
-
     const [SearchResult, PriceResult, CategoryResult] = products.reduce(
       ([SearchResult, PriceResult, CategoryResult], product: IProduct) => {
         const { title, price, category } = product;
@@ -83,33 +60,23 @@ export function ProductProvider({ children }: { children: ReactNode }) {
 
         const priceMatch =
           price >= (priceTerm as number) && price <= minMaxPrice[1];
-
         priceMatch && PriceResult.push(product);
 
         const categoryMatch =
           categoryTerm.length === 0 ? true : categoryTerm.includes(category);
-
         categoryMatch && CategoryResult.push(product);
 
         return [SearchResult, PriceResult, CategoryResult];
       },
       [[], [], []] as [IProduct[], IProduct[], IProduct[]]
     );
-    // console.log("SearchResult: ", SearchResult);
-    // console.log("PriceResult: ", PriceResult);
-    // console.log("CategoryResult: ", CategoryResult);
-
-    console.log([SearchResult, PriceResult, CategoryResult]);
+    // console.log([SearchResult, PriceResult, CategoryResult]);
 
     // join 3 array
     const joinedResult = [SearchResult, PriceResult, CategoryResult]
       .filter((arr) => arr.length !== 0)
       .reduce((a, b) => a.filter((c) => b.includes(c)));
     console.log("joinedResult: ", joinedResult);
-
-    // console.log("props: ", props);
-    // console.log(SearchResult, PriceResult, CategoryResult);
-    // console.log("joinedResult: ", joinedResult);
 
     setPage(1);
     paginateData.jump(1);

@@ -22,7 +22,7 @@ export default function PriceFilter() {
     return `${minMaxPrice[0]}$ - ${value}$ - ${minMaxPrice[1]}$`;
   }
   return (
-    <div className="flex justify-center flex-col-reverse items-center">
+    <div className="flex flex-col-reverse justify-center  items-center">
       <Typography
         id="non-linear-slider"
         gutterBottom

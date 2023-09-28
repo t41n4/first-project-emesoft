@@ -1,11 +1,9 @@
 import { IProduct } from "@/common";
-import { Product, ProductLayout } from "@/components";
-import CategoryFilter from "@/components/shop/CategoryFilter";
-import PriceFilter from "@/components/shop/PriceFilter";
+import { Product, ProductLayout, CategoryFilter, PriceFilter } from "@/modules";
+
 import { useProductContext } from "@/context/ProductContext";
 import { Grid, Skeleton, Stack } from "@mui/material";
 import Image from "next/image";
-import { use, useEffect } from "react";
 
 const SkeletonItem = () => {
   return (
@@ -36,26 +34,16 @@ const ProductEmpty = () => {
 };
 
 const Page = () => {
-  // const [isLoading, setIsLoading] = useState<boolean>(true);
-
   const { displayData, products, paginateData } = useProductContext();
-
-  // useEffect(() => {
-  //   paginateData.jump(1);
-  // }, [paginateData]);
 
   return (
     <div className="p-5 flex flex-row">
       <div className="flex flex-col p-2 sticky h-screen top-[4.75rem] left-[1.5rem]">
-        <div className="CategoryFilter">
-          <div>
-            <CategoryFilter />
-          </div>
+        <div className="CategoryFilter ">
+          <CategoryFilter />
         </div>
         <div className="PriceFilter">
-          <div>
-            <PriceFilter />
-          </div>
+          <PriceFilter />
         </div>
       </div>
       <div className="Content flex w-full">

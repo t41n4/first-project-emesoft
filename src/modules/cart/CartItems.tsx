@@ -1,5 +1,5 @@
 import { ICartItem } from "@/common/types";
-import { QuantityInput } from "@/components";
+import { QuantityInput } from "@/modules";
 import { useCart } from "@/context";
 import { formatNumber } from "@/utils";
 import Card from "@mui/material/Card";
