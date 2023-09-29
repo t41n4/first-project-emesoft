@@ -37,7 +37,7 @@ import {
 } from "@mui/material";
 import HighlightOffOutlinedIcon from "@mui/icons-material/HighlightOffOutlined";
 import { styled } from "@mui/material/styles";
-import { Controller, useForm } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import CloudUploadIcon from "@mui/icons-material/CloudUpload";
 import { useCategories } from "@/hooks";
 import { useState, useEffect } from "react";
@@ -48,30 +48,34 @@ import {
   FormUploadPicture,
   FormUploadDetailsPicture,
 } from "@/constant/formAddProduct";
+import { list } from "postcss";
 
 const AddProduct = () => {
-  const [open, setOpen] = React.useState(false);
-  const [openToast, setOpenToast] = React.useState(false);
-  const categories = useCategories();
-  const [picture, setPicture] = useState("");
-  const [listPicture, setListPicture] = useState([]);
-
-  // Handle open modal
-  const handleClickOpen = () => {
-    setOpen(true);
-  };
-  //   Handle close modal
-  const handleClose = () => {
-    setOpen(true);
-  };
   const {
     register,
     handleSubmit,
     formState: { errors },
     control,
     setValue,
+    clearErrors,
     reset,
+    getValues,
   } = useForm();
+  const [open, setOpen] = React.useState(false);
+  const [openToast, setOpenToast] = React.useState(false);
+  const categories = useCategories();
+  const [picture, setPicture] = useState("");
+  const [listPicture, setListPicture] = useState([]);
+  // Handle open modal
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
+  //   Handle close modal
+  const handleClose = () => {
+    setOpen(false);
+
+    clearErrors();
+  };
 
   //   hanlde submit form
   const onSubmitForm = (data: any) => {
@@ -79,6 +83,7 @@ const AddProduct = () => {
       console.log("data", data);
 
       reset();
+      setValue("detailPictures", []);
       setPicture("");
       setListPicture([]);
       setOpenToast(true);
@@ -86,25 +91,17 @@ const AddProduct = () => {
   };
 
   // Handle Onclick delete list picture
-  const handleDeleteListPicture = (index: number) => {
-    if (listPicture.length > 0) {
-      const updateListPicture = listPicture.filter(
-        (item, indexItem) => indexItem !== index
-      );
-      setListPicture(updateListPicture);
-    }
-  };
 
   return (
     <div>
       <Button variant="outlined" onClick={handleClickOpen}>
         Add Product
       </Button>
-      <Drawer anchor="right" open={true} onClose={() => setOpen(false)}>
+      <Drawer anchor="right" open={open} onClose={() => setOpen(true)}>
         <Card className="w-[50vw] overflow-y-scroll">
           <CardHeader
             action={
-              <IconButton aria-label="settings">
+              <IconButton aria-label="settings" onClick={() => handleClose()}>
                 <HighlightOffOutlinedIcon className="text-4xl" />
               </IconButton>
             }
@@ -119,7 +116,7 @@ const AddProduct = () => {
               id="my-form"
               className="grid grid-flow-row gap-5 mt-5 w-full"
             >
-              {/* <FormInputProductName
+              <FormInputProductName
                 name="productName"
                 control={control}
                 label="Product Name"
@@ -130,8 +127,8 @@ const AddProduct = () => {
                 name="categories"
                 label="Category"
                 control={control}
-              /> */}
-              {/* <Divider textAlign="left">Product Image</Divider>
+              />
+              <Divider textAlign="left">Product Image</Divider>
 
               <Card className=" w-full">
                 {picture ? (
@@ -181,69 +178,16 @@ const AddProduct = () => {
                     />
                   </Button>
                 </CardActions>
-              </Card> */}
+              </Card>
 
               <Divider textAlign="left">Details Product Image </Divider>
-              <Card className=" w-full">
-                <ImageList
-                  sx={{
-                    width: "100%",
-                    // Promote the list into its own layer in Chrome. This costs memory, but helps keeping high FPS.
-                    transform: "translateZ(0)",
-                  }}
-                  cols={3}
-                  gap={1}
-                >
-                  {listPicture.map((item, index) => {
-                    return (
-                      <ImageListItem key={index}>
-                        <img src={URL.createObjectURL(item)} loading="lazy" />
-                        <ImageListItemBar
-                          sx={{
-                            background:
-                              "linear-gradient(to bottom, rgba(0,0,0,0.7) 0%, " +
-                              "rgba(0,0,0,0.3) 70%, rgba(0,0,0,0) 100%)",
-                          }}
-                          position="top"
-                          actionIcon={
-                            <IconButton
-                              sx={{ color: "white" }}
-                              onClick={() => handleDeleteListPicture(index)}
-                            >
-                              <HighlightOffOutlinedIcon />
-                            </IconButton>
-                          }
-                          actionPosition="left"
-                        />
-                      </ImageListItem>
-                    );
-                  })}
-                </ImageList>
-                <CardContent className="p-0">
-                  {errors?.detailsPicture ? (
-                    <span className="text-[0.75rem] mx-[14px] mt-1 text-[#d32f2f]">{`${errors.detailsPicture.message}`}</span>
-                  ) : (
-                    <></>
-                  )}
-                </CardContent>
-
-                <CardActions>
-                  <Button
-                    component="label"
-                    variant="contained"
-                    startIcon={<CloudUploadIcon />}
-                    className="mx-auto"
-                  >
-                    Upload file
-                    <FormUploadDetailsPicture
-                      control={control}
-                      label="Details Picture"
-                      name="detailsPicture"
-                      setListPicture={setListPicture}
-                    />
-                  </Button>
-                </CardActions>
-              </Card>
+              <FormUploadDetailsPicture
+                name="detailPictures"
+                control={control}
+                label="Detail Picture"
+                listPicture={listPicture}
+                setListPicture={setListPicture}
+              />
             </form>
           </CardContent>
           <CardActions>

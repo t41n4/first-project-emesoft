@@ -15,19 +15,23 @@ import {
   CardActions,
   Button,
   Autocomplete,
+  ImageListItemBar,
+  ImageList,
+  ImageListItem,
 } from "@mui/material";
 import HighlightOffOutlinedIcon from "@mui/icons-material/HighlightOffOutlined";
 import CloudUploadIcon from "@mui/icons-material/CloudUpload";
 import { useRef, useState } from "react";
 import { useCategories } from "@/hooks";
+
 import styled from "styled-components";
 interface FormInputProps {
   name: string;
   control: any;
   label: string;
   setPicture?: any;
-  setListPicture?: any;
   listPicture?: any;
+  setListPicture?: any;
 }
 
 const VisuallyHiddenInput = styled("input")({
@@ -192,10 +196,6 @@ export const FormInputCategory = (props: FormInputProps) => {
 };
 
 export const FormUploadPicture = (props: FormInputProps) => {
-  const {
-    formState: { errors },
-    setValue,
-  } = useForm();
   return (
     <Controller
       name={props.name}
@@ -221,32 +221,95 @@ export const FormUploadPicture = (props: FormInputProps) => {
 };
 
 export const FormUploadDetailsPicture = (props: FormInputProps) => {
+  const { listPicture, setListPicture } = props;
   return (
     <Controller
       name={props.name}
       control={props.control}
       defaultValue=""
-      render={({ field, fieldState, formState }) => {
+      rules={{ required: "Product image be not empty" }}
+      render={({ field, fieldState: { error }, formState }) => {
+        console.log("check value", field.value);
         return (
-          <VisuallyHiddenInput
-            type="file"
-            accept="image/*"
-            // value={value}
-            multiple
-            onChange={(event) => {
-              const listFiles = event.target.files;
-              console.log("check listFiles", listFiles);
-              const listPicture = [];
-              for (let i = 0; i < listFiles.length; i++) {
-                listPicture.push(listFiles[i]);
-                props.setListPicture((prevState: any) => [
-                  ...prevState,
-                  listFiles[i],
-                ]);
-              }
-              return field.onChange(listPicture);
-            }}
-          />
+          <Card className=" w-full">
+            <ImageList
+              sx={{
+                width: "100%",
+                // Promote the list into its own layer in Chrome. This costs memory, but helps keeping high FPS.
+                transform: "translateZ(0)",
+              }}
+              cols={3}
+              gap={1}
+            >
+              {listPicture.map((item: any, index: number) => {
+                return (
+                  <ImageListItem key={index}>
+                    <img src={URL.createObjectURL(item)} loading="lazy" />
+                    <ImageListItemBar
+                      sx={{
+                        background:
+                          "linear-gradient(to bottom, rgba(0,0,0,0.7) 0%, " +
+                          "rgba(0,0,0,0.3) 70%, rgba(0,0,0,0) 100%)",
+                      }}
+                      position="top"
+                      actionIcon={
+                        <IconButton
+                          sx={{ color: "white" }}
+                          onClick={() => {
+                            if (listPicture.length > 0) {
+                              const updateListPicture = [...listPicture];
+                              updateListPicture.splice(index, 1);
+
+                              setListPicture(updateListPicture);
+                              field.onChange(updateListPicture);
+                            }
+                          }}
+                        >
+                          <HighlightOffOutlinedIcon />
+                        </IconButton>
+                      }
+                      actionPosition="left"
+                    />
+                  </ImageListItem>
+                );
+              })}
+            </ImageList>
+            <CardContent className="p-0">
+              {error ? (
+                <span className="text-[0.75rem] mx-[14px] mt-1 text-[#d32f2f]">{`${error.message}`}</span>
+              ) : (
+                <></>
+              )}
+            </CardContent>
+
+            <CardActions>
+              <Button
+                component="label"
+                variant="contained"
+                startIcon={<CloudUploadIcon />}
+                className="mx-auto"
+              >
+                Upload file
+                <VisuallyHiddenInput
+                  type="file"
+                  accept="image/*"
+                  // value={value}
+                  multiple
+                  onChange={(event) => {
+                    const listFiles = event.target.files;
+                    const newListPicture = [...listPicture];
+
+                    for (let i = 0; i < listFiles.length; i++) {
+                      newListPicture.push(listFiles[i]);
+                    }
+                    setListPicture(newListPicture);
+
+                    return field.onChange(newListPicture);
+                  }}
+                />
+              </Button>
+            </CardActions>
+          </Card>
         );
       }}
     />
