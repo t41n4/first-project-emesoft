@@ -211,7 +211,7 @@ export const FormUploadPicture = (props: FormInputProps) => {
             onChange={(e) => {
               const pictureURL = URL.createObjectURL(e.target.files[0]);
               props.setPicture(pictureURL);
-              return field.onChange(e.target.files[0].name);
+              return field.onChange(e.target.files[0]);
             }}
           />
         );
@@ -229,7 +229,6 @@ export const FormUploadDetailsPicture = (props: FormInputProps) => {
       defaultValue=""
       rules={{ required: "Product image be not empty" }}
       render={({ field, fieldState: { error }, formState }) => {
-        console.log("check value", field.value);
         return (
           <Card className=" w-full">
             <ImageList

@@ -2,33 +2,13 @@ import {
   Button,
   Drawer,
   Typography,
-  ListItemIcon,
-  ListItemButton,
-  ListItemText,
-  Box,
-  List,
-  ListItem,
-  TextField,
-  OutlinedInput,
-  InputLabel,
-  InputAdornment,
-  Select,
-  MenuItem,
   Card,
   CardActions,
   CardContent,
   CardHeader,
   CardMedia,
-  Dialog,
-  DialogActions,
-  DialogContent,
-  DialogTitle,
   Divider,
-  FormControl,
   IconButton,
-  ImageList,
-  ImageListItem,
-  ImageListItemBar,
   Snackbar,
   Alert,
   AlertTitle,
@@ -46,24 +26,27 @@ import {
   FormUploadPicture,
   FormUploadDetailsPicture,
 } from "@/constant/formAddProduct";
-import { list } from "postcss";
-
+import { useCart } from "@/context";
+import { v4 as uuidv4 } from "uuid";
 const AddProduct = () => {
+  // Use Form
   const {
-    register,
     handleSubmit,
     formState: { errors },
     control,
     setValue,
     clearErrors,
     reset,
-    getValues,
   } = useForm();
+  //
   const [open, setOpen] = useState(false);
   const [openToast, setOpenToast] = useState(false);
   const categories = useCategories();
   const [picture, setPicture] = useState("");
   const [listPicture, setListPicture] = useState([]);
+  // cart context
+  const { addNewProduct } = useCart();
+
   // Handle open modal
   const handleClickOpen = () => {
     setOpen(true);
@@ -78,8 +61,8 @@ const AddProduct = () => {
   //   hanlde submit form
   const onSubmitForm = (data: any) => {
     if (data) {
-      console.log("data", data);
-
+      const newData = { ...data, id: uuidv4() };
+      addNewProduct(newData);
       reset();
       setValue("detailPictures", []);
       setPicture("");

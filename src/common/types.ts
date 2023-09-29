@@ -1,5 +1,4 @@
-import { Dispatch, SetStateAction } from "react";
-
+import { Dispatch, SetStateAction } from "react";6
 // Define the type for your cart item
 export interface ICartItem {
   id: number | undefined;
@@ -7,6 +6,14 @@ export interface ICartItem {
   name: string | undefined;
   price: number | undefined;
   quantity: number | undefined;
+}
+export interface IProductCart {
+  id: number;
+  productName: string;
+  price: number;
+  categories: string[];
+  picture: File;
+  detailPictures: File[];
 }
 
 export interface IInputQuantity {
@@ -17,6 +24,8 @@ export interface IInputQuantity {
 // Define the shape of your context
 export interface CartContextType {
   carts: ICartItem[];
+  ListProduct: IProductCart[];
+  setListProduct: any;
   addToCart: (item: ICartItem) => void;
   removeFromCart: (id: any) => void;
   updateQuantityCart: (
@@ -26,6 +35,8 @@ export interface CartContextType {
   quantity: number;
   setQuantity: any;
   filterSearch: (textSearch: string) => void;
+  addNewProduct: (data: IProductCart) => void;
+  
 }
 
 export interface IQuery {

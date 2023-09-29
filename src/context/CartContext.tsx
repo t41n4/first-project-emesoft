@@ -1,5 +1,6 @@
 import { CartContextType } from "@/common";
 import { ICartItem } from "@/common/types";
+import { IProductCart } from "@/common/types";
 import React, { createContext, useContext, useState } from "react";
 import { usePagination } from "@/hooks";
 // Create the CartContext
@@ -9,8 +10,12 @@ export const CartContext = createContext<CartContextType | undefined>(
 const PER_PAGE = 8;
 // Create a provider component
 export const CartProvider: React.FC<any> = ({ children }) => {
+  // State Add To Cart
   const [carts, setCart] = useState<ICartItem[]>([]);
   const [newCarts, setNewCarts] = useState<ICartItem[]>([]);
+  // State Add products
+  const [ListProduct, setListProduct] = useState<IProductCart[]>([]);
+  console.log("🚀 ~ ListProduct:", ListProduct);
 
   const [quantity, setQuantity] = useState(1);
 
@@ -30,7 +35,7 @@ export const CartProvider: React.FC<any> = ({ children }) => {
       (cart) => cart.id === item.id && cart.name === item.name
     );
   };
-
+  // Handle Cart
   const addToCart = (item: ICartItem) => {
     if (isItemExist(item)) {
       const index = findCartItemIndex(carts, item);
@@ -86,17 +91,24 @@ export const CartProvider: React.FC<any> = ({ children }) => {
       setCart(newCarts);
     }
   };
+  // Handle Product
+  const addNewProduct = (data: IProductCart) => {
+    setListProduct((prevState) => [...prevState, data]);
+  };
 
   return (
     <CartContext.Provider
       value={{
         carts,
+        ListProduct,
         addToCart,
         removeFromCart,
         updateQuantityCart,
         quantity,
         setQuantity,
         filterSearch,
+        setListProduct,
+        addNewProduct,
       }}
     >
       {children}
