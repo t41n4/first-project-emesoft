@@ -25,7 +25,7 @@ export interface CartContextType {
   ) => void;
   quantity: number;
   setQuantity: any;
-  filterSearch: (textSearch: string)=>void;
+  filterSearch: (textSearch: string) => void;
 }
 
 export interface IQuery {
@@ -37,7 +37,7 @@ export interface IQuery {
 // Define the context interface
 export interface ProductContextType {
   products: IProduct[];
-  filteredProducts: IProduct[];
+  displayData: IProduct[];
   numberOfPages: number;
   categoryTerm: any;
   paginateData: IPaginateData;

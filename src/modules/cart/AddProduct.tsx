@@ -1,4 +1,3 @@
-import * as React from "react";
 import {
   Button,
   Drawer,
@@ -10,23 +9,22 @@ import {
   List,
   ListItem,
   TextField,
-  Dialog,
-  DialogTitle,
-  DialogContentText,
-  DialogActions,
-  DialogContent,
-  Divider,
-  FormControl,
   OutlinedInput,
   InputLabel,
   InputAdornment,
   Select,
   MenuItem,
   Card,
-  CardMedia,
   CardActions,
   CardContent,
   CardHeader,
+  CardMedia,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogTitle,
+  Divider,
+  FormControl,
   IconButton,
   ImageList,
   ImageListItem,
@@ -61,8 +59,8 @@ const AddProduct = () => {
     reset,
     getValues,
   } = useForm();
-  const [open, setOpen] = React.useState(false);
-  const [openToast, setOpenToast] = React.useState(false);
+  const [open, setOpen] = useState(false);
+  const [openToast, setOpenToast] = useState(false);
   const categories = useCategories();
   const [picture, setPicture] = useState("");
   const [listPicture, setListPicture] = useState([]);

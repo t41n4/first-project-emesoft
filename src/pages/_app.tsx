@@ -1,12 +1,15 @@
 "use client";
 
-import { FloatingCartButton, Footer, Header } from "@/components";
+import { Footer, Header } from "@/components";
 import { CartProvider } from "@/context/CartContext";
+import { FloatingCartButton } from "@/modules";
 import "@/styles/globals.css";
 import { Backdrop, CircularProgress } from "@mui/material";
 import type { AppProps } from "next/app";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
+import { Provider } from "react-redux";
+import { store } from "../../redux/store/store";
 import { ProductProvider } from "../context/ProductContext";
 
 function Loading() {
@@ -46,15 +49,17 @@ function Loading() {
 export default function App({ Component, pageProps }: AppProps) {
   return (
     <main className="pt-[3.5rem] ">
-      <ProductProvider>
-        <CartProvider>
-          <FloatingCartButton />
-          <Loading />
-          <Header />
-          <Component {...pageProps} />  
-          <Footer />
-        </CartProvider>
-      </ProductProvider>
+      <Provider store={store}>
+        <ProductProvider>
+          <CartProvider>
+            <FloatingCartButton />
+            <Loading />
+            <Header />
+            <Component {...pageProps} />
+            <Footer />
+          </CartProvider>
+        </ProductProvider>
+      </Provider>
     </main>
   );
 }

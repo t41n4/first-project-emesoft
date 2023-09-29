@@ -15,6 +15,7 @@ import {
   styled,
 } from "@mui/material";
 import { File } from "buffer";
+import Image from "next/image";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 
@@ -49,12 +50,8 @@ const InsertPage = () => {
   const cartegories = useCategories();
 
   const onSubmit = (data: IFormInput) => {
-    const isValidateFile = validateFileType(File);
-    console.log("isValidateFile: ", isValidateFile);
-    console.log("data: ", data);
-
-    data.file = File.name;
-
+    handleValidateFile(File);
+    data.file = File?.name;
     alert(JSON.stringify(data));
   };
 
@@ -111,8 +108,8 @@ const InsertPage = () => {
       typeof value === "string" ? value.split(",") : value
     );
   };
-  const handleFileChange = (event: any) => {
-    const file = event.target.files[0];
+
+  const handleValidateFile = (file: any) => {
     const isVaildType = validateFileType(file);
     const isVaildSize = validateFileSize(file);
 
@@ -125,6 +122,11 @@ const InsertPage = () => {
       alert("Please select a file that is less than 1MB");
       return;
     }
+  };
+
+  const handleFileChange = (event: any) => {
+    const file = event.target.files[0];
+    handleValidateFile(file);
     const src = URL.createObjectURL(file);
     setFile(file);
     setImage(src);
@@ -262,10 +264,13 @@ const InsertPage = () => {
         <div className="flex justify-center items-center border border-black bg-white rounded-lg h-auto w-[30vw]">
           <div className="Image p-5">
             {MyImage ? (
-              <img
+              <Image
                 className="object-cover h-full w-full rounded-lg"
                 src={MyImage}
                 alt="EMESOFT-Logo-Full-Horizontal"
+                priority={true}
+                width={500}
+                height={500}
               />
             ) : (
               <div className="w-[20vw] h-[50vh]">
