@@ -1,6 +1,12 @@
 import { useCart } from "@/context";
 import { usePagination } from "@/hooks";
-import { CartEmpty, CartInfo, CartItems, HeaderCart } from "@/modules";
+import {
+  CartEmpty,
+  CartInfo,
+  CartItems,
+  HeaderCart,
+  TableProduct,
+} from "@/modules";
 import { Grid, Pagination } from "@mui/material";
 
 const CartPage = () => {
@@ -18,7 +24,7 @@ const CartPage = () => {
         </div>
       </div>
       <div className="cartItems  w-full">
-      <div className="header ">
+        <div className="header ">
           <HeaderCart />
         </div>
         {currentData().length === 0 ? (
@@ -46,6 +52,10 @@ const CartPage = () => {
             </div>
           </>
         )}
+
+        <div className="table-cart mt-4">
+          <TableProduct />
+        </div>
       </div>
     </div>
   );

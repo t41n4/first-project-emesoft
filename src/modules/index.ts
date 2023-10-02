@@ -7,7 +7,8 @@ import CartEmpty from "./cart/CartEmpty";
 import CartSkeleton from "./cart/CartSkeleton";
 import CartItems from "./cart/CartItems";
 import HeaderCart from "./cart/HeaderCart";
-import AddProduct from "./cart/AddProduct";
+import AddProduct from "./product/AddProduct";
+import TableProduct from "./product/TableProduct";
 
 import LoginForm from "./login/LoginForm";
 
@@ -23,6 +24,7 @@ export {
   CartInfo,
   CartEmpty,
   CartSkeleton,
+  TableProduct,
   LoginForm,
   HeaderCart,
   AddProduct,

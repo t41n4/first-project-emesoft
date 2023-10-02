@@ -14,9 +14,11 @@ export const CartProvider: React.FC<any> = ({ children }) => {
   const [carts, setCart] = useState<ICartItem[]>([]);
   const [newCarts, setNewCarts] = useState<ICartItem[]>([]);
   // State Add products
-  const [ListProduct, setListProduct] = useState<IProductCart[]>([]);
-  console.log("🚀 ~ ListProduct:", ListProduct);
-
+  const [listProduct, setListProduct] = useState<IProductCart[]>([
+    { id: 12, productName: "DUY KHANG", price: 200, categories: ["duykhang"] },
+  ]);
+  const [productDetail, setProductDetail] = useState<IProductCart | null>(null);
+  console.log("🚀 ~ productDetail:", productDetail);
   const [quantity, setQuantity] = useState(1);
 
   // Pagination variables
@@ -92,15 +94,26 @@ export const CartProvider: React.FC<any> = ({ children }) => {
     }
   };
   // Handle Product
+  // handle Add new product
   const addNewProduct = (data: IProductCart) => {
     setListProduct((prevState) => [...prevState, data]);
+  };
+  const handleViewDetailProduct = (id: number) => {
+    if (listProduct.length > 0) {
+      const indexProduct = listProduct.findIndex(
+        (product) => product.id === id
+      );
+      const product = [...listProduct];
+
+      setProductDetail(product[indexProduct]);
+    }
   };
 
   return (
     <CartContext.Provider
       value={{
         carts,
-        ListProduct,
+        listProduct,
         addToCart,
         removeFromCart,
         updateQuantityCart,
@@ -109,6 +122,8 @@ export const CartProvider: React.FC<any> = ({ children }) => {
         filterSearch,
         setListProduct,
         addNewProduct,
+        handleViewDetailProduct,
+        productDetail,
       }}
     >
       {children}

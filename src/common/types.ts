@@ -11,9 +11,9 @@ export interface IProductCart {
   id: number;
   productName: string;
   price: number;
-  categories: string[];
-  picture: File;
-  detailPictures: File[];
+  categories?: string[];
+  picture?: File | null;
+  detailPictures?: File[] | undefined;
 }
 
 export interface IInputQuantity {
@@ -24,18 +24,20 @@ export interface IInputQuantity {
 // Define the shape of your context
 export interface CartContextType {
   carts: ICartItem[];
-  ListProduct: IProductCart[];
-  setListProduct: any;
   addToCart: (item: ICartItem) => void;
   removeFromCart: (id: any) => void;
   updateQuantityCart: (
     value: number | undefined,
     id: number | undefined
-  ) => void;
-  quantity: number;
-  setQuantity: any;
-  filterSearch: (textSearch: string) => void;
-  addNewProduct: (data: IProductCart) => void;
+    ) => void;
+    quantity: number;
+    setQuantity: any;
+    filterSearch: (textSearch: string) => void;
+    listProduct: IProductCart[];
+    setListProduct: any;
+    productDetail: IProductCart| null;
+    addNewProduct: (data: IProductCart) => void;
+    handleViewDetailProduct: (id:number) =>  void;
   
 }
 

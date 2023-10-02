@@ -75,7 +75,11 @@ const AddProduct = () => {
 
   return (
     <div>
-      <Button variant="outlined" onClick={handleClickOpen}>
+      <Button
+        variant="outlined"
+        onClick={handleClickOpen}
+        className="min-w-max"
+      >
         Add Product
       </Button>
       <Drawer anchor="right" open={open} onClose={() => setOpen(true)}>

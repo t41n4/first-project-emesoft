@@ -6,10 +6,11 @@ import SearchIcon from "@mui/icons-material/Search";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-
+import { AddProduct } from "@/modules";
 function Header() {
   const pathname = usePathname();
-  // console.log("pathname: ", pathname);
+
+  console.log("pathname: ", pathname.slice(1));
   const { handleSearchTermChange } = useProductContext();
 
   return (
@@ -30,7 +31,7 @@ function Header() {
       </div>
 
       {(pathname?.slice(1) === "shop" || pathname?.slice(1) === "cart") && (
-        <div className="search_bar">
+        <div className="search_bar flex items-center">
           <div className="relative rounded bg-opacity-15 hover:bg-opacity-25 mr-2 ml-0 w-full sm:ml-3  ">
             <div className="p-2 h-full absolute flex items-center justify-center">
               <SearchIcon />
