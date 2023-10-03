@@ -56,7 +56,7 @@ function CategoryFilter() {
   }, [categories]);
 
   return (
-    <div className="border border-black rounded-[2%] p-6 min-w-[10vw]">
+    <div className="border border-black rounded-[2%] p-6 min-w-[10vw] bg-white">
       <Typography variant="h5">Category</Typography>
       {!categories.length ? (
         // Render skeleton loading items while loading is true

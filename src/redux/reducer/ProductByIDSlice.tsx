@@ -3,7 +3,7 @@ import { IProduct } from "@/common";
 
 type initialState = {
   loading: boolean;
-  singleProduct: any;
+  singleProduct: unknown;
   error: string;
 };
 

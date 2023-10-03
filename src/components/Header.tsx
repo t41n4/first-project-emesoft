@@ -13,7 +13,7 @@ function Header() {
   const { handleSearchTermChange } = useProductContext();
 
   return (
-    <header className="fixed top-0 left-0 w-[100vw] flex flex-row justify-between items-center h-[3.5rem] border-b border-black px-4 bg-[#e4e6e7] z-50">
+    <header className="flex flex-row fixed top-0 left-[2.5%] self-center w-[95vw] justify-between items-center h-[12vh] border border-black rounded-lg px-4 bg-[#f58439] z-50">
       <div className="logo">
         <Image
           src="https://www.emesoft.net/wp-content/uploads/2023/06/EMESOFT-Logo-Full-Horizontal-.png"
