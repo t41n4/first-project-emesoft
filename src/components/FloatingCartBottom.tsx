@@ -1,11 +1,12 @@
 import { useCart } from "@/context";
+import { useAppSelector } from "@/redux/hooks";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import Box from "@mui/material/Box";
 import Fab from "@mui/material/Fab";
 import { useRouter } from "next/router";
 
 export default function FloatingCartButton() {
-  const { carts } = useCart();
+  const { carts } = useAppSelector((state) => state.carts);
   const router = useRouter();
 
   // canculate total quantity in cart

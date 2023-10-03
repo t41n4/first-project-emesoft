@@ -124,6 +124,6 @@ export interface IProduct {
 }
 
 interface IRating {
-  cout: number;
+  count: number;
   rate: number;
 }

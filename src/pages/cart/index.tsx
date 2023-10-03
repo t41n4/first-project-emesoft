@@ -1,16 +1,11 @@
 import { useCart } from "@/context";
 import { usePagination } from "@/hooks";
-import {
-  CartEmpty,
-  CartInfo,
-  CartItems,
-  HeaderCart,
-  TableProduct,
-} from "@/modules";
+import { CartEmpty, CartInfo, CartItems, HeaderCart } from "@/modules";
+import { useAppSelector } from "@/redux/hooks";
 import { Grid, Pagination } from "@mui/material";
 
 const CartPage = () => {
-  const { carts } = useCart();
+  const { carts } = useAppSelector((state) => state.carts);
 
   const { currentData, currentPage, maxPage, jump } = usePagination(carts, 8);
 
@@ -52,10 +47,6 @@ const CartPage = () => {
             </div>
           </>
         )}
-
-        <div className="table-cart mt-4">
-          <TableProduct />
-        </div>
       </div>
     </div>
   );
