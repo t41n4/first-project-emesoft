@@ -5,7 +5,7 @@ export const validateSlug = (slug: string | number | string[]) => {
   const regexString = /^[a-zA-Z]*$/;
   // check if slug is number
   const isNumber = regexNumber.test(slug);
-  console.log('isNumber: ', isNumber);
+  // console.log('isNumber: ', isNumber);
   // check if slug is string
   const isString = regexString.test(slug);
   return isNumber;

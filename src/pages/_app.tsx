@@ -9,8 +9,8 @@ import type { AppProps } from "next/app";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import { Provider } from "react-redux";
-import { store } from "../../redux/store/store";
 import { ProductProvider } from "../context/ProductContext";
+import store from "@/redux";
 
 function Loading() {
   const router = useRouter();

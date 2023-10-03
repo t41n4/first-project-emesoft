@@ -17,11 +17,12 @@ import {
   IconButton,
   Avatar,
 } from "@mui/material";
+import { useAppDispatch } from "@/redux/hooks";
+import { removeFromCart } from "@/redux/reducer/CartSlice";
 
 const CartItems = (props: { dataCarts: ICartItem[] }) => {
   const { dataCarts } = props;
-  const { removeFromCart } = useCart();
-
+  const dispatch = useAppDispatch();
   return dataCarts.map((cart) => {
     return (
       <Grid item key={cart.id}>
@@ -30,7 +31,7 @@ const CartItems = (props: { dataCarts: ICartItem[] }) => {
             action={
               <IconButton
                 className="mx-1"
-                onClick={() => removeFromCart(cart.id)}
+                onClick={() => dispatch(removeFromCart(cart.id))}
               >
                 <HighlightOffIcon />
               </IconButton>

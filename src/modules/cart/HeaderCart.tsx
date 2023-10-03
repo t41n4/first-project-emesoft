@@ -4,6 +4,8 @@ import InputBase from "@mui/material/InputBase";
 import SearchIcon from "@mui/icons-material/Search";
 import { useCart } from "@/context";
 import { AddProduct } from "@/modules";
+import { useAppDispatch } from "@/redux/hooks";
+import { filterSearch } from "@/redux/reducer/CartSlice";
 const Search = styled("div")(({ theme }) => ({
   position: "relative",
   borderRadius: theme.shape.borderRadius,
@@ -47,7 +49,7 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
   },
 }));
 const HeaderCart = () => {
-  const { filterSearch } = useCart();
+  const dispatch = useAppDispatch();
 
   return (
     <Box className=" flex justify-between mb-1">
@@ -61,7 +63,7 @@ const HeaderCart = () => {
             placeholder="Search…"
             inputProps={{ "aria-label": "search" }}
             onChange={(event) => {
-              filterSearch(event.target.value);
+              dispatch(filterSearch(event.target.value));
             }}
           />
         </Search>

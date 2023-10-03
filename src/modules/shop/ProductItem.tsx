@@ -1,7 +1,8 @@
 "use client";
 
 import { IProduct } from "@/common";
-import { useCart } from "@/context";
+import { useAppDispatch } from "@/redux/hooks";
+import { addToCart } from "@/redux/reducer/CartSlice";
 import {
   Button,
   Card,
@@ -17,6 +18,7 @@ export const scaleAnimation =
 
 export default function ProductItem(props: IProduct) {
   const router = useRouter();
+  const dispatch = useAppDispatch();
 
   //filter title to make it url friendly
   // only allow a-z, 0-9, - and _
@@ -31,7 +33,6 @@ export default function ProductItem(props: IProduct) {
     .replace(/-+/g, "-");
 
   const slug = props.id;
-  const { addToCart } = useCart();
 
   const handleClick = () => {
     router.push(`/shop/${slug}`);
@@ -68,13 +69,15 @@ export default function ProductItem(props: IProduct) {
           className="bg-blue-500 hover:bg-blue-700 mb-3 font-sans-semibold"
           variant="contained"
           onClick={() => {
-            addToCart({
-              id: props.id,
-              image: props.image,
-              name: props.title,
-              price: props.price,
-              quantity: 1,
-            });
+            dispatch(
+              addToCart({
+                id: props.id,
+                image: props.image,
+                name: props.title,
+                price: props.price,
+                quantity: 1,
+              })
+            );
           }}
         >
           Add to Cart
