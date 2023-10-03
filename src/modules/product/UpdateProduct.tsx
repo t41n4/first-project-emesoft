@@ -12,23 +12,25 @@ import {
   Snackbar,
   Alert,
   AlertTitle,
+  Tooltip,
 } from "@mui/material";
 import HighlightOffOutlinedIcon from "@mui/icons-material/HighlightOffOutlined";
+import EditIcon from "@mui/icons-material/Edit";
 import { styled } from "@mui/material/styles";
 import { useForm } from "react-hook-form";
 import CloudUploadIcon from "@mui/icons-material/CloudUpload";
 import { useCategories } from "@/hooks";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import {
   FormInputProductName,
   FormInputPrice,
   FormInputCategory,
   FormUploadPicture,
   FormUploadDetailsPicture,
+  FormInputId,
 } from "@/constant/formAddProduct";
 import { useCart } from "@/context";
-import { v4 as uuidv4 } from "uuid";
-const AddProduct = () => {
+const UpdateProduct = ({ id }: any) => {
   // Use Form
   const {
     handleSubmit,
@@ -45,14 +47,16 @@ const AddProduct = () => {
   const [picture, setPicture] = useState("");
   const [listPicture, setListPicture] = useState([]);
   // cart context
-  const { addNewProduct } = useCart();
+  const { handleDataUpdate, dataUpdate, handleUpdateData } = useCart();
 
   // Handle open modal
   const handleClickOpen = () => {
+    handleDataUpdate(id);
     setOpen(true);
   };
   //   Handle close modal
   const handleClose = () => {
+    reset();
     setOpen(false);
 
     clearErrors();
@@ -61,27 +65,24 @@ const AddProduct = () => {
   //   hanlde submit form
   const onSubmitForm = (data: any) => {
     if (data) {
-      const newData = { ...data, id: uuidv4() };
-      addNewProduct(newData);
-      reset();
-      setValue("detailPictures", []);
-      setPicture("");
-      setListPicture([]);
-      setOpenToast(true);
+      handleUpdateData(id, data);
+      setOpen(false);
     }
   };
 
   // Handle Onclick delete list picture
 
   return (
-    <div className="add-product ">
-      <Button
-        variant="outlined"
-        onClick={handleClickOpen}
-        className="min-w-max"
-      >
-        Add Product
-      </Button>
+    <div className="add-product inline ">
+      <Tooltip title="edit product">
+        <IconButton
+          aria-label="edit"
+          className="text-yellow-600 "
+          onClick={() => handleClickOpen()}
+        >
+          <EditIcon />
+        </IconButton>
+      </Tooltip>
       <Drawer anchor="right" open={open} onClose={() => setOpen(true)}>
         <Card className="w-[50vw] overflow-y-scroll">
           <CardHeader
@@ -94,33 +95,46 @@ const AddProduct = () => {
           />
           <CardContent>
             <Typography className="font-semibold text-xl">
-              Add a new product
+              Update Product
             </Typography>
             <form
               onSubmit={handleSubmit(onSubmitForm)}
               id="my-form"
               className="grid grid-flow-row gap-5 mt-5 w-full"
             >
+              <FormInputId
+                name="id"
+                control={control}
+                label="ID"
+                value={dataUpdate?.id}
+              />
+
               <FormInputProductName
                 name="productName"
                 control={control}
                 label="Product Name"
+                value={dataUpdate?.productName}
               />
-              <FormInputPrice name="price" control={control} label="Price" />
+              <FormInputPrice
+                name="price"
+                control={control}
+                label="Price"
+                value={dataUpdate?.price}
+              />
 
               <FormInputCategory
                 name="categories"
                 label="Category"
                 control={control}
+                value={dataUpdate?.categories}
               />
               <Divider textAlign="left">Product Image</Divider>
-
               <FormUploadPicture
                 name="picture"
                 control={control}
                 label=" Picture"
+                value={dataUpdate?.picture}
               />
-
               <Divider textAlign="left">Details Product Image </Divider>
               <FormUploadDetailsPicture
                 name="detailPictures"
@@ -128,6 +142,7 @@ const AddProduct = () => {
                 label="Detail Picture"
                 listPicture={listPicture}
                 setListPicture={setListPicture}
+                value={dataUpdate?.detailPictures}
               />
             </form>
           </CardContent>
@@ -138,7 +153,7 @@ const AddProduct = () => {
               form="my-form"
               className="bg-blue-500 mx-auto px-7"
             >
-              ADD
+              UPDATE DATA
             </Button>
           </CardActions>
         </Card>
@@ -164,4 +179,4 @@ const AddProduct = () => {
   );
 };
 
-export default AddProduct;
+export default UpdateProduct;

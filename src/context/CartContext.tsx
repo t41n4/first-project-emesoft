@@ -13,13 +13,13 @@ export const CartProvider: React.FC<any> = ({ children }) => {
   // State Add To Cart
   const [carts, setCart] = useState<ICartItem[]>([]);
   const [newCarts, setNewCarts] = useState<ICartItem[]>([]);
+  const [quantity, setQuantity] = useState(1);
   // State Add products
   const [listProduct, setListProduct] = useState<IProductCart[]>([
     { id: 12, productName: "DUY KHANG", price: 200, categories: ["duykhang"] },
   ]);
   const [productDetail, setProductDetail] = useState<IProductCart | null>(null);
-  console.log("🚀 ~ productDetail:", productDetail);
-  const [quantity, setQuantity] = useState(1);
+  const [dataUpdate, setDataUpdate] = useState<IProductCart | null>(null);
 
   // Pagination variables
   const [numberOfPages, setNumberOfPages] = useState<number>(0);
@@ -71,9 +71,6 @@ export const CartProvider: React.FC<any> = ({ children }) => {
   };
 
   const removeFromCart = (id: number | undefined) => {
-    // const updatedCart = carts.filter((item) => item.id === id);
-    // console.log(updatedCart);
-    // setCart(updatedCart);
     const updateCart = carts.filter((cart) => {
       if (cart.id !== id) {
         return cart;
@@ -98,6 +95,7 @@ export const CartProvider: React.FC<any> = ({ children }) => {
   const addNewProduct = (data: IProductCart) => {
     setListProduct((prevState) => [...prevState, data]);
   };
+  // Handle view details
   const handleViewDetailProduct = (id: number) => {
     if (listProduct.length > 0) {
       const indexProduct = listProduct.findIndex(
@@ -108,7 +106,24 @@ export const CartProvider: React.FC<any> = ({ children }) => {
       setProductDetail(product[indexProduct]);
     }
   };
-
+  // Handle delete product
+  const handleDeleteProduct = (id: number) => {
+    const indexProduct = listProduct.findIndex((product) => product.id === id);
+    const cloneListProduct = [...listProduct];
+    cloneListProduct.splice(indexProduct, 1);
+    setListProduct(cloneListProduct);
+  };
+  // Handle display data update
+  const handleDataUpdate = (id: any) => {
+    const indexProduct = listProduct.findIndex((product) => product.id === id);
+    setDataUpdate(listProduct[indexProduct]);
+  };
+  const handleUpdateData = (id: any, data: IProductCart) => {
+    const indexProduct = listProduct.findIndex((product) => product.id === id);
+    const cloneListProduct = [...listProduct];
+    cloneListProduct[indexProduct] = data;
+    setListProduct(cloneListProduct);
+  };
   return (
     <CartContext.Provider
       value={{
@@ -124,6 +139,10 @@ export const CartProvider: React.FC<any> = ({ children }) => {
         addNewProduct,
         handleViewDetailProduct,
         productDetail,
+        handleDeleteProduct,
+        handleDataUpdate,
+        dataUpdate,
+        handleUpdateData,
       }}
     >
       {children}

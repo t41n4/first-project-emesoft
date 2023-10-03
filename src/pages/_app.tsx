@@ -48,7 +48,7 @@ function Loading() {
 
 export default function App({ Component, pageProps }: AppProps) {
   return (
-    <main className="pt-[3.5rem] ">
+    <main className="pt-[3.5rem] relative ">
       <Provider store={store}>
         <ProductProvider>
           <CartProvider>

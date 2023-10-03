@@ -38,8 +38,11 @@ export interface CartContextType {
     productDetail: IProductCart| null;
     addNewProduct: (data: IProductCart) => void;
     handleViewDetailProduct: (id:number) =>  void;
-  
-}
+    handleDeleteProduct: (id:number) => void;
+    handleDataUpdate: (id:any) => void;
+    dataUpdate: IProductCart | null;
+    handleUpdateData: (id:any,data:IProductCart) => void;
+  }
 
 export interface IQuery {
   searchTerm: string;
