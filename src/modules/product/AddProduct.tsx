@@ -1,32 +1,30 @@
 import {
+  FormInputCategory,
+  FormInputPrice,
+  FormInputProductName,
+  FormUploadDetailsPicture,
+  FormUploadPicture,
+} from "@/constant/formAddProduct";
+import { useCart } from "@/context";
+import { useCategories } from "@/hooks";
+import HighlightOffOutlinedIcon from "@mui/icons-material/HighlightOffOutlined";
+import {
+  Alert,
+  AlertTitle,
   Button,
-  Drawer,
-  Typography,
   Card,
   CardActions,
   CardContent,
   CardHeader,
-  CardMedia,
   Divider,
+  Drawer,
   IconButton,
   Snackbar,
-  Alert,
-  AlertTitle,
+  Typography,
 } from "@mui/material";
-import HighlightOffOutlinedIcon from "@mui/icons-material/HighlightOffOutlined";
-import { styled } from "@mui/material/styles";
+import { useState } from "react";
 import { useForm } from "react-hook-form";
-import CloudUploadIcon from "@mui/icons-material/CloudUpload";
-import { useCategories } from "@/hooks";
-import { useState, useEffect } from "react";
-import {
-  FormInputProductName,
-  FormInputPrice,
-  FormInputCategory,
-  FormUploadPicture,
-  FormUploadDetailsPicture,
-} from "@/constant/formAddProduct";
-import { useCart } from "@/context";
+import { v4 as uuidv4 } from "uuid";
 const AddProduct = () => {
   // Use Form
   const {

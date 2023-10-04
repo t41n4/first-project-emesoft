@@ -50,7 +50,12 @@ function Header() {
         </div>
       )}
 
-      <div className="navigate_bar flex flex-row h-full border-collapse">
+      <div className="navigate_bar flex flex-row h-full border ">
+        {pathname.slice(1) === "product" && (
+          <div className="my-auto">
+            <AddProduct />
+          </div>
+        )}
         {navLinks.map((link) => {
           const isActive = pathname === link.route;
           // console.log("pathname: ", pathname);
