@@ -37,6 +37,7 @@
     "styled-components": "^6.0.8",
     "tailwind-scrollbar-hide": "^1.1.7",
     "tailwindcss": "3.3.3",
-    "typescript": "5.2.2"
+    "typescript": "5.2.2",
+    "uuidv4": "^6.2.13"
   }
 }
