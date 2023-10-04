@@ -1,5 +1,4 @@
 "use client";
-
 import { Footer, Header } from "@/components";
 import { CartProvider } from "@/context/CartContext";
 import { FloatingCartButton } from "@/modules";
@@ -56,7 +55,7 @@ export default function App({ Component, pageProps }: AppProps) {
             <Loading />
             <Header />
             <Component {...pageProps} />
-            <Footer />
+            {/* <Footer /> */}
           </CartProvider>
         </ProductProvider>
       </Provider>

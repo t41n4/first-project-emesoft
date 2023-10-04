@@ -106,6 +106,29 @@ export interface IProduct {
   category: string;
   rating: IRating;
 }
+/*User*/
+interface IGeolocation {
+  lat: string;
+  long: string;
+}
+interface IAddress {
+  city: string;
+  street: string;
+  number: number;
+  zipcode: string;
+  geolocation: IGeolocation;
+}
+export interface IUser {
+  id : number ,
+  email : string ,
+  username:string,
+  password:string,
+  name:{
+    firstname:string,
+    lastname:string
+  },
+  address:IAddress
+}
 
 interface IRating {
   count: number;
