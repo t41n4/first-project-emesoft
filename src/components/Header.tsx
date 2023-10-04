@@ -50,7 +50,7 @@ function Header() {
         </div>
       )}
 
-      <div className="navigate_bar flex flex-row h-full border ">
+      <div className="navigate_bar flex flex-row h-full ">
         {pathname.slice(1) === "product" && (
           <div className="my-auto">
             <AddProduct />
