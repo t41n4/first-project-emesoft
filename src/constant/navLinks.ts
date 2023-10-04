@@ -34,5 +34,12 @@ export const navLinks = [
     title: "Product",
     route: "/product",
     isActive: false,
+    
   },
+  {
+    id: "users",
+    title: "users",
+    route: "/users",
+    isActive: false,
+  }
 ];

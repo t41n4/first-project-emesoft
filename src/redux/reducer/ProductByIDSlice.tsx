@@ -3,13 +3,24 @@ import { IProduct } from "@/common";
 
 type initialState = {
   loading: boolean;
-  singleProduct: any;
+  singleProduct: IProduct;
   error: string;
 };
 
 const initial: initialState = {
   loading: true,
-  singleProduct: {},
+  singleProduct: {
+    id: 0,
+    title: "",
+    price: 0,
+    image: "",
+    description: "",
+    category: "",
+    rating: {
+      rate: 0,
+      count: 0,
+    },
+  },
   error: "",
 };
 

@@ -1,20 +1,14 @@
 import { IProduct } from "@/common";
-import { QuantityInput } from "@/modules";
 import { useCart } from "@/context";
+import { QuantityInput } from "@/modules";
+import { useAppDispatch, useAppSelector } from "@/redux/hooks";
+import { addToCart } from "@/redux/reducer/CartSlice";
+import { fetchProductsByID } from "@/redux/reducer/ProductByIDSlice";
 import { validateSlug } from "@/utils";
 import { Button, Rating, Skeleton, Typography } from "@mui/material";
 import Image from "next/image";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
-import { useAppDispatch, useAppSelector } from "@/redux/hooks";
-import { fetchProductsByID } from "@/redux/reducer/ProductByIDSlice";
-import { useFetchProductsByID } from "@/hooks";
-import {
-  addToCart,
-  updateQuantityCart,
-  removeFromCart,
-  filterSearch,
-} from "@/redux/reducer/CartSlice";
 
 export default function Page() {
   const router = useRouter();
@@ -39,16 +33,11 @@ export default function Page() {
 
   useEffect(() => {
     if (!slug) return;
-    dispatch(fetchProductsByID(Number(slug)));
-  }, [dispatch, slug]);
+    if (!validateSlug(slug)) router.push("/404");
 
-  useEffect(() => {
-    // console.log(loading, singleProduct, error);
-    if (!slug) return;
-    if (!validateSlug(slug)) {
-      router.push("/404");
-    }
-    if (Object.keys(singleProduct).length !== 0) {
+    dispatch(fetchProductsByID(Number(slug)));
+
+    if (Object.keys(singleProduct as object).length !== 0) {
       setProduct(singleProduct);
     } else if (error && !loading) {
       console.log(error);
