@@ -56,7 +56,7 @@ export interface IPaginateData {
   next: () => void;
   prev: () => void;
   jump: (page: number) => void;
-  currentData: () => any[];
+  currentData: () => string | any[];
   currentPage: number;
   maxPage: number;
 }
