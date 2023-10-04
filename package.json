@@ -32,15 +32,13 @@
     "react-hook-form": "^7.46.2",
     "react-redux": "^8.1.2",
     "react-window": "^1.8.9",
+    "redux-persist": "^6.0.0",
     "resize-observer-polyfill": "^1.5.1",
     "styled-components": "^6.0.8",
     "tailwind-scrollbar-hide": "^1.1.7",
     "tailwindcss": "3.3.3",
-    "typescript": "5.2.2"
-  },
-  "devDependencies": {
-    "@types/next": "^9.0.0",
-    "@types/react": "^18.2.24",
-    "@types/react-dom": "^18.2.8"
+    "typescript": "5.2.2",
+    "uuid": "^9.0.1",
+    "uuidv4": "^6.2.13"
   }
 }

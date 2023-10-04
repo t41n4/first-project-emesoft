@@ -1,5 +1,4 @@
-import { Dispatch, SetStateAction } from "react";
-
+import { Dispatch, SetStateAction } from "react";6
 // Define the type for your cart item
 export interface ICartItem {
   id: number | undefined;
@@ -7,6 +6,14 @@ export interface ICartItem {
   name: string | undefined;
   price: number | undefined;
   quantity: number | undefined;
+}
+export interface IProductCart {
+  id: number;
+  productName: string;
+  price: number;
+  categories?: string[];
+  picture?: File | null;
+  detailPictures?: File[] | undefined;
 }
 
 export interface IInputQuantity {
@@ -22,11 +29,20 @@ export interface CartContextType {
   updateQuantityCart: (
     value: number | undefined,
     id: number | undefined
-  ) => void;
-  quantity: number;
-  setQuantity: any;
-  filterSearch: (textSearch: string) => void;
-}
+    ) => void;
+    quantity: number;
+    setQuantity: any;
+    filterSearch: (textSearch: string) => void;
+    listProduct: IProductCart[];
+    setListProduct: any;
+    productDetail: IProductCart| null;
+    addNewProduct: (data: IProductCart) => void;
+    handleViewDetailProduct: (id:number) =>  void;
+    handleDeleteProduct: (id:number) => void;
+    handleDataUpdate: (id:any) => void;
+    dataUpdate: IProductCart | null;
+    handleUpdateData: (id:any,data:IProductCart) => void;
+  }
 
 export interface IQuery {
   searchTerm: string;
@@ -56,7 +72,7 @@ export interface IPaginateData {
   next: () => void;
   prev: () => void;
   jump: (page: number) => void;
-  currentData: () => any[];
+  currentData: () => string | any[];
   currentPage: number;
   maxPage: number;
 }

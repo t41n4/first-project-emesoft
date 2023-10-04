@@ -55,7 +55,7 @@ const HeaderCart = () => {
     <Box className=" flex justify-between mb-1">
       <Typography variant="h4">Your cart</Typography>
       <div className="flex">
-        <Search>
+        {/* <Search>
           <SearchIconWrapper>
             <SearchIcon />
           </SearchIconWrapper>
@@ -66,8 +66,8 @@ const HeaderCart = () => {
               dispatch(filterSearch(event.target.value));
             }}
           />
-        </Search>
-        <AddProduct />
+        </Search> */}
+        {/* <AddProduct /> */}
       </div>
     </Box>
   );

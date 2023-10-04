@@ -29,4 +29,17 @@ export const navLinks = [
     route: "/insert",
     isActive: false,
   },
+  {
+    id: "product",
+    title: "Product",
+    route: "/product",
+    isActive: false,
+    
+  },
+  {
+    id: "users",
+    title: "users",
+    route: "/users",
+    isActive: false,
+  }
 ];
