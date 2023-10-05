@@ -1,11 +1,12 @@
-import { Dispatch, SetStateAction } from "react";6
+import { Dispatch, SetStateAction } from "react";
+6;
 // Define the type for your cart item
 export interface ICartItem {
-  id: number | undefined;
-  image: string | undefined;
-  name: string | undefined;
-  price: number | undefined;
-  quantity: number | undefined;
+  id: number;
+  image: string;
+  name: string;
+  price: number;
+  quantity: number;
 }
 export interface IProduct2 {
   id: number;
@@ -24,24 +25,26 @@ export interface IInputQuantity {
 // Define the shape of your context
 export interface CartContextType {
   carts: ICartItem[];
-  addToCart: (item: ICartItem) => void;
-  removeFromCart: (id: any) => void;
-  updateQuantityCart: (
-    value: number | undefined,
-    id: number | undefined
-    ) => void;
-    quantity: number;
-    setQuantity: any;
-    filterSearch: (textSearch: string) => void;
+  handleQueryChange: IQuery
+  handleSearchTermChange : (searchTerm:string) => void;
+  // addToCart: (item: ICartItem) => void;
+  // removeFromCart: (id: any) => void;
+  // updateQuantityCart: (
+  //   value: number | undefined,
+  //   id: number | undefined
+  //   ) => void;
+  //   quantity: number;
+  //   setQuantity: any;
+  //   filterSearch: (textSearch: string) => void;
     
     
     
   }
 
 export interface IQuery {
-  searchTerm: string;
-  categoryTerm: string[];
-  priceTerm: number | number[];
+  searchTerm?: string;
+  categoryTerm?: string[];
+  priceTerm?: number | number[];
 }
 
 // Define the context interface
@@ -57,7 +60,7 @@ export interface ProductContextType {
   // setSearchTerm: Dispatch<SetStateAction<string>>;
   minMaxPrice: number[];
 
-  handleSearchTermChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  handleSearchTermChange: (searchTerm: string) => void;
   handleCurrentFilterPriceChange: (newValue: number | number[]) => void;
   handleCategoryChange: (category: any) => void;
 }

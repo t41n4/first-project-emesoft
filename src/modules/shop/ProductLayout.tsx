@@ -18,14 +18,12 @@ const ProductLayout: React.FC<IProductLayout> = ({ children }) => {
   };
   return (
     <Box className="product-layout flex flex-col p-2 w-full justify-between ">
-      <SmoothScroll className="flex w-full h-1/2 flex-col">
-        <Grid
-          container
-          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4"
-        >
-          {children}
-        </Grid>
-      </SmoothScroll>
+      <Grid
+        container
+        className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 "
+      >
+        {children}
+      </Grid>
       <Pagination
         count={paginateData.maxPage}
         className="mt-5 flex w-full justify-center p-3 "

@@ -12,7 +12,7 @@ export default function Page() {
   }, [dispatch]);
 
   return (
-    <div className="flex w-full justify-center items-center px-10">
+    <div className="flex w-full h-[100vh] px-10">
       <StickyHeadTable data={users} />
     </div>
   );

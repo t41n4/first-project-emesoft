@@ -1,3 +1,4 @@
+import { useCartContext } from "@/context";
 import {
   Button,
   Card,

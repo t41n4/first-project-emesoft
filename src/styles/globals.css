@@ -5,7 +5,7 @@
 @tailwind utilities;
 
 :root {
-  --primary: #e4e6e7;
+  --primary: #fae4ca;
 }
 
 * {
@@ -15,7 +15,7 @@
 }
 
 body {
-  background-color: #e4e6e7;
+  background-color: var(--primary);
 }
 
 /* width */

@@ -1,13 +1,15 @@
-import { useCart } from "@/context";
+import { useCartContext } from "@/context";
 import { usePagination } from "@/hooks";
 import { CartEmpty, CartInfo, CartItems, HeaderCart } from "@/modules";
 import { useAppSelector } from "@/redux/hooks";
 import { Grid, Pagination } from "@mui/material";
 
 const CartPage = () => {
-  const { carts } = useAppSelector((state) => state.carts);
-
-  const { currentData, currentPage, maxPage, jump } = usePagination(carts, 8);
+  const { displayData } = useCartContext();
+  const { currentData, currentPage, maxPage, jump } = usePagination(
+    displayData,
+    8
+  );
 
   // Handle change pagination
 

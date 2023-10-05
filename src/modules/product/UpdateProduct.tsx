@@ -1,35 +1,32 @@
 import {
+  FormInputCategory,
+  FormInputId,
+  FormInputPrice,
+  FormInputProductName,
+  FormUploadDetailsPicture,
+  FormUploadPicture,
+} from "@/constant/formAddProduct";
+import { useCartContext } from "@/context";
+import { useCategories } from "@/hooks";
+import EditIcon from "@mui/icons-material/Edit";
+import HighlightOffOutlinedIcon from "@mui/icons-material/HighlightOffOutlined";
+import {
+  Alert,
+  AlertTitle,
   Button,
-  Drawer,
-  Typography,
   Card,
   CardActions,
   CardContent,
   CardHeader,
-  CardMedia,
   Divider,
+  Drawer,
   IconButton,
   Snackbar,
-  Alert,
-  AlertTitle,
   Tooltip,
+  Typography,
 } from "@mui/material";
-import HighlightOffOutlinedIcon from "@mui/icons-material/HighlightOffOutlined";
-import EditIcon from "@mui/icons-material/Edit";
-import { styled } from "@mui/material/styles";
-import { useForm } from "react-hook-form";
-import CloudUploadIcon from "@mui/icons-material/CloudUpload";
-import { useCategories } from "@/hooks";
 import { useState } from "react";
-import {
-  FormInputProductName,
-  FormInputPrice,
-  FormInputCategory,
-  FormUploadPicture,
-  FormUploadDetailsPicture,
-  FormInputId,
-} from "@/constant/formAddProduct";
-import { useProductContext2 } from "@/context";
+import { useForm } from "react-hook-form";
 const UpdateProduct = ({ id }: any) => {
   // Use Form
   const {

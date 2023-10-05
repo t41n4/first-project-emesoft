@@ -1,9 +1,9 @@
 import { IProduct } from "@/common";
-import { useCart } from "@/context";
+import { useCartContext } from "@/context";
 import { QuantityInput } from "@/modules";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import { addToCart } from "@/redux/reducer/CartSlice";
-import { fetchProductsByID } from "@/redux/reducer/ProductByIDSlice";
+import { fetchProductsByID } from "@/redux/reducer/ProducSlice";
 import { validateSlug } from "@/utils";
 import { Button, Rating, Skeleton, Typography } from "@mui/material";
 import Image from "next/image";
@@ -19,9 +19,9 @@ export default function Page() {
 
   // use carts from redux
 
-  const { quantity } = useCart();
+  const { quantity } = useCartContext();
   // validate slug ??
-  const { loading, singleProduct, error } = useAppSelector(
+  const { singleProduct, error } = useAppSelector(
     (state) => state.singleProduct
   );
 
@@ -39,11 +39,11 @@ export default function Page() {
 
     if (Object.keys(singleProduct as object).length !== 0) {
       setProduct(singleProduct);
-    } else if (error && !loading) {
+    } else if (error) {
       console.log(error);
       router.push("/404");
     }
-  }, [dispatch, error, loading, router, singleProduct, slug]);
+  }, [dispatch, error, router, singleProduct, slug]);
 
   // useEffect(() => {
   //   console.log("quantity: ", quantity);
@@ -124,14 +124,15 @@ export default function Page() {
                 className="w-1/2 bg-blue-500 hover:bg-blue-400"
                 variant="contained"
                 onClick={() => {
-                  const item = {
-                    id: product?.id,
-                    image: product?.image,
-                    name: product?.title,
-                    price: product?.price,
-                    quantity: quantity,
-                  };
-                  dispatch(addToCart(item));
+                  dispatch(
+                    addToCart({
+                      id: product?.id || 0, // provide a default value of 0 if id is undefined
+                      image: product?.image || "",
+                      name: product?.title || "",
+                      price: product?.price || 0, // provide a default value of 0 if price is undefined
+                      quantity: quantity ?? 1, // provide a default value of 1 if quantity is undefined or null
+                    })
+                  );
                 }}
               >
                 {product ? "Add to cart" : <Skeleton height={40} width={160} />}

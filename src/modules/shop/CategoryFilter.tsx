@@ -1,4 +1,5 @@
 import { useProductContext } from "@/context/ProductContext";
+import { useCategories } from "@/hooks";
 import { Skeleton } from "@mui/material";
 import List from "@mui/material/List";
 import ListItemButton from "@mui/material/ListItemButton";
@@ -41,19 +42,12 @@ const CategoryItem = ({ category }: { category: any }) => {
 
 function CategoryFilter() {
   const [categories, setCategories] = useState<string[]>([]); // Use string[] for categories
-
+  const rawCategories = useCategories();
   useEffect(() => {
-    // Make an API request to fetch category data
-    if (!categories.length) {
-      fetch("https://fakestoreapi.com/products/categories")
-        .then((response) => response.json())
-        .then((data) => {
-          setCategories(data);
-          // console.log("data: ", data);
-        })
-        .catch((error) => console.error("Error fetching categories: ", error));
+    if (rawCategories.length) {
+      setCategories(rawCategories);
     }
-  }, [categories]);
+  }, [rawCategories]);
 
   return (
     <div className="border border-black rounded-[2%] p-6 min-w-[10vw] bg-white">

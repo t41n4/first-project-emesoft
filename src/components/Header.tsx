@@ -1,16 +1,32 @@
 "use client";
 
 import { navLinks } from "@/constant";
+import { useCartContext } from "@/context";
 import { useProductContext } from "@/context/ProductContext";
-import SearchIcon from "@mui/icons-material/Search";
+import { AddProduct } from "@/modules";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { AddProduct, SearchProduct } from "@/modules";
+import SearchBar from "./SearchBar";
 function Header() {
   const pathname = usePathname();
+  const { handleSearchTermChange: handleProductSearchTermChange } =
+    useProductContext();
+  const { handleSearchTermChange: handleCartSearchTermChange } =
+    useCartContext();
 
-  const { handleSearchTermChange } = useProductContext();
+  const currentContext = () => {
+    const currentPath = pathname.slice(1).toLowerCase();
+    console.log("currentPath: ", currentPath);
+    switch (currentPath) {
+      case "shop":
+        return handleProductSearchTermChange;
+      case "cart":
+        return handleCartSearchTermChange;
+      default:
+        return handleCartSearchTermChange;
+    }
+  };
 
   return (
     <header className="flex flex-row fixed top-0 left-[2.5%] self-center w-[95vw] justify-between items-center h-[12vh] border border-black rounded-lg px-4 bg-[#f58439] z-50">
@@ -29,25 +45,9 @@ function Header() {
         {pathname?.slice(1) === "" ? "Home" : pathname?.slice(1)}
       </div>
 
-      {pathname?.slice(1) === "shop" && (
-        <div className="search_bar flex items-center">
-          <div className="relative rounded bg-opacity-15 hover:bg-opacity-25 mr-2 ml-0 w-full sm:ml-3  ">
-            <div className="p-2 h-full absolute flex items-center justify-center">
-              <SearchIcon />
-            </div>
-            <input
-              className="text-current py-1 px-10 md:w-[20vw] w-full transition-all "
-              placeholder="Search…"
-              aria-label="search"
-              onChange={(e) => {
-                // setSearchTerm(e.target.value);
-                handleSearchTermChange(e);
-              }}
-            />
-          </div>
-        </div>
-      )}
-      {pathname.slice(1) === "product" && <SearchProduct />}
+      <div className="search_bar flex items-center">
+        <SearchBar handleSearchTermChange={currentContext()} />
+      </div>
 
       <div className="navigate_bar flex flex-row h-full ">
         {pathname.slice(1) === "product" && (
