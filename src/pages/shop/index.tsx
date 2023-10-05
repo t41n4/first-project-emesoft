@@ -4,6 +4,7 @@ import { Product, ProductLayout, CategoryFilter, PriceFilter } from "@/modules";
 import { useProductContext } from "@/context/ProductContext";
 import { Grid, Skeleton, Stack } from "@mui/material";
 import Image from "next/image";
+import SearchBar from "@/components/SearchBar";
 
 const SkeletonItem = () => {
   return (
@@ -35,6 +36,8 @@ const ProductEmpty = () => {
 
 const Page = () => {
   const { displayData, products, paginateData } = useProductContext();
+
+  console.log("products: ", products);
 
   return (
     <div className="p-5 flex flex-row">

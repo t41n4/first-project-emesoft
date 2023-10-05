@@ -1,7 +1,7 @@
 import { IInputQuantity } from "@/common/types";
 import { StyledButton, StyledInput } from "@/constant";
 import { StyledInputRoot } from "@/constant/styleQuantityInput";
-import { useCart } from "@/context";
+import { useCartContext } from "@/context";
 import {
   Unstable_NumberInput as NumberInput,
   NumberInputProps,
@@ -13,7 +13,7 @@ const CustomNumberInput = React.forwardRef(function CustomNumberInput(
   props: NumberInputProps & IInputQuantity,
   ref: React.ForwardedRef<HTMLDivElement>
 ) {
-  const { setQuantity } = useCart();
+  const { setQuantity } = useCartContext();
   return (
     <NumberInput
       slots={{

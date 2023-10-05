@@ -2,6 +2,8 @@ import { IProduct } from "@/common";
 import { IQuery, ProductContextType } from "@/common/types";
 import { useFetchProducts } from "@/hooks";
 import usePagination from "@/hooks/usePagination";
+import { useAppDispatch, useAppSelector } from "@/redux/hooks";
+import { fetchProducts } from "@/redux/reducer/ProducSlice";
 import { findMax, findMin } from "@/utils";
 import {
   ReactNode,
@@ -17,7 +19,7 @@ const PRODUCT_PER_PAGE = 8;
 const ProductContext = createContext<ProductContextType | undefined>(undefined);
 // Define the ProductProvider component
 export function ProductProvider({ children }: { children: ReactNode }) {
-  const [products, setProducts] = useState<Array<IProduct>>([]);
+  // const [products, setProducts] = useState<Array<IProduct>>([]);
   const [minMaxPrice, setMinMaxPrice] = useState<number[]>([0, 0]);
 
   const [displayData, setDisplayData] = useState<Array<IProduct>>([]);
@@ -31,22 +33,21 @@ export function ProductProvider({ children }: { children: ReactNode }) {
   const paginateData = usePagination(displayData, PRODUCT_PER_PAGE);
   const [Page, setPage] = useState<number>(1);
 
-  const rawData = useFetchProducts();
-
+  const { products } = useAppSelector((state) => state.products);
+  
+  const dispatch = useAppDispatch();
   useEffect(() => {
-    if (products.length !== 0) return;
-    rawData.then((res) => {
-      // console.log("res: ", displayData);
-      setProducts(res);
-      setDisplayData(res);
-      setNumberOfPages(Math.ceil(res.length / PRODUCT_PER_PAGE));
+    if (products.length === 0) {
+      dispatch(fetchProducts());
+      return;
+    }
 
-      const highestPrice = findMax(res);
-      const lowestPrice = findMin(res);
-
-      setMinMaxPrice([lowestPrice, highestPrice]);
-    });
-  }, [rawData]);
+    setDisplayData(products);
+    setNumberOfPages(Math.ceil(products.length / PRODUCT_PER_PAGE));
+    const highestPrice = findMax(products);
+    const lowestPrice = findMin(products);
+    setMinMaxPrice([lowestPrice, highestPrice]);
+  }, [dispatch, products]);
 
   const handleQueryChange = (props: IQuery) => {
     const { searchTerm, categoryTerm, priceTerm } = props;
@@ -55,7 +56,7 @@ export function ProductProvider({ children }: { children: ReactNode }) {
         const { title, price, category } = product;
         const titleMatch = title
           .toLowerCase()
-          .includes(searchTerm.toLowerCase());
+          .includes(searchTerm?.toLowerCase() ?? "");
         titleMatch && SearchResult.push(product);
 
         const priceMatch =
@@ -63,11 +64,12 @@ export function ProductProvider({ children }: { children: ReactNode }) {
         priceMatch && PriceResult.push(product);
 
         const categoryMatch =
-          categoryTerm.length === 0 ? true : categoryTerm.includes(category);
+          categoryTerm?.length === 0 ? true : categoryTerm?.includes(category);
         categoryMatch && CategoryResult.push(product);
 
         return [SearchResult, PriceResult, CategoryResult];
       },
+
       [[], [], []] as [IProduct[], IProduct[], IProduct[]]
     );
     // console.log([SearchResult, PriceResult, CategoryResult]);
@@ -83,10 +85,7 @@ export function ProductProvider({ children }: { children: ReactNode }) {
     setDisplayData(joinedResult);
   };
 
-  const handleSearchTermChange = (
-    event: React.ChangeEvent<HTMLInputElement>
-  ) => {
-    const searchTerm = event.target.value;
+  const handleSearchTermChange = (searchTerm: string) => {
     setSearchTerm(searchTerm);
     handleQueryChange({
       searchTerm,
@@ -97,7 +96,6 @@ export function ProductProvider({ children }: { children: ReactNode }) {
 
   const handleCurrentFilterPriceChange = (value: number | number[]) => {
     const priceTerm = value;
-    // console.log("priceTerm: ", priceTerm);
     setPriceTerm(priceTerm);
     handleQueryChange({
       searchTerm,

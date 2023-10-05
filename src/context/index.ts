@@ -1,3 +1,3 @@
-import { CartContext, useCart } from "./CartContext";
+import { CartContext, useCartContext } from "./CartContext";
 
-export {CartContext, useCart }
+export { CartContext, useCartContext };
