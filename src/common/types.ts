@@ -44,7 +44,7 @@ export interface CartContextType {
   dataUpdate: IProductCart | null;
   handleUpdateData: (id: any, data: IProductCart) => void;
   handleSearchTermChange: (searchTerm: string) => void;
-  displayData: IProductCart[];
+  displayData: ICartItem[];
 }
 
 export interface IQuery {

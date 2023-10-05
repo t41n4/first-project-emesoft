@@ -1,26 +1,21 @@
-import { ICartItem } from "@/common/types";
 import { QuantityInput } from "@/modules";
-import { useCart } from "@/context";
+import { useAppDispatch } from "@/redux/hooks";
+import { removeFromCart } from "@/redux/reducer/CartSlice";
 import { formatNumber } from "@/utils";
-import Card from "@mui/material/Card";
-import CardContent from "@mui/material/CardContent";
 import HighlightOffIcon from "@mui/icons-material/HighlightOff";
 import {
-  Box,
-  CardMedia,
-  Grid,
-  Typography,
-  Button,
   CardActionArea,
   CardActions,
   CardHeader,
+  CardMedia,
+  Grid,
   IconButton,
-  Avatar,
+  Typography
 } from "@mui/material";
-import { useAppDispatch } from "@/redux/hooks";
-import { removeFromCart } from "@/redux/reducer/CartSlice";
+import Card from "@mui/material/Card";
+import CardContent from "@mui/material/CardContent";
 
-const CartItems = (props: { dataCarts: ICartItem[] }) => {
+const CartItems = (props: { dataCarts: any }) => {
   const { dataCarts } = props;
   const dispatch = useAppDispatch();
   return dataCarts.map((cart) => {

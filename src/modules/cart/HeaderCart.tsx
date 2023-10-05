@@ -1,11 +1,5 @@
-import { Box, Typography, Button } from "@mui/material";
-import { styled, alpha } from "@mui/material/styles";
-import InputBase from "@mui/material/InputBase";
-import SearchIcon from "@mui/icons-material/Search";
-import { useCart } from "@/context";
-import { AddProduct } from "@/modules";
 import { useAppDispatch } from "@/redux/hooks";
-import { filterSearch } from "@/redux/reducer/CartSlice";
+import { Box, Typography } from "@mui/material";
 
 const HeaderCart = () => {
   const dispatch = useAppDispatch();

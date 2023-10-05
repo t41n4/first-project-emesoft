@@ -1,16 +1,15 @@
-import { useCart } from "@/context";
-import { sumPrice, formatNumber } from "@/utils";
+import { useAppSelector } from "@/redux/hooks";
+import { formatNumber, sumPrice } from "@/utils";
 import Box from "@mui/material/Box";
+import Button from "@mui/material/Button";
 import Card from "@mui/material/Card";
 import CardActions from "@mui/material/CardActions";
 import CardContent from "@mui/material/CardContent";
-import Button from "@mui/material/Button";
-import Typography from "@mui/material/Typography";
-import FormGroup from "@mui/material/FormGroup";
-import FormControlLabel from "@mui/material/FormControlLabel";
 import Checkbox from "@mui/material/Checkbox";
+import FormControlLabel from "@mui/material/FormControlLabel";
+import FormGroup from "@mui/material/FormGroup";
+import Typography from "@mui/material/Typography";
 import { useState } from "react";
-import { useAppSelector } from "@/redux/hooks";
 
 const CartInfo = () => {
   const { carts } = useAppSelector((state) => state.carts);

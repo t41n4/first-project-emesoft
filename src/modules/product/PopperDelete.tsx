@@ -1,3 +1,4 @@
+import { useCartContext } from "@/context";
 import {
   Button,
   Card,
@@ -7,7 +8,6 @@ import {
   Popper,
   Typography,
 } from "@mui/material";
-import { useCart } from "@/context";
 interface IDataDeleteProduct {
   id: number;
   productName: string;
@@ -19,7 +19,7 @@ interface IPopperProps {
   setOpenPopper: any;
 }
 const PopperDelete = (props: IPopperProps) => {
-  const { handleDeleteProduct } = useCart();
+  const { handleDeleteProduct } = useCartContext();
 
   return (
     <Popper

@@ -1,4 +1,3 @@
-import { useCart } from "@/context";
 import { useAppSelector } from "@/redux/hooks";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import Box from "@mui/material/Box";

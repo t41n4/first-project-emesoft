@@ -1,13 +1,13 @@
 "use client";
 
 import { navLinks } from "@/constant";
+import { useCartContext } from "@/context";
+import { useProductContext } from "@/context/ProductContext";
 import { AddProduct } from "@/modules";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import SearchBar from "./SearchBar";
-import { useProductContext } from "@/context/ProductContext";
-import { useCartContext } from "@/context";
 function Header() {
   const pathname = usePathname();
   const { handleSearchTermChange: handleProductSearchTermChange } =

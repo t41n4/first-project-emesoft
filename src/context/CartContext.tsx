@@ -1,15 +1,8 @@
 import { CartContextType } from "@/common";
-import { ICartItem, IQuery } from "@/common/types";
-import { IProductCart } from "@/common/types";
-import React, {
-  createContext,
-  use,
-  useContext,
-  useEffect,
-  useState,
-} from "react";
+import { ICartItem, IProductCart, IQuery } from "@/common/types";
 import { usePagination } from "@/hooks";
 import { useAppSelector } from "@/redux/hooks";
+import React, { createContext, useContext, useEffect, useState } from "react";
 // Create the CartContext
 export const CartContext = createContext<CartContextType | undefined>(
   undefined
@@ -51,9 +44,8 @@ export const CartProvider: React.FC<any> = ({ children }) => {
     const [SearchResult] = carts.reduce(
       ([SearchResult], cart: ICartItem) => {
         const { name } = cart;
-        const titleMatch = name
-          .toLowerCase()
-          .includes(searchTerm.toLowerCase());
+        const titleMatch =
+          searchTerm && name.toLowerCase().includes(searchTerm.toLowerCase());
         titleMatch && SearchResult.push(cart);
 
         return [SearchResult];

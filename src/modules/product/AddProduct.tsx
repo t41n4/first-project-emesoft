@@ -5,7 +5,7 @@ import {
   FormUploadDetailsPicture,
   FormUploadPicture,
 } from "@/constant/formAddProduct";
-import { useCart } from "@/context";
+import { useCartContext } from "@/context";
 import { useCategories } from "@/hooks";
 import HighlightOffOutlinedIcon from "@mui/icons-material/HighlightOffOutlined";
 import {
@@ -42,7 +42,7 @@ const AddProduct = () => {
   const [picture, setPicture] = useState("");
   const [listPicture, setListPicture] = useState([]);
   // cart context
-  const { addNewProduct } = useCart();
+  const { addNewProduct } = useCartContext();
 
   // Handle open modal
   const handleClickOpen = () => {

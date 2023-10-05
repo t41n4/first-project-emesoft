@@ -257,7 +257,13 @@ export const FormUploadPicture = (props: FormInputProps) => {
                   accept="image/*"
                   // value={value}
 
-                  onChange={(event) => onChange(event.target.files[0])}
+                  onChange={(event) => {
+                    if (event.target.files && event.target.files.length > 0) {
+                      onChange(event.target.files[0]);
+                    } else {
+                      onChange(null);
+                    }
+                  }}
                 />
               </Button>
             </CardActions>
@@ -349,11 +355,13 @@ export const FormUploadDetailsPicture = (props: FormInputProps) => {
                   multiple
                   onChange={(event) => {
                     const listFiles = event.target.files;
-                    const newListPicture = [...value];
-                    for (let i = 0; i < listFiles.length; i++) {
-                      newListPicture.push(listFiles[i]);
+                    if (listFiles && listFiles.length > 0) {
+                      const newListPicture = [...value];
+                      for (let i = 0; i < listFiles.length; i++) {
+                        newListPicture.push(listFiles[i]);
+                      }
+                      onChange(newListPicture);
                     }
-                    return onChange(newListPicture);
                   }}
                 />
               </Button>
