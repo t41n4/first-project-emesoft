@@ -62,10 +62,7 @@ const TableProduct = () => {
   //
 
   // handle viewdetail
-  const handleViewDetail = (id: number) => {
-    setOpenDialog(true);
-    handleViewDetailProduct(id);
-  };
+
   const { listProduct } = useCart();
   return (
     <>
@@ -129,16 +126,7 @@ const TableProduct = () => {
                   </Tooltip>
 
                   <UpdateProduct id={product.id} />
-
-                  <Tooltip title="view detail product">
-                    <IconButton
-                      className="text-blue-600"
-                      aria-label="view"
-                      onClick={() => handleViewDetail(product.id)}
-                    >
-                      <VisibilityIcon />
-                    </IconButton>
-                  </Tooltip>
+                  <DetailProduct id={product.id} />
                 </TableCell>
               </TableRow>
             ))}
