@@ -145,7 +145,7 @@ const TableProduct = () => {
           </TableBody>
         </Table>
       </TableContainer>
-      <DetailProduct openDialog={openDialog} setOpenDialog={setOpenDialog} />
+
       <PopperDelete
         openPopper={openPopper}
         setOpenPopper={setOpenPopper}
