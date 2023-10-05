@@ -30,7 +30,7 @@ import {
 import DeleteIcon from "@mui/icons-material/Delete";
 import EditIcon from "@mui/icons-material/Edit";
 import VisibilityIcon from "@mui/icons-material/Visibility";
-import { useCart } from "@/context";
+import { useProductContext2 } from "@/context";
 import { formatNumber } from "@/utils";
 import { PopperDelete, UpdateProduct, DetailProduct } from "@/modules";
 interface IDataDeleteProduct {
@@ -39,8 +39,6 @@ interface IDataDeleteProduct {
 }
 const TableProduct = () => {
   const [openDialog, setOpenDialog] = useState(false);
-  const { handleViewDetailProduct, productDetail, handleDeleteProduct } =
-    useCart();
   const [openPopper, setOpenPopper] = useState(false);
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const [dataDeleteProduct, setDataDeleteProduct] =
@@ -63,7 +61,8 @@ const TableProduct = () => {
 
   // handle viewdetail
 
-  const { listProduct } = useCart();
+  const { handleDisplayProduct } = useProductContext2();
+  const listProduct = handleDisplayProduct();
   return (
     <>
       <TableContainer component={Paper} className="w-full">

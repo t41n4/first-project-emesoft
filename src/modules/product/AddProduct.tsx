@@ -5,7 +5,7 @@ import {
   FormUploadDetailsPicture,
   FormUploadPicture,
 } from "@/constant/formAddProduct";
-import { useCart } from "@/context";
+import { useProductContext2 } from "@/context";
 import { useCategories } from "@/hooks";
 import HighlightOffOutlinedIcon from "@mui/icons-material/HighlightOffOutlined";
 import {
@@ -42,7 +42,7 @@ const AddProduct = () => {
   const [picture, setPicture] = useState("");
   const [listPicture, setListPicture] = useState([]);
   // cart context
-  const { addNewProduct } = useCart();
+  const { addNewProduct } = useProductContext2();
 
   // Handle open modal
   const handleClickOpen = () => {
@@ -53,6 +53,11 @@ const AddProduct = () => {
     setOpen(false);
 
     clearErrors();
+  };
+  const handleOnKeyDown = (event: React.KeyboardEvent<HTMLDivElement>) => {
+    if (event.key === "Escape") {
+      setOpen(false);
+    }
   };
 
   //   hanlde submit form
@@ -75,24 +80,26 @@ const AddProduct = () => {
       <Button
         variant="outlined"
         onClick={handleClickOpen}
-        className="min-w-max"
+        className="min-w-max text-black border border-neutral-950"
       >
         Add Product
       </Button>
-      <Drawer anchor="right" open={open} onClose={() => setOpen(true)}>
+      <Drawer
+        anchor="right"
+        open={open}
+        onKeyDown={(event) => handleOnKeyDown(event)}
+      >
         <Card className="w-[50vw] overflow-y-scroll">
           <CardHeader
             action={
               <IconButton aria-label="settings" onClick={() => handleClose()}>
-                <HighlightOffOutlinedIcon className="text-4xl" />
+                <HighlightOffOutlinedIcon className="text-4xl mr-4" />
               </IconButton>
             }
             className="p-0 flex-row-reverse"
+            title="Add A New Product"
           />
           <CardContent>
-            <Typography className="font-semibold text-xl">
-              Add a new product
-            </Typography>
             <form
               onSubmit={handleSubmit(onSubmitForm)}
               id="my-form"

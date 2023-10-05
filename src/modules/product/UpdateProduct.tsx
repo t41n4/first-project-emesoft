@@ -29,7 +29,7 @@ import {
   FormUploadDetailsPicture,
   FormInputId,
 } from "@/constant/formAddProduct";
-import { useCart } from "@/context";
+import { useProductContext2 } from "@/context";
 const UpdateProduct = ({ id }: any) => {
   // Use Form
   const {
@@ -47,7 +47,8 @@ const UpdateProduct = ({ id }: any) => {
   const [picture, setPicture] = useState("");
   const [listPicture, setListPicture] = useState([]);
   // cart context
-  const { handleDataUpdate, dataUpdate, handleUpdateData } = useCart();
+  const { handleDataUpdate, dataUpdate, handleUpdateData } =
+    useProductContext2();
 
   // Handle open modal
   const handleClickOpen = () => {
@@ -61,7 +62,11 @@ const UpdateProduct = ({ id }: any) => {
 
     clearErrors();
   };
-
+  const handleOnKeyDown = (event: React.KeyboardEvent<HTMLDivElement>) => {
+    if (event.key === "Escape") {
+      setOpen(false);
+    }
+  };
   //   hanlde submit form
   const onSubmitForm = (data: any) => {
     if (data) {
@@ -83,20 +88,22 @@ const UpdateProduct = ({ id }: any) => {
           <EditIcon />
         </IconButton>
       </Tooltip>
-      <Drawer anchor="right" open={open} onClose={() => setOpen(true)}>
+      <Drawer
+        anchor="right"
+        open={open}
+        onKeyDown={(event) => handleOnKeyDown(event)}
+      >
         <Card className="w-[50vw] overflow-y-scroll">
           <CardHeader
             action={
               <IconButton aria-label="settings" onClick={() => handleClose()}>
-                <HighlightOffOutlinedIcon className="text-4xl" />
+                <HighlightOffOutlinedIcon className="text-4xl mr-4" />
               </IconButton>
             }
             className="p-0 flex-row-reverse"
+            title="Update Product"
           />
           <CardContent>
-            <Typography className="font-semibold text-xl">
-              Update Product
-            </Typography>
             <form
               onSubmit={handleSubmit(onSubmitForm)}
               id="my-form"

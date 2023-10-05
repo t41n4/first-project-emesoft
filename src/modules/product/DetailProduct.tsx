@@ -21,13 +21,12 @@ import {
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import HighlightOffOutlinedIcon from "@mui/icons-material/HighlightOffOutlined";
 
-import { useCart } from "@/context";
+import { useProductContext2 } from "@/context";
 import { useState } from "react";
 
 const DetailProduct = ({ id }: any) => {
-  const { productDetail, handleViewDetailProduct } = useCart();
+  const { productDetail, handleViewDetailProduct } = useProductContext2();
   const [open, setOpen] = useState(false);
-  console.log("🚀 ~ open:", open);
 
   const handleViewDetail = (id: number) => {
     setOpen(true);
@@ -59,10 +58,11 @@ const DetailProduct = ({ id }: any) => {
           <CardHeader
             action={
               <IconButton aria-label="settings" onClick={() => setOpen(false)}>
-                <HighlightOffOutlinedIcon className="text-4xl" />
+                <HighlightOffOutlinedIcon className="text-4xl mr-4" />
               </IconButton>
             }
             className="p-0 flex-row-reverse"
+            title="View Detail Product"
           />
         </Card>
         <TableContainer component={Paper} className="w-[50vw]">

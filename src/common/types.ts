@@ -7,7 +7,7 @@ export interface ICartItem {
   price: number | undefined;
   quantity: number | undefined;
 }
-export interface IProductCart {
+export interface IProduct2 {
   id: number;
   productName: string;
   price: number;
@@ -33,15 +33,9 @@ export interface CartContextType {
     quantity: number;
     setQuantity: any;
     filterSearch: (textSearch: string) => void;
-    listProduct: IProductCart[];
-    setListProduct: any;
-    productDetail: IProductCart| null;
-    addNewProduct: (data: IProductCart) => void;
-    handleViewDetailProduct: (id:number) =>  void;
-    handleDeleteProduct: (id:number) => void;
-    handleDataUpdate: (id:any) => void;
-    dataUpdate: IProductCart | null;
-    handleUpdateData: (id:any,data:IProductCart) => void;
+    
+    
+    
   }
 
 export interface IQuery {

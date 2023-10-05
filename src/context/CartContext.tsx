@@ -1,6 +1,5 @@
 import { CartContextType } from "@/common";
 import { ICartItem } from "@/common/types";
-import { IProductCart } from "@/common/types";
 import React, { createContext, useContext, useState } from "react";
 import { usePagination } from "@/hooks";
 // Create the CartContext
@@ -14,12 +13,6 @@ export const CartProvider: React.FC<any> = ({ children }) => {
   const [carts, setCart] = useState<ICartItem[]>([]);
   const [newCarts, setNewCarts] = useState<ICartItem[]>([]);
   const [quantity, setQuantity] = useState(1);
-  // State Add products
-  const [listProduct, setListProduct] = useState<IProductCart[]>([
-    { id: 12, productName: "DUY KHANG", price: 200, categories: ["duykhang"] },
-  ]);
-  const [productDetail, setProductDetail] = useState<IProductCart | null>(null);
-  const [dataUpdate, setDataUpdate] = useState<IProductCart | null>(null);
 
   // Pagination variables
   const [numberOfPages, setNumberOfPages] = useState<number>(0);
@@ -81,6 +74,7 @@ export const CartProvider: React.FC<any> = ({ children }) => {
   };
 
   const filterSearch = (textSearch: string) => {
+    console.log("🚀 ~ textSearch:", textSearch);
     if (textSearch) {
       const updateCart = carts.filter((cart) => {
         return cart.name?.includes(textSearch);
@@ -91,58 +85,17 @@ export const CartProvider: React.FC<any> = ({ children }) => {
     }
   };
   // Handle Product
-  // handle Add new product
-  const addNewProduct = (data: IProductCart) => {
-    setListProduct((prevState) => [...prevState, data]);
-  };
-  // Handle view details
-  const handleViewDetailProduct = (id: number) => {
-    if (listProduct.length > 0) {
-      const indexProduct = listProduct.findIndex(
-        (product) => product.id === id
-      );
-      const product = [...listProduct];
 
-      setProductDetail(product[indexProduct]);
-    }
-  };
-  // Handle delete product
-  const handleDeleteProduct = (id: number) => {
-    const indexProduct = listProduct.findIndex((product) => product.id === id);
-    const cloneListProduct = [...listProduct];
-    cloneListProduct.splice(indexProduct, 1);
-    setListProduct(cloneListProduct);
-  };
-  // Handle display data update
-  const handleDataUpdate = (id: any) => {
-    const indexProduct = listProduct.findIndex((product) => product.id === id);
-    setDataUpdate(listProduct[indexProduct]);
-  };
-  const handleUpdateData = (id: any, data: IProductCart) => {
-    const indexProduct = listProduct.findIndex((product) => product.id === id);
-    const cloneListProduct = [...listProduct];
-    cloneListProduct[indexProduct] = data;
-    setListProduct(cloneListProduct);
-  };
   return (
     <CartContext.Provider
       value={{
         carts,
-        listProduct,
         addToCart,
         removeFromCart,
         updateQuantityCart,
         quantity,
         setQuantity,
         filterSearch,
-        setListProduct,
-        addNewProduct,
-        handleViewDetailProduct,
-        productDetail,
-        handleDeleteProduct,
-        handleDataUpdate,
-        dataUpdate,
-        handleUpdateData,
       }}
     >
       {children}
