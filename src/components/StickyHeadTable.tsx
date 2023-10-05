@@ -12,6 +12,7 @@ import { useRouter } from "next/router";
 import * as React from "react";
 import { useEffect } from "react";
 import usePagination from "../hooks/usePagination";
+import { set } from "react-hook-form";
 
 function createData(
   id: number,
@@ -35,6 +36,7 @@ const StickyHeadTable = (props: IProps) => {
   const router = useRouter();
 
   const [page, setPage] = React.useState(0);
+
   const [rowsPerPage, setRowsPerPage] = React.useState(rowsPerPageDefault);
   const [rows, setRows] = React.useState<IUser[]>([]);
 
@@ -53,6 +55,7 @@ const StickyHeadTable = (props: IProps) => {
         )
       );
       setRows(rows);
+      setPage(0);
     }
   }, [data]);
 
@@ -68,8 +71,8 @@ const StickyHeadTable = (props: IProps) => {
   };
 
   return (
-    <Paper sx={{ width: "100%", overflow: "hidden" }}>
-      <TableContainer sx={{ maxHeight: 440 }}>
+    <Paper className="w-full overflow-hidden max-h-[50vh]">
+      <TableContainer className="max-h-[50vh]">
         <Table stickyHeader aria-label="sticky table">
           <TableHead>
             <TableRow>

@@ -8,23 +8,28 @@ import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import SearchBar from "./SearchBar";
+import { useUserContext } from "@/context/UserContext";
 function Header() {
   const pathname = usePathname();
   const { handleSearchTermChange: handleProductSearchTermChange } =
     useProductContext();
   const { handleSearchTermChange: handleCartSearchTermChange } =
     useCartContext();
+  const { handleSearchTermChange: handleUsersSearchTermChange } =
+    useUserContext();
 
   const currentContext = () => {
     const currentPath = pathname.slice(1).toLowerCase();
-    console.log('currentPath: ', currentPath);
+    console.log("currentPath: ", currentPath);
     switch (currentPath) {
       case "shop":
         return handleProductSearchTermChange;
       case "cart":
         return handleCartSearchTermChange;
+      case "users":
+        return handleUsersSearchTermChange;
       default:
-        return handleCartSearchTermChange;
+        return undefined;
     }
   };
 

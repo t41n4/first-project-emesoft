@@ -1,4 +1,3 @@
-import { useProductContext } from "@/context/ProductContext";
 import { styled } from "@mui/material/styles";
 
 import SearchIcon from "@mui/icons-material/Search";
@@ -49,17 +48,30 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 }));
 
 interface IProps {
-  handleSearchTermChange: (value: string) => void;
+  handleSearchTermChange: ((searchTerm: string) => void) | undefined;
 }
+
+const willSearchBarAppear = (pathname: string) => {
+  switch (pathname.slice(1)) {
+    case "shop":
+      return true;
+    case "cart":
+      return true;
+    case "product":
+      return true;
+    case "users":
+      return true;
+    default:
+      return false;
+  }
+};
 
 const SearchBar = (props: IProps) => {
   const { handleSearchTermChange } = props;
 
   const pathname = usePathname();
   return (
-    (pathname?.slice(1) === "shop" ||
-      pathname?.slice(1) === "cart" ||
-      pathname?.slice(1) === "product") && (
+    willSearchBarAppear(pathname) && (
       <div>
         <Search>
           <SearchIconWrapper>
@@ -69,7 +81,7 @@ const SearchBar = (props: IProps) => {
             placeholder="Search…"
             inputProps={{ "aria-label": "search" }}
             onChange={(event) => {
-              handleSearchTermChange(event.target.value);
+              handleSearchTermChange?.(event.target.value);
             }}
           />
         </Search>

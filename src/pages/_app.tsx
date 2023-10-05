@@ -11,6 +11,7 @@ import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import { Provider } from "react-redux";
 import { ProductProvider } from "../context/ProductContext";
+import { UserProvider } from "@/context/UserContext";
 
 interface LoadingProps {
   loading: boolean;
@@ -57,11 +58,13 @@ export default function App({ Component, pageProps }: AppProps) {
       <Provider store={store}>
         <ProductProvider>
           <CartProvider>
-            <FloatingCartButton />
-            <Loading loading={loading} setLoading={setLoading} />
-            <Header />
-            <Component {...pageProps} />
-            <Footer />
+            <UserProvider>
+              <FloatingCartButton />
+              <Loading loading={loading} setLoading={setLoading} />
+              <Header />
+              <Component {...pageProps} />
+              <Footer />
+            </UserProvider>
           </CartProvider>
         </ProductProvider>
       </Provider>

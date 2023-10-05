@@ -14,14 +14,14 @@ import {
   TableContainer,
   TableRow,
 } from "@mui/material";
-import { useCart } from "@/context";
+import { useCartContext } from "@/context";
 
 interface IDetailProductProps {
   openDialog: boolean;
   setOpenDialog: any;
 }
 const DetailProduct = ({ openDialog, setOpenDialog }: IDetailProductProps) => {
-  const { productDetail } = useCart();
+  const { productDetail } = useCartContext();
   return (
     <Dialog
       open={openDialog}

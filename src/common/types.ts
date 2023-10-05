@@ -8,6 +8,12 @@ export interface ICartItem {
   price: number;
   quantity: number;
 }
+export type UserContextType = {
+  users: any[];
+  displayData: any[];
+  handleSearchTermChange: (searchTerm: string) => void;
+};
+
 export interface IProductCart {
   id: number;
   productName: string;
