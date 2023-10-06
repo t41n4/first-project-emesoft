@@ -6,7 +6,7 @@ import Link from "next/link";
 
 export default function Home() {
   return (
-    <div className="w-full flex justify-center items-center flex-col p-5">
+    <div className="w-full flex justify-center items-center flex-col p-5 ">
       <div className="flex flex-row ">
         <Typography
           variant="h3"

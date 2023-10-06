@@ -1,10 +1,8 @@
 import { IProduct } from "@/common";
-import { Product, ProductLayout, CategoryFilter, PriceFilter } from "@/modules";
-
+import { CategoryFilter, PriceFilter, Product, ProductLayout } from "@/modules";
 import { useProductContext } from "@/context/ProductContext";
 import { Grid, Skeleton, Stack } from "@mui/material";
 import Image from "next/image";
-import SearchBar from "@/components/SearchBar";
 
 const SkeletonItem = () => {
   return (

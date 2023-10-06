@@ -1,38 +1,20 @@
-import { useState } from "react";
+import { useCartContext } from "@/context";
+import { DetailProduct, PopperDelete, UpdateProduct } from "@/modules";
+import { formatNumber } from "@/utils";
+import DeleteIcon from "@mui/icons-material/Delete";
+import VisibilityIcon from "@mui/icons-material/Visibility";
 import {
-  Button,
-  Card,
-  CardActionArea,
-  CardContent,
-  CardMedia,
-  CardActions,
-  Dialog,
-  DialogActions,
-  DialogContent,
-  DialogContentText,
-  DialogTitle,
-  ImageList,
-  ImageListItem,
-  Typography,
+  IconButton,
+  Paper,
   Table,
   TableBody,
   TableCell,
   TableContainer,
   TableHead,
   TableRow,
-  Paper,
-  IconButton,
-  Popper,
-  Fade,
-  Box,
-  Tooltip,
+  Tooltip
 } from "@mui/material";
-import DeleteIcon from "@mui/icons-material/Delete";
-import EditIcon from "@mui/icons-material/Edit";
-import VisibilityIcon from "@mui/icons-material/Visibility";
-import { useCartContext } from "@/context";
-import { formatNumber } from "@/utils";
-import { PopperDelete, UpdateProduct, DetailProduct } from "@/modules";
+import { useState } from "react";
 interface IDataDeleteProduct {
   id: number;
   productName: string;
@@ -110,6 +92,7 @@ const TableProduct = () => {
                 <TableCell align="center" className="text-base">
                   {product.categories?.join()}
                 </TableCell>
+
                 <TableCell align="center" className="text-base">
                   <Tooltip title="delete product">
                     <IconButton

@@ -8,11 +8,9 @@ import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TablePagination from "@mui/material/TablePagination";
 import TableRow from "@mui/material/TableRow";
-import { useRouter } from "next/router";
 import * as React from "react";
 import { useEffect } from "react";
-import usePagination from "../hooks/usePagination";
-import { set } from "react-hook-form";
+import ActionsCell from "./ActionsCell";
 
 function createData(
   id: number,
@@ -25,6 +23,7 @@ function createData(
 ): IUser {
   return { id, email, username, password, name, address, phone };
 }
+
 interface IProps {
   data: IUser[];
 }
@@ -33,7 +32,6 @@ const StickyHeadTable = (props: IProps) => {
   const { data } = props;
   const rowsPerPageOptions = [3, 5, 7];
   const rowsPerPageDefault = rowsPerPageOptions[0];
-  const router = useRouter();
 
   const [page, setPage] = React.useState(0);
 
@@ -70,9 +68,20 @@ const StickyHeadTable = (props: IProps) => {
     setPage(0);
   };
 
+  const handleClickPopper = (
+    event: React.MouseEvent<HTMLElement>,
+    id: number,
+    productName: string
+  ) => {
+    const dataDelete = {
+      id,
+      productName,
+    };
+  };
+
   return (
-    <Paper className="w-full overflow-hidden max-h-[50vh]">
-      <TableContainer className="max-h-[50vh]">
+    <Paper className="w-full overflow-hidden mb-5">
+      <TableContainer className="h-[70vh]">
         <Table stickyHeader aria-label="sticky table">
           <TableHead>
             <TableRow>
@@ -103,16 +112,13 @@ const StickyHeadTable = (props: IProps) => {
                           : value;
 
                       return (
-                        <TableCell
-                          className="cursor-pointer"
-                          key={column.id}
-                          align={column.align}
-                          onClick={() => {
-                            console.log("row: ", row);
-                            router.push(`/users/${row.id}`);
-                          }}
-                        >
+                        <TableCell key={column.id} align={column.align}>
                           {column.format ? column.format(value) : displayValue}
+                          {/* put your action cell here */}
+                          {column.id === "action" && (
+                            <ActionsCell id={row.id} />
+                          )}
+                          {/* put your action cell here */}
                         </TableCell>
                       );
                     })}

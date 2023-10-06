@@ -1,6 +1,6 @@
 import StickyHeadTable from "@/components/StickyHeadTable";
 import { useUserContext } from "@/context/UserContext";
-import { useAppDispatch, useAppSelector } from "@/redux/hooks";
+import { useAppDispatch } from "@/redux/hooks";
 import { fetchUsers } from "@/redux/reducer/UserSlice";
 import { useEffect } from "react";
 
@@ -14,7 +14,7 @@ export default function Page() {
   }, [dispatch]);
 
   return (
-    <div className="flex w-full h-[100vh] px-10">
+    <div className="flex w-full h-full px-10">
       <StickyHeadTable data={displayData} />
     </div>
   );

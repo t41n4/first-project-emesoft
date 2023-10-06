@@ -54,20 +54,22 @@ export default function App({ Component, pageProps }: AppProps) {
   }, [loading]);
 
   return (
-    <main className="mt-[15vh] ">
+    <>
       <Provider store={store}>
         <ProductProvider>
           <CartProvider>
             <UserProvider>
-              <FloatingCartButton />
-              <Loading loading={loading} setLoading={setLoading} />
               <Header />
-              <Component {...pageProps} />
+              <main className="mt-[15vh] h-full ">
+                <FloatingCartButton />
+                <Loading loading={loading} setLoading={setLoading} />
+                <Component {...pageProps} />
+              </main>
               <Footer />
             </UserProvider>
           </CartProvider>
         </ProductProvider>
       </Provider>
-    </main>
+    </>
   );
 }

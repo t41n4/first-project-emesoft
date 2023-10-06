@@ -34,7 +34,7 @@ function Header() {
   };
 
   return (
-    <header className="flex flex-row fixed top-0 left-[2.5%] self-center w-[95vw] justify-between items-center h-[12vh] border border-black rounded-lg px-4 bg-[#f58439] z-50">
+    <header className="flex flex-row fixed top-0 left-[2.5%] w-[95vw] justify-between items-center h-[12vh] border border-black rounded-lg px-4 bg-[#f58439] z-50">
       <div className="logo">
         <Image
           src="https://www.emesoft.net/wp-content/uploads/2023/06/EMESOFT-Logo-Full-Horizontal-.png"
