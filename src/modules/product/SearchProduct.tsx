@@ -47,8 +47,7 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
   },
 }));
 const SearchProduct = () => {
-  const [textSearch, setTextSearch] = useState<string>("");
-  const { handleDisplayProduct } = useProductContext2();
+  const { handleSearchTermChange } = useProductContext2();
   return (
     <Box className=" flex justify-between mb-1">
       <Search>
@@ -58,10 +57,8 @@ const SearchProduct = () => {
         <StyledInputBase
           placeholder="Search…"
           inputProps={{ "aria-label": "search" }}
-          value={textSearch}
           onChange={(event) => {
-            setTextSearch(event.target.value);
-            handleDisplayProduct(event.target.value);
+            handleSearchTermChange(event.target.value);
           }}
         />
       </Search>

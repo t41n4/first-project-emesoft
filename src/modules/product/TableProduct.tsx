@@ -1,19 +1,5 @@
 import { useState } from "react";
 import {
-  Button,
-  Card,
-  CardActionArea,
-  CardContent,
-  CardMedia,
-  CardActions,
-  Dialog,
-  DialogActions,
-  DialogContent,
-  DialogContentText,
-  DialogTitle,
-  ImageList,
-  ImageListItem,
-  Typography,
   Table,
   TableBody,
   TableCell,
@@ -28,8 +14,6 @@ import {
   Tooltip,
 } from "@mui/material";
 import DeleteIcon from "@mui/icons-material/Delete";
-import EditIcon from "@mui/icons-material/Edit";
-import VisibilityIcon from "@mui/icons-material/Visibility";
 import { useProductContext2 } from "@/context";
 import { formatNumber } from "@/utils";
 import { PopperDelete, UpdateProduct, DetailProduct } from "@/modules";
@@ -61,8 +45,8 @@ const TableProduct = () => {
 
   // handle viewdetail
 
-  const { handleDisplayProduct } = useProductContext2();
-  const listProduct = handleDisplayProduct();
+  const { displayData, handleSearchTermChange } = useProductContext2();
+
   return (
     <>
       <TableContainer component={Paper} className="w-full">
@@ -87,7 +71,7 @@ const TableProduct = () => {
             </TableRow>
           </TableHead>
           <TableBody>
-            {listProduct.map((product, index) => (
+            {displayData.map((product, index) => (
               <TableRow key={index}>
                 <TableCell
                   component="th"
@@ -106,7 +90,10 @@ const TableProduct = () => {
                 <TableCell align="center" className="text-base">
                   {product.categories?.join()}
                 </TableCell>
-                <TableCell align="center" className="text-base">
+                <TableCell
+                  align="center"
+                  className="text-base flex justify-center"
+                >
                   <Tooltip title="delete product">
                     <IconButton
                       aria-label="delete"

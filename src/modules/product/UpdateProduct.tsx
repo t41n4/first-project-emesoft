@@ -6,10 +6,11 @@ import {
   FormUploadDetailsPicture,
   FormUploadPicture,
 } from "@/constant/formAddProduct";
-import { useCartContext } from "@/context";
-import { useCategories } from "@/hooks";
+import { useProductContext2 } from "@/context";
 import EditIcon from "@mui/icons-material/Edit";
 import HighlightOffOutlinedIcon from "@mui/icons-material/HighlightOffOutlined";
+import { DialogMessage } from "@/modules";
+
 import {
   Alert,
   AlertTitle,
@@ -23,25 +24,23 @@ import {
   IconButton,
   Snackbar,
   Tooltip,
-  Typography,
 } from "@mui/material";
 import { useState } from "react";
-import { useForm } from "react-hook-form";
+import { useForm, useFormContext } from "react-hook-form";
 const UpdateProduct = ({ id }: any) => {
   // Use Form
   const {
     handleSubmit,
     formState: { errors },
     control,
-    setValue,
     clearErrors,
     reset,
+    getValues,
   } = useForm();
   //
-  const [open, setOpen] = useState(false);
+  const [openDrawer, setOpenDrawer] = useState(false);
+  const [openDialog, setOpenDialog] = useState(false);
   const [openToast, setOpenToast] = useState(false);
-  const categories = useCategories();
-  const [picture, setPicture] = useState("");
   const [listPicture, setListPicture] = useState([]);
   // cart context
   const { handleDataUpdate, dataUpdate, handleUpdateData } =
@@ -50,25 +49,36 @@ const UpdateProduct = ({ id }: any) => {
   // Handle open modal
   const handleClickOpen = () => {
     handleDataUpdate(id);
-    setOpen(true);
+    setOpenDrawer(true);
+  };
+  // handle check value and erros forms
+  const handleCheck = () => {
+    const getValueForm = Object.values(getValues());
+    // console.log("🚀 ~ getValueForm:", getValueForm);
+
+    const checkValueForm = getValueForm.some((item) => item.length !== 0); //user khong nhap gia tri = false
+    const checkErrors = Object.keys(errors).length !== 0; //neu khong co error false
+    const check = checkValueForm || checkErrors;
+    return check;
   };
   //   Handle close modal
   const handleClose = () => {
-    reset();
-    setOpen(false);
-
-    clearErrors();
+    if (handleCheck()) {
+      setOpenDialog(true);
+    } else {
+      setOpenDrawer(false);
+    }
   };
   const handleOnKeyDown = (event: React.KeyboardEvent<HTMLDivElement>) => {
     if (event.key === "Escape") {
-      setOpen(false);
+      setOpenDrawer(false);
     }
   };
   //   hanlde submit form
   const onSubmitForm = (data: any) => {
     if (data) {
       handleUpdateData(id, data);
-      setOpen(false);
+      setOpenDrawer(false);
     }
   };
 
@@ -87,7 +97,7 @@ const UpdateProduct = ({ id }: any) => {
       </Tooltip>
       <Drawer
         anchor="right"
-        open={open}
+        open={openDrawer}
         onKeyDown={(event) => handleOnKeyDown(event)}
       >
         <Card className="w-[50vw] overflow-y-scroll">
@@ -179,6 +189,12 @@ const UpdateProduct = ({ id }: any) => {
           Add a new product success
         </Alert>
       </Snackbar>
+      <DialogMessage
+        openDialog={openDialog}
+        setOpenDrawer={setOpenDrawer}
+        content="You are updating the data, do you want to continue?"
+        setOpenDialog={setOpenDialog}
+      />
     </div>
   );
 };

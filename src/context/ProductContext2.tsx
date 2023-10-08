@@ -1,48 +1,91 @@
-import { createContext, useContext, useState } from "react";
+import { createContext, useContext, useEffect, useState } from "react";
 import { IProduct2 } from "@/common/types";
-interface IProductContext2 {
-  listProduct: IProduct2[];
-  addNewProduct: (data: IProduct2) => void;
-  handleViewDetailProduct: (id: number) => void;
-  handleDeleteProduct: (id: number) => void;
-  handleDataUpdate: (id: any) => void;
-  dataUpdate: IProduct2 | null;
-  handleUpdateData: (id: any, data: IProduct2) => void;
-  productDetail: IProduct2 | null;
-  handleDisplayProduct: (textSearch?: string) => void;
-}
 const ProductContext2 = createContext<IProductContext2 | undefined>(undefined);
 
 export const ProductProvider2: React.FC<any> = ({ children }) => {
   const [listProduct, setListProduct] = useState<IProduct2[]>([
-    { id: 12, productName: "duy khang", price: 200, categories: ["duykhang"] },
+    {
+      id: 1,
+      productName: "laptop",
+      price: 200,
+      categories: ["electronics"],
+    },
+    {
+      id: 2,
+      productName: "tablet",
+      price: 200,
+      categories: ["electronics"],
+    },
+    {
+      id: 3,
+      productName: "PC",
+      price: 200,
+      categories: ["electronics"],
+    },
   ]);
   const [productDetail, setProductDetail] = useState<IProduct2 | null>(null);
   const [dataUpdate, setDataUpdate] = useState<IProduct2 | null>(null);
+  const [displayData, setDisplayData] = useState<IProduct2[]>([]);
+  // console.log("🚀 ~ searchText:", searchText);
   // handle Add new product
+
+  useEffect(() => {
+    setDisplayData(listProduct);
+  }, [listProduct]);
   const addNewProduct = (data: IProduct2) => {
     setListProduct((prevState) => [...prevState, data]);
   };
-  // handle display data
-  const handleDisplayProduct = (searchText: string | undefined) => {
-    // const todoRemaining = state.todoList.filter((todo) => {
-    //         return todo.name.includes(state.filters.search);
-    //     })
-    //     return todoRemaining
-
-    // const listDataProduct = [...listProduct];
-    // listDataProduct.filter((product) => {
-    //   return product.productName.includes(searchText);
-    // });
-    // console.log("🚀 ~ listDataProduct:", listDataProduct);
-    if (searchText) {
-      const listDataProduct = listProduct.filter((product) => {
-        return product.productName.includes(searchText);
-      });
-      return listDataProduct;
-    }
-    return listProduct;
+  // hanlde display Data
+  const handleSearchTermChange = (searchTerm: string) => {
+    console.log("🚀 ~ searchTerm:", searchTerm);
+    console.log("displayData", displayData);
+    const searchResult = listProduct.reduce((accumulator, currentValue) => {
+      const checkSearch =
+        searchTerm &&
+        currentValue.productName
+          .toLowerCase()
+          .includes(searchTerm.toLowerCase());
+      checkSearch && accumulator.push(currentValue);
+      return accumulator;
+    }, []);
+    console.log("🚀 ~ searchResult:", searchResult);
+    // setDisplayData(searchResult);
+    const joinArray = [searchResult, listProduct]
+      .filter((arrayElement) => arrayElement.length > 0)
+      .reduce((accumulator, currentValue) =>
+        accumulator.filter((element) => currentValue.includes(element))
+      );
+    setDisplayData(joinArray);
   };
+
+  // const handleQueryChange = (props: IQuery) => {
+  //   const { searchTerm } = props;
+  //   console.log("listProduct: ", listProduct);
+
+  //   const [SearchResult] = listProduct.reduce(
+  //     ([SearchResult], productItem: IProduct2) => {
+  //       // console.log("SearchResult", [SearchResult]);
+  //       const { productName } = productItem;
+  //       const titleMatch =
+  //         searchTerm &&
+  //         productName.toLowerCase().includes(searchTerm.toLowerCase());
+  //       titleMatch && SearchResult.push(productItem);
+
+  //       return [SearchResult];
+  //     },
+  //     [[]] as [IProduct2[]]
+  //   );
+  //   // console.log("🚀 ~ SearchResult:", SearchResult);
+  //   const joinedResult = [SearchResult, listProduct]
+  //     .filter((arrayElement) => arrayElement.length !== 0)
+  //     .reduce((accumulator, currentValue) =>
+  //       accumulator.filter((element) => currentValue.includes(element))
+  //     );
+  //   // console.log("🚀 ~ joinedResult:", joinedResult);
+
+  //   setDisplayData(joinedResult);
+  // };
+
   // Handle view details
   const handleViewDetailProduct = (id: number) => {
     if (listProduct.length > 0) {
@@ -72,8 +115,11 @@ export const ProductProvider2: React.FC<any> = ({ children }) => {
     cloneListProduct[indexProduct] = data;
     setListProduct(cloneListProduct);
   };
-  const handleSearchProduct = (textSearch: string) => {};
-
+  // Use hook form
+  // const useHookFormProduct = () => {
+  //   const useHookForm = useForm();
+  //   return useHookForm;
+  // };
   return (
     <ProductContext2.Provider
       value={{
@@ -85,13 +131,26 @@ export const ProductProvider2: React.FC<any> = ({ children }) => {
         handleDataUpdate,
         dataUpdate,
         handleUpdateData,
-        handleDisplayProduct,
+        handleSearchTermChange,
+        displayData,
       }}
     >
       {children}
     </ProductContext2.Provider>
   );
 };
+interface IProductContext2 {
+  listProduct: IProduct2[];
+  addNewProduct: (data: IProduct2) => void;
+  handleViewDetailProduct: (id: number) => void;
+  handleDeleteProduct: (id: number) => void;
+  handleDataUpdate: (id: any) => void;
+  dataUpdate: IProduct2 | null;
+  handleUpdateData: (id: any, data: IProduct2) => void;
+  productDetail: IProduct2 | null;
+  handleSearchTermChange: (search: string) => void;
+  displayData: IProduct2[];
+}
 
 export const useProductContext2 = () => {
   const context = useContext(ProductContext2);

@@ -15,6 +15,7 @@ import PopperDelete from "./product/PopperDelete";
 import UpdateProduct from "./product/UpdateProduct";
 import DetailProduct from "./product/DetailProduct";
 import SearchProduct from "./product/SearchProduct";
+import DialogMessage from "./product/DialogMessage";
 import LoginForm from "./login/LoginForm";
 
 import CategoryFilter from "./shop/CategoryFilter";
@@ -42,5 +43,5 @@ export {
   PopperDelete,
   UpdateProduct,
   DetailProduct,
-  SearchProduct
+  SearchProduct,DialogMessage
 };

@@ -8,7 +8,23 @@ export interface ICartItem {
   price: number;
   quantity: number;
 }
+export type UserContextType = {
+  users: any[];
+  displayData: any[];
+  handleSearchTermChange: (searchTerm: string) => void;
+};
+
 export interface IProduct2 {
+  id: number;
+  productName: string;
+  price: number;
+  categories?: string[];
+  picture?: File | null ;
+  detailPictures?: File[] | undefined;
+}
+
+
+export interface IProductCart {
   id: number;
   productName: string;
   price: number;

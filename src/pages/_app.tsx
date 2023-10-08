@@ -11,7 +11,9 @@ import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import { Provider } from "react-redux";
 import { ProductProvider } from "../context/ProductContext";
-import { ProductProvider2 } from "@/context";
+import { ProductProvider2 } from "@/context/ProductContext2";
+import { UserProvider } from "@/context/UserContext";
+import UseFormProvider from "@/context/FormContext";
 interface LoadingProps {
   loading: boolean;
   setLoading: React.Dispatch<React.SetStateAction<boolean>>;
@@ -53,17 +55,21 @@ export default function App({ Component, pageProps }: AppProps) {
   return (
     <main className="mt-[15vh] ">
       <Provider store={store}>
-        <ProductProvider>
-          <ProductProvider2>
-            <CartProvider>
-              <FloatingCartButton />
-              <Loading loading={loading} setLoading={setLoading} />
-              <Header />
-              <Component {...pageProps} />
-              <Footer />
-            </CartProvider>
-          </ProductProvider2>
-        </ProductProvider>
+        <UseFormProvider>
+          <ProductProvider>
+            <UserProvider>
+              <ProductProvider2>
+                <CartProvider>
+                  <FloatingCartButton />
+                  <Loading loading={loading} setLoading={setLoading} />
+                  <Header />
+                  <Component {...pageProps} />
+                  <Footer />
+                </CartProvider>
+              </ProductProvider2>
+            </UserProvider>
+          </ProductProvider>
+        </UseFormProvider>
       </Provider>
     </main>
   );

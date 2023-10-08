@@ -20,11 +20,11 @@ import {
   Drawer,
   IconButton,
   Snackbar,
-  Typography,
 } from "@mui/material";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { v4 as uuidv4 } from "uuid";
+import { DialogMessage } from "@/modules";
 const AddProduct = () => {
   // Use Form
   const {
@@ -34,47 +34,63 @@ const AddProduct = () => {
     setValue,
     clearErrors,
     reset,
+    getValues,
   } = useForm();
   //
-  const [open, setOpen] = useState(false);
+  const [openDrawer, setOpenDrawer] = useState(false);
   const [openToast, setOpenToast] = useState(false);
-  const categories = useCategories();
-  const [picture, setPicture] = useState("");
-  const [listPicture, setListPicture] = useState([]);
+  const [openDialog, setOpenDialog] = useState(false);
   // cart context
   const { addNewProduct } = useProductContext2();
 
   // Handle open modal
   const handleClickOpen = () => {
-    setOpen(true);
+    setOpenDrawer(true);
+  };
+  // handle check value and erros forms
+  const handleCheck = () => {
+    const getValueForm = Object.values(getValues());
+    // console.log("🚀 ~ getValueForm:", getValueForm);
+
+    const checkValueForm = getValueForm.some((item) => item.length !== 0); //user khong nhap gia tri = false
+    const checkErrors = Object.keys(errors).length !== 0; //neu khong co error false
+    const check = checkValueForm || checkErrors;
+    return check;
   };
   //   Handle close modal
   const handleClose = () => {
-    setOpen(false);
-
-    clearErrors();
+    if (handleCheck()) {
+      setOpenDialog(true);
+    } else {
+      setOpenDrawer(false);
+    }
+    // clearErrors();
   };
   const handleOnKeyDown = (event: React.KeyboardEvent<HTMLDivElement>) => {
     if (event.key === "Escape") {
-      setOpen(false);
+      if (handleCheck()) {
+        setOpenDialog(true);
+      } else {
+        setOpenDrawer(false);
+        clearErrors();
+      }
     }
   };
 
   //   hanlde submit form
   const onSubmitForm = (data: any) => {
+    console.log("🚀 ~ data:", data);
     if (data) {
       const newData = { ...data, id: uuidv4() };
       addNewProduct(newData);
       reset();
       setValue("detailPictures", []);
-      setPicture("");
-      setListPicture([]);
+
       setOpenToast(true);
     }
   };
 
   // Handle Onclick delete list picture
-
   return (
     <div className="add-product ">
       <Button
@@ -86,7 +102,7 @@ const AddProduct = () => {
       </Button>
       <Drawer
         anchor="right"
-        open={open}
+        open={openDrawer}
         onKeyDown={(event) => handleOnKeyDown(event)}
       >
         <Card className="w-[50vw] overflow-y-scroll">
@@ -130,8 +146,6 @@ const AddProduct = () => {
                 name="detailPictures"
                 control={control}
                 label="Detail Picture"
-                listPicture={listPicture}
-                setListPicture={setListPicture}
               />
             </form>
           </CardContent>
@@ -164,6 +178,15 @@ const AddProduct = () => {
           Add a new product success
         </Alert>
       </Snackbar>
+      {/* Popup Message */}
+      <DialogMessage
+        openDialog={openDialog}
+        setOpenDialog={setOpenDialog}
+        content="You are adding a product do you want to continue?"
+        setOpenDrawer={setOpenDrawer}
+        reset={reset}
+        clearErrors={clearErrors}
+      />
     </div>
   );
 };

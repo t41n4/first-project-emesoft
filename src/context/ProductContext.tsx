@@ -1,6 +1,5 @@
 import { IProduct } from "@/common";
 import { IQuery, ProductContextType } from "@/common/types";
-import { useFetchProducts } from "@/hooks";
 import usePagination from "@/hooks/usePagination";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import { fetchProducts } from "@/redux/reducer/ProducSlice";
@@ -34,7 +33,7 @@ export function ProductProvider({ children }: { children: ReactNode }) {
   const [Page, setPage] = useState<number>(1);
 
   const { products } = useAppSelector((state) => state.products);
-  
+
   const dispatch = useAppDispatch();
   useEffect(() => {
     if (products.length === 0) {
@@ -72,7 +71,7 @@ export function ProductProvider({ children }: { children: ReactNode }) {
 
       [[], [], []] as [IProduct[], IProduct[], IProduct[]]
     );
-    // console.log([SearchResult, PriceResult, CategoryResult]);
+    console.log([SearchResult, PriceResult, CategoryResult]);
 
     // join 3 array
     const joinedResult = [SearchResult, PriceResult, CategoryResult]

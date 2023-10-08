@@ -129,8 +129,8 @@ const DetailProduct = ({ id }: any) => {
                 <TableCell align="right">
                   <ImageList cols={4}>
                     {productDetail?.detailPictures ? (
-                      productDetail.detailPictures.map((item) => (
-                        <ImageListItem>
+                      productDetail.detailPictures.map((item, index) => (
+                        <ImageListItem key={index}>
                           <img src={URL.createObjectURL(item)} loading="lazy" />
                         </ImageListItem>
                       ))

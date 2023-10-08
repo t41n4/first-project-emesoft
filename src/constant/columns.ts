@@ -11,7 +11,7 @@ export const columns: readonly Column[] = [
   },
   {
     id: "name",
-    label: "Name",
+    label: "name",
     minWidth: 170,
     align: "left",
     format: (value: IName) => {
@@ -22,14 +22,14 @@ export const columns: readonly Column[] = [
   { id: "email", label: "Email", minWidth: 100 },
   {
     id: "phone",
-    label: "Phone",
+    label: "phone",
     minWidth: 170,
     align: "left",
     format: (value: number) => value.toLocaleString("en-US"),
   },
   {
     id: "address",
-    label: "Address",
+    label: "address",
     minWidth: 170,
     align: "left",
     format: (value: IAddress) => {
@@ -38,17 +38,9 @@ export const columns: readonly Column[] = [
     },
   },
   {
-    id: "username",
-    label: "Username",
+    id: "action",
+    label: "action",
     minWidth: 170,
     align: "left",
-    format: (value: object) => value.toString(),
-  },
-  {
-    id: "password",
-    label: "password",
-    minWidth: 170,
-    align: "left",
-    format: (value: object) => value.toString(),
   },
 ];
