@@ -14,7 +14,7 @@ export default function Page() {
   }, [dispatch]);
 
   return (
-    <div className="flex w-full h-full px-10">
+    <div className="flex w-full h-full px-10 pt-5">
       <StickyHeadTable data={displayData} />
     </div>
   );

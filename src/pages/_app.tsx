@@ -60,7 +60,7 @@ export default function App({ Component, pageProps }: AppProps) {
           <CartProvider>
             <UserProvider>
               <Header />
-              <main className="mt-[15vh] h-full ">
+              <main className="h-full min-h-[77vh] relative">
                 <FloatingCartButton />
                 <Loading loading={loading} setLoading={setLoading} />
                 <Component {...pageProps} />

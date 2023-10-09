@@ -1,6 +1,10 @@
 import React, { useRef, useEffect } from "react";
 
-const ScrollArea: React.FC = ({ children }) => {
+interface IProps {
+  children: any;
+}
+
+const ScrollArea: React.FC<IProps> = ({ children }) => {
   const scrollContainerRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {

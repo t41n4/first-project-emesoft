@@ -81,7 +81,7 @@ const StickyHeadTable = (props: IProps) => {
 
   return (
     <Paper className="w-full overflow-hidden mb-5">
-      <TableContainer className="h-[70vh]">
+      <TableContainer className="h-[65vh]">
         <Table stickyHeader aria-label="sticky table">
           <TableHead>
             <TableRow>

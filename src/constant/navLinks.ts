@@ -1,45 +1,46 @@
+// scan all the page in nextjs and create the navLinks
+// this is the navLinks
+// this is the navLinks
+
 export const navLinks = [
   {
     id: "home",
     title: "Home",
     route: "/",
-    isActive: false,
   },
   {
     id: "shop",
     title: "shop",
     route: "/shop",
-    isActive: false,
   },
   {
     id: "cart",
     title: "cart",
     route: "/cart",
-    isActive: false,
   },
   {
     id: "login",
     title: "login",
     route: "/login",
-    isActive: false,
   },
   {
     id: "insert",
     title: "insert",
     route: "/insert",
-    isActive: false,
   },
   {
     id: "product",
     title: "Product",
     route: "/product",
-    isActive: false,
-    
   },
   {
     id: "users",
     title: "users",
     route: "/users",
-    isActive: false,
-  }
+  },
+  {
+    id: "headerMT",
+    title: "headerMT",
+    route: "/headerMT",
+  },
 ];
