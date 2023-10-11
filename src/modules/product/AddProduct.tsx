@@ -20,13 +20,29 @@ import {
   Drawer,
   IconButton,
   Snackbar,
+  Backdrop,
+  Collapse,
+  Zoom,
+  Fade,
 } from "@mui/material";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
+import { useDispatch, useSelector } from "react-redux";
 import { v4 as uuidv4 } from "uuid";
 import { DialogMessage } from "@/modules";
+import { addNewProduct } from "@/redux/reducer/ProductSlice_2";
+
 const AddProduct = () => {
+  const dispatch = useDispatch();
+
   // Use Form
+  const defaultValues = {
+    productName: "",
+    price: "",
+    categories: [],
+    picture: "",
+    detailPictures: [],
+  };
   const {
     handleSubmit,
     formState: { errors },
@@ -35,18 +51,20 @@ const AddProduct = () => {
     clearErrors,
     reset,
     getValues,
-  } = useForm();
+    register,
+  } = useForm({ defaultValues });
   //
-  const [openDrawer, setOpenDrawer] = useState(false);
+  const [open, setOpen] = useState(false);
   const [openToast, setOpenToast] = useState(false);
   const [openDialog, setOpenDialog] = useState(false);
   // cart context
-  const { addNewProduct } = useProductContext2();
+  // const { addNewProduct } = useProductContext2();
 
   // Handle open modal
   const handleClickOpen = () => {
-    setOpenDrawer(true);
+    setOpen(true);
   };
+
   // handle check value and erros forms
   const handleCheck = () => {
     const getValueForm = Object.values(getValues());
@@ -62,7 +80,7 @@ const AddProduct = () => {
     if (handleCheck()) {
       setOpenDialog(true);
     } else {
-      setOpenDrawer(false);
+      setOpen(false);
     }
     // clearErrors();
   };
@@ -71,7 +89,7 @@ const AddProduct = () => {
       if (handleCheck()) {
         setOpenDialog(true);
       } else {
-        setOpenDrawer(false);
+        setOpen(false);
         clearErrors();
       }
     }
@@ -82,9 +100,9 @@ const AddProduct = () => {
     console.log("🚀 ~ data:", data);
     if (data) {
       const newData = { ...data, id: uuidv4() };
-      addNewProduct(newData);
+      // addNewProduct(newData);
+      dispatch(addNewProduct(newData));
       reset();
-      setValue("detailPictures", []);
 
       setOpenToast(true);
     }
@@ -92,7 +110,7 @@ const AddProduct = () => {
 
   // Handle Onclick delete list picture
   return (
-    <div className="add-product ">
+    <div className="add-product inline">
       <Button
         variant="outlined"
         onClick={handleClickOpen}
@@ -100,67 +118,74 @@ const AddProduct = () => {
       >
         Add Product
       </Button>
-      <Drawer
-        anchor="right"
-        open={openDrawer}
-        onKeyDown={(event) => handleOnKeyDown(event)}
+
+      <Backdrop
+        sx={{ color: "#fff", zIndex: (theme) => theme.zIndex.drawer + 1 }}
+        open={open}
       >
-        <Card className="w-[50vw] overflow-y-scroll">
-          <CardHeader
-            action={
-              <IconButton aria-label="settings" onClick={() => handleClose()}>
-                <HighlightOffOutlinedIcon className="text-4xl mr-4" />
-              </IconButton>
-            }
-            className="p-0 flex-row-reverse"
-            title="Add A New Product"
-          />
-          <CardContent>
-            <form
-              onSubmit={handleSubmit(onSubmitForm)}
-              id="my-form"
-              className="grid grid-flow-row gap-5 mt-5 w-full"
-            >
-              <FormInputProductName
-                name="productName"
-                control={control}
-                label="Product Name"
-              />
-              <FormInputPrice name="price" control={control} label="Price" />
+        <Fade in={open} timeout={500}>
+          <Card className="w-[50vw] h-[100vh] overflow-y-scroll absolute top-0 right-0">
+            <CardHeader
+              action={
+                <IconButton
+                  aria-label="settings"
+                  onClick={() => handleClose()}
+                  className="h-9 w-9 my-2 mr-4"
+                >
+                  <HighlightOffOutlinedIcon className="text-4xl mx-auto" />
+                </IconButton>
+              }
+              className="p-0 flex-row-reverse"
+              title="Create A New Product"
+            />
+            <CardContent>
+              <form
+                noValidate
+                onSubmit={handleSubmit(onSubmitForm)}
+                id="my-formAdd"
+                className="grid grid-flow-row gap-5 mt-5 w-full"
+              >
+                <FormInputProductName
+                  name="productName"
+                  control={control}
+                  label="Product Name"
+                />
+                <FormInputPrice name="price" control={control} label="Price" />
 
-              <FormInputCategory
-                name="categories"
-                label="Category"
-                control={control}
-              />
-              <Divider textAlign="left">Product Image</Divider>
+                <FormInputCategory
+                  name="categories"
+                  label="Category"
+                  control={control}
+                />
+                <Divider textAlign="left">Product Image</Divider>
 
-              <FormUploadPicture
-                name="picture"
-                control={control}
-                label=" Picture"
-              />
+                <FormUploadPicture
+                  name="picture"
+                  control={control}
+                  label=" Picture"
+                />
 
-              <Divider textAlign="left">Details Product Image </Divider>
-              <FormUploadDetailsPicture
-                name="detailPictures"
-                control={control}
-                label="Detail Picture"
-              />
-            </form>
-          </CardContent>
-          <CardActions>
-            <Button
-              type="submit"
-              variant="contained"
-              form="my-form"
-              className="bg-blue-500 mx-auto px-7"
-            >
-              ADD
-            </Button>
-          </CardActions>
-        </Card>
-      </Drawer>
+                <Divider textAlign="left">Details Product Image </Divider>
+                <FormUploadDetailsPicture
+                  name="detailPictures"
+                  control={control}
+                  label="Detail Picture"
+                />
+              </form>
+            </CardContent>
+            <CardActions>
+              <Button
+                type="submit"
+                variant="contained"
+                form="my-formAdd"
+                className="bg-blue-500 mx-auto px-7"
+              >
+                ADD
+              </Button>
+            </CardActions>
+          </Card>
+        </Fade>
+      </Backdrop>
 
       {/* Toast message */}
       <Snackbar
@@ -183,7 +208,7 @@ const AddProduct = () => {
         openDialog={openDialog}
         setOpenDialog={setOpenDialog}
         content="You are adding a product do you want to continue?"
-        setOpenDrawer={setOpenDrawer}
+        setOpenDrawer={setOpen}
         reset={reset}
         clearErrors={clearErrors}
       />

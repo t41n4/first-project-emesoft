@@ -15,7 +15,7 @@ export type UserContextType = {
 };
 
 export interface IProduct2 {
-  id: number;
+  id: any;
   productName: string;
   price: number;
   categories?: string[];

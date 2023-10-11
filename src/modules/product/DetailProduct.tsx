@@ -1,4 +1,5 @@
 import {
+  Box,
   Card,
   CardActionArea,
   CardHeader,
@@ -17,20 +18,32 @@ import {
   TableContainer,
   TableRow,
   Tooltip,
+  Backdrop,
+  Zoom,
+  Typography,
+  CardContent,
+  CardActions,
+  Button,
 } from "@mui/material";
+import { Collapse } from "@mui/material";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import HighlightOffOutlinedIcon from "@mui/icons-material/HighlightOffOutlined";
-
-import { useProductContext2 } from "@/context";
+import { handleViewDetailProduct } from "@/redux/reducer/ProductSlice_2";
 import { useState } from "react";
-
+import { useAppSelector } from "@/redux/store/store";
+import { useDispatch } from "react-redux";
 const DetailProduct = ({ id }: any) => {
-  const { productDetail, handleViewDetailProduct } = useProductContext2();
+  // const { productDetail, handleViewDetailProduct } = useProductContext2();
+  const dispatch = useDispatch();
+  const productDetail = useAppSelector(
+    (state) => state.products2.detailProduct
+  );
+
   const [open, setOpen] = useState(false);
 
   const handleViewDetail = (id: number) => {
     setOpen(true);
-    handleViewDetailProduct(id);
+    dispatch(handleViewDetailProduct(id));
   };
   const handleOnKeyDown = (event: React.KeyboardEvent<HTMLDivElement>) => {
     if (event.key === "Escape") {
@@ -39,7 +52,7 @@ const DetailProduct = ({ id }: any) => {
   };
 
   return (
-    <div className="add-product inline ">
+    <div className="add-product inline relative">
       <Tooltip title="view detail product">
         <IconButton
           className="text-blue-600"
@@ -49,117 +62,119 @@ const DetailProduct = ({ id }: any) => {
           <VisibilityIcon />
         </IconButton>
       </Tooltip>
-      <Drawer
-        anchor="right"
+
+      <Backdrop
+        sx={{ color: "#fff", zIndex: (theme) => theme.zIndex.drawer + 1 }}
         open={open}
-        onKeyDown={(event) => handleOnKeyDown(event)}
+        onClick={() => setOpen(false)}
+        className=""
       >
-        <Card className="w-[50vw] overflow-y-scroll">
-          <CardHeader
-            action={
-              <IconButton aria-label="settings" onClick={() => setOpen(false)}>
-                <HighlightOffOutlinedIcon className="text-4xl mr-4" />
-              </IconButton>
-            }
-            className="p-0 flex-row-reverse"
-            title="View Detail Product"
-          />
-        </Card>
-        <TableContainer component={Paper} className="w-[50vw]">
-          <Table aria-label="simple table">
-            <TableBody>
-              <TableRow
-                sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
-              >
-                <TableCell component="th" scope="row">
-                  Product Name
-                </TableCell>
-                <TableCell align="left">{productDetail?.productName}</TableCell>
-              </TableRow>
+        <Zoom in={open} timeout={500}>
+          <Card className="w-[50vw] h-[100vh] overflow-y-scroll absolute top-0 right-0">
+            <CardHeader
+              action={
+                <IconButton
+                  aria-label="settings"
+                  onClick={() => setOpen(false)}
+                  className="h-9 w-9 my-2 mr-4"
+                >
+                  <HighlightOffOutlinedIcon className="text-4xl mx-auto" />
+                </IconButton>
+              }
+              className="p-0 flex-row-reverse"
+              title="View Detail Product"
+            />
+            <CardContent>
+              <TableContainer component={Paper} className="w-[50vw]">
+                <Table aria-label="simple table">
+                  <TableBody>
+                    <TableRow
+                      sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
+                    >
+                      <TableCell component="th" scope="row">
+                        Product Name
+                      </TableCell>
+                      <TableCell align="left">
+                        {productDetail?.productName}
+                      </TableCell>
+                    </TableRow>
 
-              <TableRow
-                sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
-              >
-                <TableCell component="th" scope="row">
-                  Price
-                </TableCell>
-                <TableCell align="left">{productDetail?.price}</TableCell>
-              </TableRow>
+                    <TableRow
+                      sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
+                    >
+                      <TableCell component="th" scope="row">
+                        Price
+                      </TableCell>
+                      <TableCell align="left">{productDetail?.price}</TableCell>
+                    </TableRow>
 
-              <TableRow
-                sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
-              >
-                <TableCell component="th" scope="row">
-                  Category
-                </TableCell>
-                <TableCell align="left">
-                  {productDetail?.categories?.join()}
-                </TableCell>
-              </TableRow>
+                    <TableRow
+                      sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
+                    >
+                      <TableCell component="th" scope="row">
+                        Category
+                      </TableCell>
+                      <TableCell align="left">
+                        {productDetail?.categories?.join()}
+                      </TableCell>
+                    </TableRow>
 
-              <TableRow
-                sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
-              >
-                <TableCell component="th" scope="row">
-                  Main Image
-                </TableCell>
-                <TableCell>
-                  <Card sx={{ maxWidth: 345 }}>
-                    <CardActionArea>
-                      <CardMedia
-                        component="img"
-                        image={
-                          productDetail?.picture
-                            ? URL.createObjectURL(productDetail.picture)
-                            : ""
-                        }
-                        alt="green iguana"
-                        className="h-40 object-contain"
-                      />
-                    </CardActionArea>
-                  </Card>
-                </TableCell>
-              </TableRow>
-              <TableRow
-                sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
-              >
-                <TableCell component="th" scope="row">
-                  Detail Image
-                </TableCell>
-                <TableCell align="right">
-                  <ImageList cols={4}>
-                    {productDetail?.detailPictures ? (
-                      productDetail.detailPictures.map((item, index) => (
-                        <ImageListItem key={index}>
-                          <img src={URL.createObjectURL(item)} loading="lazy" />
-                        </ImageListItem>
-                      ))
-                    ) : (
-                      <></>
-                    )}
-                  </ImageList>
-                </TableCell>
-              </TableRow>
-            </TableBody>
-          </Table>
-        </TableContainer>
-      </Drawer>
+                    <TableRow
+                      sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
+                    >
+                      <TableCell component="th" scope="row">
+                        Main Image
+                      </TableCell>
+                      <TableCell>
+                        <Card sx={{ maxWidth: 345 }}>
+                          <CardActionArea>
+                            <CardMedia
+                              component="img"
+                              image={
+                                productDetail?.picture
+                                  ? URL.createObjectURL(productDetail.picture)
+                                  : ""
+                              }
+                              alt="green iguana"
+                              className="h-40 object-contain"
+                            />
+                          </CardActionArea>
+                        </Card>
+                      </TableCell>
+                    </TableRow>
+                    <TableRow
+                      sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
+                    >
+                      <TableCell component="th" scope="row">
+                        Detail Image
+                      </TableCell>
+                      <TableCell align="right">
+                        <ImageList cols={4}>
+                          {productDetail?.detailPictures ? (
+                            productDetail.detailPictures.map(
+                              (item: File, index: number) => (
+                                <ImageListItem key={index}>
+                                  <img
+                                    src={URL.createObjectURL(item)}
+                                    loading="lazy"
+                                  />
+                                </ImageListItem>
+                              )
+                            )
+                          ) : (
+                            <></>
+                          )}
+                        </ImageList>
+                      </TableCell>
+                    </TableRow>
+                  </TableBody>
+                </Table>
+              </TableContainer>
+            </CardContent>
+          </Card>
+        </Zoom>
+      </Backdrop>
     </div>
-    // <Dialog
-    //   open={openDialog}
-    //   onClose={() => setOpenDialog(false)}
-    //   aria-labelledby="alert-dialog-title"
-    //   aria-describedby="alert-dialog-description"
-    // >
-    //   <DialogTitle id="alert-dialog-title">View Detail Product</DialogTitle>
-    //   <DialogContent>
-    //     {productDetail === null ? (
-    //       ""
-    //     ) : (
-
-    //     )}
-    //   </DialogContent>
-    // </Dialog>
   );
 };
 

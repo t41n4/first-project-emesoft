@@ -1,4 +1,3 @@
-import { useState } from "react";
 import {
   Table,
   TableBody,
@@ -7,46 +6,44 @@ import {
   TableHead,
   TableRow,
   Paper,
-  IconButton,
-  Popper,
-  Fade,
   Box,
-  Tooltip,
+  Fade,
 } from "@mui/material";
-import DeleteIcon from "@mui/icons-material/Delete";
-import { useProductContext2 } from "@/context";
+
 import { formatNumber } from "@/utils";
 import { PopperDelete, UpdateProduct, DetailProduct } from "@/modules";
-interface IDataDeleteProduct {
-  id: number;
-  productName: string;
-}
+import { useSelector } from "react-redux";
+import { IProduct2 } from "@/common/types";
+import { RootState } from "@/redux/store/store";
+import { useState } from "react";
+const icon = (
+  <Paper sx={{ m: 1, width: 100, height: 100 }} elevation={4}>
+    <svg>
+      <Box
+        component="polygon"
+        points="0,100 50,00, 100,100"
+        sx={{
+          fill: (theme) => theme.palette.common.white,
+          stroke: (theme) => theme.palette.divider,
+          strokeWidth: 1,
+        }}
+      />
+    </svg>
+  </Paper>
+);
 const TableProduct = () => {
-  const [openDialog, setOpenDialog] = useState(false);
-  const [openPopper, setOpenPopper] = useState(false);
-  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
-  const [dataDeleteProduct, setDataDeleteProduct] =
-    useState<IDataDeleteProduct>();
-  const handleClickPopper = (
-    event: React.MouseEvent<HTMLElement>,
-    id: number,
-    productName: string
-  ) => {
-    const dataDelete = {
-      id,
-      productName,
-    };
-    setDataDeleteProduct(dataDelete);
+  const [checked, setChecked] = useState(false);
 
-    setAnchorEl(event.currentTarget);
-    setOpenPopper((previousOpen) => !previousOpen);
+  const handleChange = () => {
+    setChecked((prev) => !prev);
   };
-  //
-
-  // handle viewdetail
-
-  const { displayData, handleSearchTermChange } = useProductContext2();
-
+  // const { displayData, handleSearchTermChange } = useProductContext2();
+  const displayData = useSelector((state: RootState) => {
+    const newData = state.products2.listProduct.filter((product: IProduct2) => {
+      return product.productName.includes(state.products2.searchText);
+    });
+    return newData;
+  });
   return (
     <>
       <TableContainer component={Paper} className="w-full">
@@ -71,7 +68,7 @@ const TableProduct = () => {
             </TableRow>
           </TableHead>
           <TableBody>
-            {displayData.map((product, index) => (
+            {displayData.map((product: IProduct2, index: number) => (
               <TableRow key={index}>
                 <TableCell
                   component="th"
@@ -94,24 +91,8 @@ const TableProduct = () => {
                   align="center"
                   className="text-base flex justify-center"
                 >
-                  <Tooltip title="delete product">
-                    <IconButton
-                      aria-label="delete"
-                      aria-describedby="message-delete-popper"
-                      onClick={(event) =>
-                        handleClickPopper(
-                          event,
-                          product.id,
-                          product.productName
-                        )
-                      }
-                      className="text-red-600"
-                    >
-                      <DeleteIcon />
-                    </IconButton>
-                  </Tooltip>
-
-                  <UpdateProduct id={product.id} />
+                  <PopperDelete id={product.id} />
+                  <UpdateProduct {...product} />
                   <DetailProduct id={product.id} />
                 </TableCell>
               </TableRow>
@@ -119,13 +100,6 @@ const TableProduct = () => {
           </TableBody>
         </Table>
       </TableContainer>
-
-      <PopperDelete
-        openPopper={openPopper}
-        setOpenPopper={setOpenPopper}
-        anchorEl={anchorEl}
-        dataDeleteProduct={dataDeleteProduct}
-      />
     </>
   );
 };

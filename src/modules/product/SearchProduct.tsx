@@ -4,6 +4,8 @@ import InputBase from "@mui/material/InputBase";
 import SearchIcon from "@mui/icons-material/Search";
 import { useProductContext2 } from "@/context";
 import { useState } from "react";
+import { useDispatch } from "react-redux";
+import { handleSearchTextChange } from "@/redux/reducer/ProductSlice_2";
 const Search = styled("div")(({ theme }) => ({
   position: "relative",
   borderRadius: theme.shape.borderRadius,
@@ -47,7 +49,8 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
   },
 }));
 const SearchProduct = () => {
-  const { handleSearchTermChange } = useProductContext2();
+  // const { handleSearchTermChange } = useProductContext2();
+  const dispatch = useDispatch();
   return (
     <Box className=" flex justify-between mb-1">
       <Search>
@@ -58,7 +61,7 @@ const SearchProduct = () => {
           placeholder="Search…"
           inputProps={{ "aria-label": "search" }}
           onChange={(event) => {
-            handleSearchTermChange(event.target.value);
+            dispatch(handleSearchTextChange(event.target.value));
           }}
         />
       </Search>
