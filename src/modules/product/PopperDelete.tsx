@@ -19,7 +19,7 @@ import {
   handleDeleteProduct,
 } from "@/redux/reducer/ProductSlice_2";
 import { useDispatch } from "react-redux";
-import { useAppSelector } from "@/redux/store/store";
+import { useAppSelector } from "@/redux/hooks";
 const PopperDelete = ({ id }: any) => {
   // dispatch
   const dispatch = useDispatch();

@@ -30,8 +30,8 @@ import VisibilityIcon from "@mui/icons-material/Visibility";
 import HighlightOffOutlinedIcon from "@mui/icons-material/HighlightOffOutlined";
 import { handleViewDetailProduct } from "@/redux/reducer/ProductSlice_2";
 import { useState } from "react";
-import { useAppSelector } from "@/redux/store/store";
 import { useDispatch } from "react-redux";
+import { useAppSelector } from "@/redux/hooks";
 const DetailProduct = ({ id }: any) => {
   // const { productDetail, handleViewDetailProduct } = useProductContext2();
   const dispatch = useDispatch();

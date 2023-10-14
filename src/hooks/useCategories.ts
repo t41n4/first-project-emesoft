@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-export function useCategories() {
+export function useCategories () {
   const [categories, setCategories] = useState([]);
 
   if (categories.length === 0) {
@@ -13,3 +13,5 @@ export function useCategories() {
   }
   return categories;
 }
+
+

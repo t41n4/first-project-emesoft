@@ -124,7 +124,17 @@ const AddProduct = () => {
         open={open}
       >
         <Fade in={open} timeout={500}>
-          <Card className="w-[50vw] h-[100vh] overflow-y-scroll absolute top-0 right-0">
+          <Card
+            className="  overflow-y-scroll absolute top-0 right-0"
+            sx={{
+              height: "100vh",
+              width: {
+                xs: "100vw",
+                sm: "70vw",
+                md: "50vw",
+              },
+            }}
+          >
             <CardHeader
               action={
                 <IconButton

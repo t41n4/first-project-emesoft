@@ -1,6 +1,6 @@
 const Footer = () => {
   return (
-    <footer className="shadow bg-[#f58439] px-4 w-full border border-black">
+    <footer className="shadow bg-[#f58439] px-4 w-full border border-black fixed  bottom-0 left-0 right-0">
       <div className=" mx-auto max-w-screen-xl py-4 md:flex md:items-center md:justify-between">
         <span className="text-sm text-black sm:text-center">
           © 2023{" "}

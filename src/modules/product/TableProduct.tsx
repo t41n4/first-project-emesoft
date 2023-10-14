@@ -12,7 +12,7 @@ import {
 
 import { formatNumber } from "@/utils";
 import { PopperDelete, UpdateProduct, DetailProduct } from "@/modules";
-import { useSelector } from "react-redux";
+import { useAppSelector } from "@/redux/hooks";
 import { IProduct2 } from "@/common/types";
 import { RootState } from "@/redux/store/store";
 import { useState } from "react";
@@ -38,12 +38,14 @@ const TableProduct = () => {
     setChecked((prev) => !prev);
   };
   // const { displayData, handleSearchTermChange } = useProductContext2();
-  const displayData = useSelector((state: RootState) => {
-    const newData = state.products2.listProduct.filter((product: IProduct2) => {
-      return product.productName.includes(state.products2.searchText);
-    });
-    return newData;
-  });
+  // const displayData = useAppSelector((state: RootState) => {
+  //   const newData = state.products2.listProduct.filter((product: IProduct2) => {
+  //     return product.productName.includes(state.products2.searchText);
+  //   });
+  //   return newData;
+  // });
+  const displayData = useAppSelector((state) => state.products2.listProduct);
+  console.log("🚀 ~ listProduct:", displayData);
   return (
     <>
       <TableContainer component={Paper} className="w-full">

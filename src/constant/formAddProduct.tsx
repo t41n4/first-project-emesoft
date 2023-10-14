@@ -22,6 +22,7 @@ import CloudUploadIcon from "@mui/icons-material/CloudUpload";
 import { useCategories } from "@/hooks";
 
 import styled from "styled-components";
+import { useEffect, useState } from "react";
 interface FormInputProps {
   name: string;
   control: any;
@@ -120,7 +121,12 @@ export const FormInputPrice = (props: FormInputProps) => {
 };
 
 export const FormInputCategory = (props: FormInputProps) => {
-  const categories = useCategories();
+  const categories = [
+    "electronics",
+    "jewelery",
+    "men's clothing",
+    "women's clothing",
+  ];
 
   return (
     <Controller

@@ -34,7 +34,7 @@ import {
   handleUpdateData,
 } from "@/redux/reducer/ProductSlice_2";
 import { useDispatch } from "react-redux";
-import { useAppSelector } from "@/redux/store/store";
+import { useAppSelector } from "@/redux/hooks";
 import { IProduct2 } from "@/common/types";
 const UpdateProduct = (props: IProduct2) => {
   // Use Form
@@ -64,7 +64,6 @@ const UpdateProduct = (props: IProduct2) => {
   // const { handleUpdateData } = useProductContext2();
 
   const dataUpdate = useAppSelector((state) => state.products2.detailProduct);
-  console.log("🚀 ~ dataUpdate:", dataUpdate);
   // Handle open modal
   const handleClickOpen = (id: any) => {
     setOpen(true);
@@ -73,7 +72,6 @@ const UpdateProduct = (props: IProduct2) => {
   // handle check value and erros forms
   const handleCheck = () => {
     const getValueForm = Object.values(getValues());
-    console.log("🚀 ~ getValueForm:", getValueForm);
 
     const checkValueForm = getValueForm.some((item) => item.length !== 0); //user khong nhap gia tri = false
     const checkErrors = Object.keys(errors).length !== 0; //neu khong co error false
