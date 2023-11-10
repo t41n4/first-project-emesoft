@@ -1,3 +1,4 @@
+import { error } from "console";
 import { useState } from "react";
 
 export function useCategories () {

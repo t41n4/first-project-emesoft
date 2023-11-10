@@ -10,10 +10,10 @@ const ProductLayout: React.FC<IProductLayout> = ({ children }) => {
   const { paginateData, setPage, Page } = useProductContext();
 
   const handleChange = (event: React.ChangeEvent<unknown>, value: number) => {
-    console.log("handleChange: ");
+    console.log("event", event);
+    console.log("value", value);
     setPage(value);
     paginateData.jump(value);
-
     window.scrollTo(0, 0);
   };
   return (

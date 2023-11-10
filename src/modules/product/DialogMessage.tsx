@@ -5,7 +5,7 @@ import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
 import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
-import { useFormContext } from "react-hook-form";
+import { useFormContext, useForm } from "react-hook-form";
 
 interface IPopupMessageProps {
   openDialog: boolean;
@@ -18,7 +18,7 @@ interface IPopupMessageProps {
 const DialogMessage = (props: IPopupMessageProps) => {
   const {
     formState: { errors },
-  } = useFormContext();
+  } = useForm();
   const {
     openDialog,
     setOpenDialog,

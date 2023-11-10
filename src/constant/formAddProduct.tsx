@@ -1,28 +1,19 @@
-import { Controller, useForm } from "react-hook-form";
+import { Controller } from "react-hook-form";
 import {
   TextField,
   Card,
-  CardContent,
-  CardHeader,
   IconButton,
   Typography,
-  Divider,
-  CardMedia,
   CardActions,
   Button,
   Autocomplete,
   ImageListItemBar,
   ImageList,
   ImageListItem,
-  Stack,
 } from "@mui/material";
 import HighlightOffOutlinedIcon from "@mui/icons-material/HighlightOffOutlined";
 import CloudUploadIcon from "@mui/icons-material/CloudUpload";
 
-import { useCategories } from "@/hooks";
-
-import styled from "styled-components";
-import { useEffect, useState } from "react";
 interface FormInputProps {
   name: string;
   control: any;
@@ -193,7 +184,7 @@ export const FormUploadPicture = (props: FormInputProps) => {
               gap={10}
             >
               <ImageListItem>
-                <img src={value ? URL.createObjectURL(value) : ""} />
+                <img src={value ? value : ""} />
                 <ImageListItemBar
                   sx={{
                     background:
@@ -233,12 +224,17 @@ export const FormUploadPicture = (props: FormInputProps) => {
               >
                 Upload
                 <input
+                  aria-label={props.label}
                   hidden
                   accept="image/*"
                   type="file"
                   onChange={(event) => {
                     if (event.target.files && event.target.files.length > 0) {
-                      onChange(event.target.files[0]);
+                      console.log(
+                        "event.target.files[0]",
+                        URL.createObjectURL(event.target.files[0])
+                      );
+                      onChange(URL.createObjectURL(event.target.files[0]));
                     } else {
                       onChange(null);
                     }
@@ -279,7 +275,7 @@ export const FormUploadDetailsPicture = (props: FormInputProps) => {
                 value.map((item: any, index: number) => {
                   return (
                     <ImageListItem key={index}>
-                      <img src={URL.createObjectURL(item)} loading="lazy" />
+                      <img src={item} loading="lazy" />
                       <ImageListItemBar
                         sx={{
                           background:
@@ -330,6 +326,7 @@ export const FormUploadDetailsPicture = (props: FormInputProps) => {
               >
                 Upload
                 <input
+                  aria-label={props.label}
                   hidden
                   accept="image/*"
                   multiple
@@ -339,7 +336,7 @@ export const FormUploadDetailsPicture = (props: FormInputProps) => {
                     if (listFiles && listFiles.length > 0) {
                       const newListPicture = [...value];
                       for (let i = 0; i < listFiles.length; i++) {
-                        newListPicture.push(listFiles[i]);
+                        newListPicture.push(URL.createObjectURL(listFiles[i]));
                       }
                       onChange(newListPicture);
                     }

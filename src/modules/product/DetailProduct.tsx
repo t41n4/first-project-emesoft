@@ -31,33 +31,27 @@ import HighlightOffOutlinedIcon from "@mui/icons-material/HighlightOffOutlined";
 import { handleViewDetailProduct } from "@/redux/reducer/ProductSlice_2";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
-import { useAppSelector } from "@/redux/hooks";
+import { useAppSelector, useAppDispatch } from "@/redux/hooks";
+import { productDetailSelector } from "@/redux/selector/selector";
 const DetailProduct = ({ id }: any) => {
   // const { productDetail, handleViewDetailProduct } = useProductContext2();
-  const dispatch = useDispatch();
-  const productDetail = useAppSelector(
-    (state) => state.products2.detailProduct
-  );
+  const dispatch = useAppDispatch();
+  const productDetail = useAppSelector(productDetailSelector);
 
   const [open, setOpen] = useState(false);
 
-  const handleViewDetail = (id: number) => {
-    setOpen(true);
+  const onClickViewDetail = (id: any) => {
     dispatch(handleViewDetailProduct(id));
-  };
-  const handleOnKeyDown = (event: React.KeyboardEvent<HTMLDivElement>) => {
-    if (event.key === "Escape") {
-      setOpen(false);
-    }
+    setOpen(true);
   };
 
   return (
-    <div className="add-product inline relative">
+    <div className="viewDetail inline relative" data-testid={id}>
       <Tooltip title="view detail product">
         <IconButton
           className="text-blue-600"
           aria-label="view"
-          onClick={() => handleViewDetail(id)}
+          onClick={() => onClickViewDetail(id)}
         >
           <VisibilityIcon />
         </IconButton>
@@ -68,13 +62,18 @@ const DetailProduct = ({ id }: any) => {
         open={open}
         onClick={() => setOpen(false)}
         className=""
+        data-testid="backdrop-viewDetail"
       >
         <Zoom in={open} timeout={500}>
-          <Card className="w-[50vw] h-[100vh] overflow-y-scroll absolute top-0 right-0">
+          <Card
+            data-testid="card-viewDetail"
+            className="w-[50vw] h-[100vh] overflow-y-scroll absolute top-0 right-0"
+          >
             <CardHeader
               action={
                 <IconButton
-                  aria-label="settings"
+                  data-testid="btn-close"
+                  aria-label="close"
                   onClick={() => setOpen(false)}
                   className="h-9 w-9 my-2 mr-4"
                 >
@@ -82,7 +81,7 @@ const DetailProduct = ({ id }: any) => {
                 </IconButton>
               }
               className="p-0 flex-row-reverse"
-              title="View Detail Product"
+              title="View Detail"
             />
             <CardContent>
               <TableContainer component={Paper} className="w-[50vw]">
@@ -132,10 +131,10 @@ const DetailProduct = ({ id }: any) => {
                               component="img"
                               image={
                                 productDetail?.picture
-                                  ? URL.createObjectURL(productDetail.picture)
+                                  ? productDetail.picture
                                   : ""
                               }
-                              alt="green iguana"
+                              alt="main image"
                               className="h-40 object-contain"
                             />
                           </CardActionArea>
@@ -152,11 +151,12 @@ const DetailProduct = ({ id }: any) => {
                         <ImageList cols={4}>
                           {productDetail?.detailPictures ? (
                             productDetail.detailPictures.map(
-                              (item: File, index: number) => (
+                              (item: string, index: number) => (
                                 <ImageListItem key={index}>
                                   <img
-                                    src={URL.createObjectURL(item)}
+                                    src={item}
                                     loading="lazy"
+                                    alt="detail image"
                                   />
                                 </ImageListItem>
                               )

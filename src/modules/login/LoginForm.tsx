@@ -17,11 +17,12 @@ import {
 import FacebookIcon from "@mui/icons-material/Facebook";
 import GoogleIcon from "@mui/icons-material/Google";
 import React from "react";
+
 const LoginForm = () => {
   const [showPassword, setShowPassword] = React.useState(false);
-  const handleClickShowPassword = () => setShowPassword((show) => !show);
   const [valueName, setValueName] = React.useState("");
   const [password, setPassword] = React.useState("");
+  const handleClickShowPassword = () => setShowPassword((show) => !show);
 
   const handleOnchange = (
     event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
@@ -78,6 +79,7 @@ const LoginForm = () => {
               </IconButton>
             </InputAdornment>
           }
+          data-testid="password"
           label="Password"
         />
       </FormControl>

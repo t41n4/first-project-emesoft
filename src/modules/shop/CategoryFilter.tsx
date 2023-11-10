@@ -42,7 +42,9 @@ const CategoryItem = ({ category }: { category: any }) => {
 
 function CategoryFilter() {
   const [categories, setCategories] = useState<string[]>([]); // Use string[] for categories
+
   const rawCategories = useCategories();
+
   useEffect(() => {
     if (rawCategories.length) {
       setCategories(rawCategories);

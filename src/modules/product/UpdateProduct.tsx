@@ -28,7 +28,7 @@ import {
   Zoom,
 } from "@mui/material";
 import { useEffect, useState } from "react";
-import { useForm, useFormContext } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import {
   handleViewDetailProduct,
   handleUpdateData,
@@ -104,7 +104,7 @@ const UpdateProduct = (props: IProduct2) => {
   // Handle Onclick delete list picture
 
   return (
-    <div className="add-product inline  ">
+    <div className="update-product inline  ">
       <Tooltip title="edit product">
         <IconButton
           aria-label="edit"

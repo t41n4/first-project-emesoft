@@ -55,21 +55,19 @@ export default function App({ Component, pageProps }: AppProps) {
   return (
     <main className="mt-[15vh] ">
       <Provider store={store}>
-        <UseFormProvider>
-          <ProductProvider>
-            <UserProvider>
-              <ProductProvider2>
-                <CartProvider>
-                  <FloatingCartButton />
-                  <Loading loading={loading} setLoading={setLoading} />
-                  <Header />
-                  <Component {...pageProps} />
-                  <Footer />
-                </CartProvider>
-              </ProductProvider2>
-            </UserProvider>
-          </ProductProvider>
-        </UseFormProvider>
+        <ProductProvider>
+          <UserProvider>
+            <ProductProvider2>
+              <CartProvider>
+                <FloatingCartButton />
+                <Loading loading={loading} setLoading={setLoading} />
+                <Header />
+                <Component {...pageProps} />
+                <Footer />
+              </CartProvider>
+            </ProductProvider2>
+          </UserProvider>
+        </ProductProvider>
       </Provider>
     </main>
   );

@@ -1,4 +1,4 @@
-import { AddProduct, TableProduct } from "@/modules";
+import { TableProduct } from "@/modules";
 import { Grid, Stack, Typography } from "@mui/material";
 
 const ProductPage = () => {

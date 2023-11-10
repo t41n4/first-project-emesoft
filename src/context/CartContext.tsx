@@ -60,14 +60,14 @@ export const CartProvider: React.FC<any> = ({ children }) => {
   };
 
   // // check pro exist in cart
-  // const isItemExist = (item: ICartItem) =>
-  //   carts.some((cart) => cart.id === item.id);
+  const isItemExist = (item: ICartItem) =>
+    carts.some((cart) => cart.id === item.id);
 
-  // const findCartItemIndex = (carts: ICartItem[], item: ICartItem) => {
-  //   return carts.findIndex(
-  //     (cart) => cart.id === item.id && cart.name === item.name
-  //   );
-  // };
+  const findCartItemIndex = (carts: ICartItem[], item: ICartItem) => {
+    return carts.findIndex(
+      (cart) => cart.id === item.id && cart.name === item.name
+    );
+  };
 
   // // Handle Cart
   // const addToCart = (item: ICartItem) => {

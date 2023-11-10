@@ -2,7 +2,7 @@ import { configureStore } from "@reduxjs/toolkit";
 import ProductSliceReducer from "../reducer/ProducSlice";
 import CartSliceReducer from "../reducer/CartSlice";
 import UserSliceReducer from "../reducer/UserSlice";
-import ProductsSlice_2 from "../reducer/ProductSlice_2";
+import ProductsSliceReducer_2 from "../reducer/ProductSlice_2";
 import { TypedUseSelectorHook, useSelector } from "react-redux";
 // import storage from "redux-persist/lib/storage";
 // import { persistReducer } from "redux-persist";
@@ -21,7 +21,7 @@ export const store:any = configureStore({
     products: ProductSliceReducer,
     carts: CartSliceReducer,
     users: UserSliceReducer,
-    products2: ProductsSlice_2
+    products2: ProductsSliceReducer_2
   },
 });
 

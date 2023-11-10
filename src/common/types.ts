@@ -19,8 +19,8 @@ export interface IProduct2 {
   productName: string;
   price: number;
   categories?: string[];
-  picture?: File | null ;
-  detailPictures?: File[] | undefined;
+  picture?: File | null | string;
+  detailPictures?: File[] | undefined | string[];
 }
 
 

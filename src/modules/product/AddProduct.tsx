@@ -5,7 +5,6 @@ import {
   FormUploadDetailsPicture,
   FormUploadPicture,
 } from "@/constant/formAddProduct";
-import { useProductContext2 } from "@/context";
 import { useCategories } from "@/hooks";
 import HighlightOffOutlinedIcon from "@mui/icons-material/HighlightOffOutlined";
 import {
@@ -27,13 +26,13 @@ import {
 } from "@mui/material";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
-import { useDispatch, useSelector } from "react-redux";
+import { useAppDispatch } from "@/redux/hooks";
 import { v4 as uuidv4 } from "uuid";
 import { DialogMessage } from "@/modules";
 import { addNewProduct } from "@/redux/reducer/ProductSlice_2";
 
 const AddProduct = () => {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
 
   // Use Form
   const defaultValues = {
@@ -118,13 +117,13 @@ const AddProduct = () => {
       >
         Add Product
       </Button>
-
       <Backdrop
         sx={{ color: "#fff", zIndex: (theme) => theme.zIndex.drawer + 1 }}
         open={open}
       >
         <Fade in={open} timeout={500}>
           <Card
+            data-testid="add product dialog"
             className="  overflow-y-scroll absolute top-0 right-0"
             sx={{
               height: "100vh",
@@ -138,7 +137,7 @@ const AddProduct = () => {
             <CardHeader
               action={
                 <IconButton
-                  aria-label="settings"
+                  aria-label="close"
                   onClick={() => handleClose()}
                   className="h-9 w-9 my-2 mr-4"
                 >
@@ -153,6 +152,7 @@ const AddProduct = () => {
                 noValidate
                 onSubmit={handleSubmit(onSubmitForm)}
                 id="my-formAdd"
+                data-testid="my-formAdd"
                 className="grid grid-flow-row gap-5 mt-5 w-full"
               >
                 <FormInputProductName
@@ -181,18 +181,16 @@ const AddProduct = () => {
                   control={control}
                   label="Detail Picture"
                 />
+                <Button
+                  type="submit"
+                  variant="contained"
+                  form="my-formAdd"
+                  className="bg-blue-500 mx-auto px-7"
+                >
+                  ADD
+                </Button>
               </form>
             </CardContent>
-            <CardActions>
-              <Button
-                type="submit"
-                variant="contained"
-                form="my-formAdd"
-                className="bg-blue-500 mx-auto px-7"
-              >
-                ADD
-              </Button>
-            </CardActions>
           </Card>
         </Fade>
       </Backdrop>

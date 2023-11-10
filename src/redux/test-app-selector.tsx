@@ -1,5 +1,12 @@
-const state = {
+import { RootState } from "./store/store";
+
+const state: RootState = {
   mood: "",
 };
 
-export const testUseAppSelector = (f) => f(state);
+// Mock useSelector hook
+export const testUseAppSelector = <Selected,>(
+  selector: (state: RootState) => Selected
+): Selected => {
+  return selector(state);
+};
